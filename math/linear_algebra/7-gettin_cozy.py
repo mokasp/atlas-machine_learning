@@ -8,24 +8,19 @@ def cat_matrices2D(mat1, mat2, axis=0):
     mat2_y = len(mat02[0])
     new_mat = []
     new_mat1 = []
-    new_mat2 = []
-    new_mat3 = []
     if axis == 0:
         for x in range(mat1_x):
+            new_mat1 = []
             for y in range(mat1_y):
-                if x < mat1_x / 2:
-                    new_mat1.append(mat01[x][y])
-                else:
-                    new_mat2.append(mat01[x][y])
+                new_mat1.append(mat01[x][y])
+            if len(new_mat1) != 0:
+                new_mat.append(new_mat1)
         for x in range(mat2_x):
+            new_mat4 = []
             for y in range(mat2_y):
-                if x < mat2_x / 2:
-                    new_mat3.append(mat02[x][y])
-                else:
-                    new_mat3.append(mat02[x][y])
-        new_mat.append(new_mat1)
-        new_mat.append(new_mat2)
-        new_mat.append(new_mat3)
+                new_mat4.append(mat02[x][y])
+            if len(new_mat4) != 0:
+                new_mat.append(new_mat4)
         return new_mat
     else:
         return None
