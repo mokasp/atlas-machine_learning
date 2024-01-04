@@ -6,6 +6,10 @@ def cat_matrices2D(mat1, mat2, axis=0):
     mat1_y = len(mat01[0])
     mat2_x = len(mat02)
     mat2_y = len(mat02[0])
+    if axis == 0 and mat1_y != mat2_y:
+        return None
+    if axis == 1 and mat1_x != mat2_x:
+        return None
     new_mat = []
     new_mat1 = []
     if axis == 0:
