@@ -23,4 +23,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
                 new_mat.append(new_mat4)
         return new_mat
     else:
-        return None
+        new_mat += mat01
+        new_mat[0] += mat02[0]
+        new_mat[1] += mat02[1]
+        return new_mat
