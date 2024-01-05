@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+""" module containing a function that concatenates two 2d matricies"""
+
+
 def cat_matrices2D(mat1, mat2, axis=0):
+    """ func that returns the concatenation of two 2d matricies """
     mat01 = mat1
     mat02 = mat2
     mat1_x = len(mat01)
