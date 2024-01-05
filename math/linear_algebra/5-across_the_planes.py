@@ -4,6 +4,10 @@
 
 def add_matrices2D(mat1, mat2):
     """ func that returns the sum of two 2d matrices """
+    if len(mat1) == 0 or len(mat2) == 0:
+        return None
+    elif len(mat1[0]) == 0 or len(mat2[0]) == 0:
+        return None
     if get_shape(mat1) == get_shape(mat2):
         return [[mat1[x][y] + mat2[x][y]
                  for y in range(len(mat1[0]))] for x in range(len(mat1))]
