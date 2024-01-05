@@ -49,7 +49,7 @@ ax3.set_title('Exponential Decay of C-14', fontsize=8)
 ax3.semilogy(x2, y2)
 ax3.set_xlim([0, 28650])
 
-ax4= fig.add_subplot(gs[1, 1])
+ax4 = fig.add_subplot(gs[1, 1])
 ax4.set_xlabel('Time (years)', fontsize=8)
 ax4.set_ylabel('Fraction Remaining', fontsize=8)
 ax4.set_title('Exponential Decay of Radioactive Elements', fontsize=8)
@@ -63,7 +63,8 @@ ax5 = fig.add_subplot(gs[2, :])
 ax5.set_xlabel('Grades', fontsize=8)
 ax5.set_ylabel('Number of Students', fontsize=8)
 ax5.set_title('Project A', fontsize=8)
-ax5.hist(student_grades, bins=[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], edgecolor='black')
+bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+ax5.hist(student_grades, bins=bins, edgecolor='black')
 ax5.set_xlim([0, 100])
 ax5.set_ylim([0, 30])
 
