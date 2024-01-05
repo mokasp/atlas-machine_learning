@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" script that plots 5 seperate graphs on one figure """
 import numpy as np
 import matplotlib.pyplot as plt
 

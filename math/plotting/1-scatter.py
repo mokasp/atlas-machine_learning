@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" script that makes a simple labeled scatter graph """
 import numpy as np
 import matplotlib.pyplot as plt
 

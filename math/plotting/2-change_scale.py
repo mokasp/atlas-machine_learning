@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" script that plots a grap with a linear x axis and logrithmic y axis"""
 import numpy as np
 import matplotlib.pyplot as plt
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" script that plots a stacked bar graph"""
 import numpy as np
 import matplotlib.pyplot as plt
 
