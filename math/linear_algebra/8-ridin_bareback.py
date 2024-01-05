@@ -17,5 +17,4 @@ def mat_mul(mat1, mat2):
         for y in range(mat2_columns):
             for z in range(mat1_columns):
                 mat3[x][y] += mat1[x][z] * mat2[z][y]
-
     return mat3
