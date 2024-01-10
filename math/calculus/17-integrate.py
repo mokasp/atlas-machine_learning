@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-def poly_integral(poly, c=0):
+def poly_integral(poly, C=0):
     if not isinstance(poly, list) or len(poly) == 0:
         return None
-    integral = [c]
+    integral = [C]
     for i in range(0, len(poly)):
         if i == 0:
             integral.append(poly[i])
         else:
-            integral.append(poly[i] / (i + 1))
+            elem = poly[i] / (i + 1)
+            if elem.is_integer():
+                elem = int(elem)
+            integral.append(elem)
     if len(integral) == 0:
         return [0]
     return integral
