@@ -31,12 +31,12 @@ class Poisson():
         e = 2.7182818285
         mu = self.lambtha
         k = int(k)
-        the = [*range(0, k + 1, 1)]
-        poo = 0
-        for elem in the:
+        i = [*range(0, k + 1, 1)]
+        summ = 0
+        for elem in i:
             fact_list = [*range(1, elem + 1, 1)]
             denom = 1
             for item in fact_list:
                 denom = denom * item
-            poo += ((e ** -(mu)) * (mu ** elem)) / denom
-        return poo
+            summ += ((e ** -(mu)) * (mu ** elem)) / denom
+        return summ
