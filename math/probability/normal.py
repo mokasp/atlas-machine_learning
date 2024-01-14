@@ -18,3 +18,9 @@ class Normal():
             summed = sum(squared_diff)
             variance = summed / len(data)
             self.stddev = variance ** (1/2)
+
+    def z_score(self, x):
+        return (x - self.mean) / self.stddev
+    
+    def x_value(self, z):
+        return (self.stddev * z) + self.mean
