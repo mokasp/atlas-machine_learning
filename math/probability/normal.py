@@ -24,3 +24,12 @@ class Normal():
     
     def x_value(self, z):
         return (self.stddev * z) + self.mean
+
+    def pdf(self, x):
+        pi = 3.1415926536
+        e = 2.7182818285
+        first = (1 / (self.stddev * ((2 * pi) ** (1/2))))
+        third = -(((x - self.mean) ** 2) / (2 * self.stddev ** 2))
+        second = e ** third
+        product = first * second
+        return product
