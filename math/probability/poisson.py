@@ -14,7 +14,7 @@ class Poisson():
             self.lambtha = sum(data) / len(data)
     
     def pmf(self, k):
-        e = 2.7183
+        e = 2.7182818285
         mu = self.lambtha
         k = int(k)
         fact_list = [*range(1, k + 1, 1)]
