@@ -12,3 +12,8 @@ class Exponential():
             elif len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = 1 / (sum(data) / len(data))
+    
+    def pdf(self, x):
+        e = 2.7182818285
+        lam = self.lambtha
+        return lam * (e ** (-(lam) * x))
