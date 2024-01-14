@@ -14,6 +14,8 @@ class Exponential():
             self.lambtha = 1 / (sum(data) / len(data))
     
     def pdf(self, x):
+        if x < 0:
+            return 0
         e = 2.7182818285
         lam = self.lambtha
         return lam * (e ** (-(lam) * x))
