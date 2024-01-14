@@ -24,4 +24,19 @@ class Poisson():
         for item in fact_list:
             denom = denom * item
         return ((e ** -(mu)) * (mu ** k)) / denom
-
+    
+    def cdf(self, k):
+        if k < 0:
+            return 0
+        e = 2.7182818285
+        mu = self.lambtha
+        k = int(k)
+        the = [*range(0, k + 1, 1)]
+        poo = 0
+        for elem in the:
+            fact_list = [*range(1, elem + 1, 1)]
+            denom = 1
+            for item in fact_list:
+                denom = denom * item
+            poo += ((e ** -(mu)) * (mu ** elem)) / denom
+        return poo
