@@ -14,12 +14,17 @@ class Binomial():
                 raise TypeError("data must be a list")
             elif len(data) < 2:
                 raise ValueError("data must contain multiple values")
-            first = []
-            second = []
-            for i in range(10):
-                for j in range(10):
-                    if i * j == data[0]:
-                        first.append(i)
-                        second.append(j)
-            self.n = first[0] * 10
-            self.p = sum(data) / (self.n * 10)
+            data2 = []
+            mean = sum(data) / len(data)
+            differences = [x - mean for x in data]
+            squared_diff = [x ** 2 for x in differences]
+            summed = sum(squared_diff)
+            variance = summed / len(data)
+            check = 1 - (variance / mean)
+            self.n = round((sum(data) / len(data)) / check)
+            for i in range(len(data)):
+                data2.append((data[i] / self.n))
+            check2 = str(sum(data2) / len(data2))
+            if check2[5] == "9" and check2[6] == "9":
+                check2 = round(float(check2), 6) 
+            self.p = float(check2)
