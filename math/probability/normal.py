@@ -33,3 +33,21 @@ class Normal():
         second = e ** third
         product = first * second
         return product
+    
+    def cdf(self, x):
+        pi = 3.1415926536
+        power = [3, 5, 7, 9]
+        denom = [3, 10, 42, 216]
+        erf_1 = ((x - self.mean)) / (self.stddev * (2 ** (1 / 2)))
+        for i in range(len(power)):
+            erf_numer = (((x - self.mean)) / (self.stddev * (2 ** (1 / 2)))) ** power[i]
+            erf_2 = erf_numer / denom[i]
+            if i == 0 or i == 2:
+                erf_1 -= erf_2
+            elif i == 1 or i == 3:
+                erf_1 += erf_2
+        erf_3 = 2 / (pi ** (1/2))
+        erf = erf_1 * erf_3
+        inner = 1 + erf
+        product = (1 / 2) * inner
+        return product
