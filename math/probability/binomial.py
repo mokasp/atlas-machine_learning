@@ -50,3 +50,9 @@ class Binomial():
         qnx = (1 - self.p) ** (self.n - k)
         px = nCx * pq * qnx
         return px
+
+    def cdf(self, k):
+        summ = 0
+        for i in range(k + 1):
+            summ += self.pmf(i)
+        return summ
