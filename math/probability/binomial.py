@@ -1,7 +1,28 @@
 #!/usr/bin/env python3
+""" module containing class that represents a binomial distribution"""
+
+
 class Binomial():
+    """ class that represents a binomial distribution
+
+        Parameters:
+            data (list): list containing number of successes from trials
+            n (int): number of trials
+            p (float): probability of success
+
+        Methods:
+            pmf(k): calculates the probability mass function of binmomial
+            cdf(k): calculates the cumulative distribution function of binmoial
+            """
 
     def __init__(self, data=None, n=1, p=0.5):
+        """ initializes instances of Binomial
+
+            Parameters:
+                data (list): list containing number of successes from trials
+                n (int): number of trials
+                p (float): probability of success
+        """
         if data is None:
             if n <= 0:
                 raise ValueError("n must be a positive value")
@@ -26,10 +47,15 @@ class Binomial():
                 data2.append((data[i] / self.n))
             check2 = str(sum(data2) / len(data2))
             if check2[5] == "9" and check2[6] == "9":
-                check2 = round(float(check2), 6) 
+                check2 = round(float(check2), 6)
             self.p = float(check2)
 
     def pmf(self, k):
+        """ calculates the probability mass function of binmomial distribution
+
+            Parameters:
+                k (int): number of successes
+            """
         k = int(k)
         numer = 1
         for fact in range(self.n + 1):
@@ -52,6 +78,11 @@ class Binomial():
         return px
 
     def cdf(self, k):
+        """ calculates the cumulative distribution function of binmomial
+
+            Parameters:
+                k (int): number of successes
+        """
         summ = 0
         k = int(k)
         for i in range(k + 1):
