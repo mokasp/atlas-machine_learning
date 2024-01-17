@@ -28,3 +28,24 @@ class Binomial():
             if check2[5] == "9" and check2[6] == "9":
                 check2 = round(float(check2), 6) 
             self.p = float(check2)
+
+    def pmf(self, k):
+        numer = 1
+        for fact in range(self.n + 1):
+            if fact != 0:
+                numer *= fact
+        nx = self.n - k
+        denom_1 = 1
+        for fact in range(nx + 1):
+            if fact != 0:
+                denom_1 *= fact
+        denom_2 = 1
+        for fact in range(k + 1):
+            if fact != 0:
+                denom_2 *= fact
+        denom = denom_1 * denom_2
+        nCx = numer / denom
+        pq = self.p ** k
+        qnx = (1 - self.p) ** (self.n - k)
+        px = nCx * pq * qnx
+        return px
