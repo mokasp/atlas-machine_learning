@@ -30,17 +30,18 @@ class Binomial():
             self.p = float(check2)
 
     def pmf(self, k):
+        k = int(k)
         numer = 1
         for fact in range(self.n + 1):
             if fact != 0:
                 numer *= fact
         nx = self.n - k
         denom_1 = 1
-        for fact in range(nx + 1):
+        for fact in range(int(nx + 1)):
             if fact != 0:
                 denom_1 *= fact
         denom_2 = 1
-        for fact in range(k + 1):
+        for fact in range(int(k + 1)):
             if fact != 0:
                 denom_2 *= fact
         denom = denom_1 * denom_2
