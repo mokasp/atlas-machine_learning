@@ -53,6 +53,7 @@ class Binomial():
 
     def cdf(self, k):
         summ = 0
+        k = int(k)
         for i in range(k + 1):
             summ += self.pmf(i)
         return summ
