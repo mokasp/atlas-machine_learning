@@ -27,7 +27,7 @@ class Binomial():
             if n <= 0:
                 raise ValueError("n must be a positive value")
             self.n = n
-            if p > 1 or p < 0:
+            if p >= 1 or p <= 0:
                 raise ValueError("p must be greater than 0 and less than 1")
             self.p = p
         else:
@@ -56,6 +56,8 @@ class Binomial():
             Parameters:
                 k (int): number of successes
             """
+        if k < 0:
+            return 0
         k = int(k)
         numer = 1
         for fact in range(self.n + 1):
