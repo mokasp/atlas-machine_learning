@@ -48,6 +48,6 @@ class Neuron():
         return mse
     
     def evaluate(self, X, Y):
-        res = np.where(X[0] >= 0.5, 1, 0)
+        res = np.where(self.forward_prop(X) >= 0.5, 1, 0)
         return res, self.cost(Y, self.forward_prop(X))
         
