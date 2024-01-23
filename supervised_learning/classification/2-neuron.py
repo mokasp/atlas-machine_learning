@@ -35,6 +35,6 @@ class Neuron():
     
     def forward_prop(self, X):
         """ """
-        z2 = np.dot(self.__W[0], X) + self.__b
-        self.__A = self.sigmoid(z2)
+        z = np.dot(self.__W, X) + self.__b
+        self.__A = self.sigmoid(z)
         return self.__A
