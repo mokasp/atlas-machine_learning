@@ -64,9 +64,9 @@ class Neuron():
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """ [] """
-        Y_hat = self.forward_prop(X)
         for j in range(iterations):
+            Y_hat = self.forward_prop(X)
             self.gradient_descent(X, Y, Y_hat, alpha)
-
+        
         A, cost = self.evaluate(X, Y)
         return A, cost
