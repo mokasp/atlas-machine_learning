@@ -59,7 +59,5 @@ class Neuron():
         dldw = (1 / N) * np.dot((A - Y), X.T)
         dldb = (1 / N) * np.sum(A- Y)
 
-
-        # Update weights and bias
         self.__W -= alpha * dldw.reshape(self.__W.shape)
         self.__b -= alpha * dldb
