@@ -54,10 +54,12 @@ class Neuron():
     
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """ [] """
-        N = X.shape[0]
-        
-        dldw = -2/N * np.dot(X, (Y - A).T)
+        N = X.shape[1]
 
+        dldw = (1 / N) * np.dot((A - Y), X.T)
+        dldb = (1 / N) * np.sum(A- Y)
+
+
+        # Update weights and bias
         self.__W -= alpha * dldw.reshape(self.__W.shape)
-        self.__b -= None
-        
+        self.__b -= alpha * dldb
