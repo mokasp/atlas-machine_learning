@@ -80,7 +80,7 @@ class NeuralNetwork():
 
     def cost(self, Y, A):
         """ [] """
-        inner1 = np.multiply(np.log(1.0000001 - A), (1 -Y))
+        inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
         cel = (-1 / A.shape[1]) * summa
