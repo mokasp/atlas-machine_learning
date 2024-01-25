@@ -31,17 +31,17 @@ class Neuron():
         return self.__A
 
     def sigmoid(self, z):
-        """ """
+        """ sigmoid function """
         return 1 / (1 + np.exp(-z))
 
     def forward_prop(self, X):
-        """ """
+        """ one forward pass of neuron """
         z = np.dot(self.__W, X) + self.__b
         self.__A = self.sigmoid(z)
         return self.__A
 
     def cost(self, Y, A):
-        """ [] """
+        """ cost of neuron """
         inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
@@ -49,12 +49,12 @@ class Neuron():
         return cel
 
     def evaluate(self, X, Y):
-        """ []"""
+        """ evaluate neurons predictions """
         res = np.where(self.forward_prop(X) >= 0.5, 1, 0)
         return res, self.cost(Y, self.forward_prop(X))
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
-        """ [] """
+        """ calculates one pass of gradiendt descent """
         N = X.shape[1]
 
         dldw = (1 / N) * np.dot((A - Y), X.T)
@@ -64,7 +64,7 @@ class Neuron():
         self.__b -= alpha * dldb
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
-        """ [] """
+        """ trains model fully """
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
         if iterations < 1:

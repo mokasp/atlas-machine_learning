@@ -31,11 +31,11 @@ class Neuron():
         return self.__A
 
     def sigmoid(self, z):
-        """ """
+        """ sigmoid function """
         return 1 / (1 + np.exp(-z))
 
     def forward_prop(self, X):
-        """ """
+        """ one forward pass of neuron """
         z = np.dot(self.__W, X) + self.__b
         self.__A = self.sigmoid(z)
         return self.__A
