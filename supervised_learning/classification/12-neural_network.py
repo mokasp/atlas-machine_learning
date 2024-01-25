@@ -67,11 +67,11 @@ class NeuralNetwork():
         return self.__A2
 
     def sigmoid(self, z):
-        """ """
+        """ sigmoid function """
         return 1 / (1 + np.exp(-z))
 
     def forward_prop(self, X):
-        """ """
+        """ performs one pass of forward propagation """
         z1 = np.dot(self.__W1, X) + self.__b1
         self.__A1 = self.sigmoid(z1)
         z2 = np.dot(self.__W2, self.__A1) + self.__b2
