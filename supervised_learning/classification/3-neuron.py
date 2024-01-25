@@ -33,19 +33,19 @@ class Neuron():
     def sigmoid(self, z):
         """ """
         return 1 / (1 + np.exp(-z))
-    
+
     def forward_prop(self, X):
         """ """
         z = np.dot(self.__W, X) + self.__b
         self.__A = self.sigmoid(z)
         return self.__A
-    
+
     def cost(self, Y, A):
         """ [] """
         print(A)
         print(Y)
-        inner1 = np.multiply(np.log(1.0000001 - A), (1 -Y))
+        inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
-        mse = (-1 / A.shape[1]) * summa
-        return mse
+        cel = (-1 / A.shape[1]) * summa
+        return cel
