@@ -97,11 +97,11 @@ class NeuralNetwork():
         N = X.shape[1]
 
         dldw2 = (1 / N) * np.dot((A2 - Y), A1.T)
-        dldb2 = (1 / N) * np.sum(A2 - Y)
-        dldg = self.sigmoid(A2 - Y) * (1 - self.sigmoid(A2 - Y))
-        dldz1 = ((self.__W2.T * (A1 - Y))) * dldg
+        dldb2 = (1 / N) * np.sum((A2 - Y), keepdims=True)
+        dldg = A1 * (1 - A1)
+        dldz1 = ((self.__W2.T * (A2 - Y)) * dldg)
         dldw1 = (1 / N) * np.dot(dldz1, X.T)
-        dldb1 = (1 / N) * np.sum(dldz1)
+        dldb1 = (1 / N) * np.sum(dldz1, keepdims=True)
 
         self.__W1 -= alpha * dldw1
         self.__b1 -= alpha * dldb1
