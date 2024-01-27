@@ -21,7 +21,6 @@ class DeepNeuralNetwork():
                 layers (int) - number of nodes in the hidden layer """
         self.L = len(layers)
         layers.insert(0, nx)
-        print(layers)
         self.cache = {}
         self.weights = {}
         self.weights = {}
