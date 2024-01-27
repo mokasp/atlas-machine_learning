@@ -101,7 +101,7 @@ class NeuralNetwork():
         dldg = A1 * (1 - A1)
         dldz1 = ((self.__W2.T * (A2 - Y)) * dldg)
         dldw1 = (1 / N) * np.dot(dldz1, X.T)
-        dldb1 = (1 / N) * np.sum(dldz1, keepdims=True)
+        dldb1 = (1 / N) * np.sum(dldz1, keepdims=True, axis=1)
 
         self.__W1 -= alpha * dldw1
         self.__b1 -= alpha * dldb1
@@ -124,4 +124,6 @@ class NeuralNetwork():
 
         A, cost = self.evaluate(X, Y)
         return A, cost
+
+
 
