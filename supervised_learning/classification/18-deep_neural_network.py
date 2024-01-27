@@ -62,7 +62,8 @@ class DeepNeuralNetwork():
         for l in range(1, self.__L + 1):
             W = self.__weights["W" + str(l)]
             b = self.__weights["b" + str(l)]
-            z = np.dot(W, A) + b
+            for i in range(len(b)):
+                z = np.dot(W, A) + b[i]
             A = self.sigmoid(z)
             self.__cache["A" + str(l)] = A
         return A, self.__cache
