@@ -19,11 +19,19 @@ class DeepNeuralNetwork():
             Parameters:
                 nx (int) - nmber of input features
                 layers (int) - number of nodes in the hidden layer """
+        if type(nx) is not int:
+            raise TypeError("nx must be an integer")
+        if nx < 1:
+            raise ValueError("nx must be a positive integer")
+        if type(layers) is not list:
+            raise TypeError("list must be a list of positive integers")
         self.L = len(layers)
         layers.insert(0, nx)
         self.cache = {}
         self.weights = {}
         self.weights = {}
         for l in range (1, self.L + 1):
+            if layers[l] < 1:
+                raise TypeError("layer must be a list of positive integers")
             self.weights["W" + str(l)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2.0 / (layers[l- 1]))
             self.weights["b" + str(l)] = np.zeros((layers[l], 1))
