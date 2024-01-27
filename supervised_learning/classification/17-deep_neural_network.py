@@ -50,3 +50,4 @@ class DeepNeuralNetwork():
     def weights(self):
         """ getter for [] """
         return self.__weights
+
