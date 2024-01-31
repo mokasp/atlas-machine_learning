@@ -149,7 +149,7 @@ class DeepNeuralNetwork():
                     cost = self.cost(Y, Y_hat)
                     steps.append(j)
                     costs.append(cost)
-                    print(f'cost after {j} iterations: {cost}')
+                    print(f'cost after {} iterations: {}'.format(j, cost))
             self.gradient_descent(Y, self.__cache, alpha)
 
         A, cost = self.evaluate(X, Y)
