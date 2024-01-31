@@ -84,6 +84,7 @@ class DeepNeuralNetwork():
         return res, self.cost(Y, A)
 
     def gradient_descent(self, Y, cache, alpha=0.05):
+        """ one pass of backprogagation/gradient descent """
         N = Y.shape[1]
         leng = len(cache)
         W_cur = self.__weights["W" + str(leng - 1)]
