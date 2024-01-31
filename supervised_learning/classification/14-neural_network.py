@@ -38,40 +38,40 @@ class NeuralNetwork():
 
     @property
     def W1(self):
-        """ getter for [] """
+        """ getter for W1 """
         return self.__W1
 
     @property
     def b1(self):
-        """ getter for [] """
+        """ getter for b1 """
         return self.__b1
 
     @property
     def A1(self):
-        """ getter for [] """
+        """ getter for A1 """
         return self.__A1
 
     @property
     def W2(self):
-        """ getter for [] """
+        """ getter for W2 """
         return self.__W2
 
     @property
     def b2(self):
-        """ getter for [] """
+        """ getter for b2 """
         return self.__b2
 
     @property
     def A2(self):
-        """ getter for [] """
+        """ getter for A2 """
         return self.__A2
 
     def sigmoid(self, z):
-        """ """
+        """ sigmoid activation function """
         return 1 / (1 + np.exp(-z))
 
     def forward_prop(self, X):
-        """ """
+        """ performs one forward pass"""
         z1 = np.dot(self.__W1, X) + self.__b1
         self.__A1 = self.sigmoid(z1)
         z2 = np.dot(self.__W2, self.__A1) + self.__b2
@@ -79,7 +79,7 @@ class NeuralNetwork():
         return self.__A1, self.__A2
 
     def cost(self, Y, A):
-        """ [] """
+        """ calculates the total loss of the network """
         inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
@@ -87,13 +87,13 @@ class NeuralNetwork():
         return cel
 
     def evaluate(self, X, Y):
-        """ []"""
+        """ evaluate networks predictions """
         _, hidden = self.forward_prop(X)
         res = np.where(hidden >= 0.5, 1, 0)
         return res, self.cost(Y, hidden)
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
-        """ [] """
+        """ one pass oof backproagation/gradient discent  """
         N = X.shape[1]
 
         dldw2 = (1 / N) * np.dot((A2 - Y), A1.T)
