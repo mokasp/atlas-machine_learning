@@ -67,6 +67,7 @@ class NeuralNetwork():
         return self.__A2
 
     def sigmoid(self, z):
+        """ sigmoid activation function """
         return 1 / (1 + np.exp(-z))
 
     def forward_prop(self, X):
