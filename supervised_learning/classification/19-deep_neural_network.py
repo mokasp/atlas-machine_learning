@@ -70,7 +70,7 @@ class DeepNeuralNetwork():
         return A, self.__cache
 
     def cost(self, Y, A):
-        """ [] """
+        """ calculate the total cost of models output """
         inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
