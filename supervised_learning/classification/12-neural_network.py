@@ -87,7 +87,7 @@ class NeuralNetwork():
         return cel
 
     def evaluate(self, X, Y):
-        """ evaluate networks predictions"""
+        """ evaluate networks predictions """
         _, hidden = self.forward_prop(X)
         res = np.where(hidden >= 0.5, 1, 0)
         return res, self.cost(Y, hidden)
