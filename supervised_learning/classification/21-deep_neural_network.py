@@ -111,7 +111,7 @@ class DeepNeuralNetwork():
                 A_cur = cache["A" + str(l)]
                 A_prev = cache["A" + str(l - 1)]
                 b_cur = self.__weights["b" + str(l)]
-                dg = A_cur * (1.0000001 - A_cur)
+                dg = A_cur * (1 - A_cur)
                 dz1 = (np.dot(W_prev.T, dz2)) * dg
                 dw1 = (1 / N) * np.dot(dz1, A_prev.T)
                 db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
