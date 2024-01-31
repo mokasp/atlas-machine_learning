@@ -27,29 +27,30 @@ class DeepNeuralNetwork():
             raise TypeError("layers must be a list of positive integers")
         self.__L = len(layers)
         layers.insert(0, nx)
-        self.layers = layers
         self.__cache = {}
         self.__weights = {}
-        self.memory = {}
-        for l in range (1, self.__L + 1):
+        self.__weights = {}
+        for l in range(1, self.__L + 1):
             if layers[l] < 1:
                 raise TypeError("layers must be a list of positive integers")
-            self.__weights["W" + str(l)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2.0 / (layers[l- 1]))
+            he = np.random.randn(layers[l], layers[l - 1])
+            self.weights["W" + str(l)] = he * np.sqrt(2.0 / (layers[l - 1]))
             self.__weights["b" + str(l)] = np.zeros((layers[l], 1))
 
     @property
     def L(self):
-        """ getter for [] """
+        """ getter for value of number of layers in network """
         return self.__L
 
     @property
     def cache(self):
-        """ getter for [] """
+        """ getter for cache containing all activation function outputs, as
+            well as X """
         return self.__cache
 
     @property
     def weights(self):
-        """ getter for [] """
+        """ getter for  the dictionary containing entire network """
         return self.__weights
 
     def sigmoid(self, z):
@@ -65,26 +66,22 @@ class DeepNeuralNetwork():
             b = self.__weights["b" + str(l)]
             z = np.dot(W, A) + b[0]
             A = self.sigmoid(z)
-            self.memory["A" + str(l)] = A
-            self.memory["W" + str(l)] = W
-            self.memory["z" + str(l)] = z
             self.__cache["A" + str(l)] = A
         return A, self.__cache
-    
+
     def cost(self, Y, A):
-        """ [] """
-        inner1 = np.multiply(np.log(1.0000001 - A), (1 -Y))
+        """ calculate the total cost of models output """
+        inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
         cel = (-(1 / Y.shape[1]) / A.shape[0]) * summa
         return cel
- 
+
     def evaluate(self, X, Y):
         """ evaluate networks predictions """
         A, hidden = self.forward_prop(X)
         res = np.where(A >= 0.5, 1, 0)
         return res, self.cost(Y, A)
-    
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         N = Y.shape[1]
@@ -95,7 +92,7 @@ class DeepNeuralNetwork():
         b_cur = self.__weights["b" + str(leng - 1)]
 
         adj = {}
-        
+
         X = cache["A0"]
         dz2 = (A_cur - Y)
         dW2 = (1 / N) * np.dot(dz2, A_prev.T)
@@ -105,7 +102,7 @@ class DeepNeuralNetwork():
         adj["b" + str(leng - 1)] = b_cur - alpha * db2
 
         for l in range(leng - 2, 0, -1):
-            if l> 0:
+            if l > 0:
                 W_cur = self.__weights["W" + str(l)]
                 W_prev = self.__weights["W" + str(l + 1)]
                 A_cur = cache["A" + str(l)]
@@ -116,10 +113,8 @@ class DeepNeuralNetwork():
                 dw1 = (1 / N) * np.dot(dz1, A_prev.T)
                 db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
                 dz2 = dz1
-                
+
                 adj["W" + str(l)] = W_cur - alpha * dw1
                 adj["b" + str(l)] = b_cur - alpha * db1
-                
 
-        
         self.__weights = adj
