@@ -27,9 +27,10 @@ class DeepNeuralNetwork():
             raise TypeError("layers must be a list of positive integers")
         self.__L = len(layers)
         layers.insert(0, nx)
+        self.layers = layers
         self.__cache = {}
         self.__weights = {}
-        self.__weights = {}
+        self.memory = {}
         for l in range (1, self.__L + 1):
             if layers[l] < 1:
                 raise TypeError("layers must be a list of positive integers")
@@ -64,6 +65,9 @@ class DeepNeuralNetwork():
             b = self.__weights["b" + str(l)]
             z = np.dot(W, A) + b[0]
             A = self.sigmoid(z)
+            self.memory["A" + str(l)] = A
+            self.memory["W" + str(l)] = W
+            self.memory["z" + str(l)] = z
             self.__cache["A" + str(l)] = A
         return A, self.__cache
     
@@ -81,55 +85,41 @@ class DeepNeuralNetwork():
         res = np.where(A >= 0.5, 1, 0)
         return res, self.cost(Y, A)
     
-    def sig_back(self, dA):
-        return dA * (1 - dA)
-    
-    def get_z(self, W, b, X):
-        return W.dot(X) + b
 
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """ [] """
         N = Y.shape[1]
         leng = len(cache)
+        W_cur = self.__weights["W" + str(leng - 1)]
+        A_cur = cache["A" + str(leng - 1)]
+        A_prev = cache["A" + str(leng - 2)]
+        b_cur = self.__weights["b" + str(leng - 1)]
 
-        for i in reversed(range(1, leng)):
-            if i - 1 > 0 and i < leng:
-                A0 = cache["A0"]
-                A2 = cache["A" + str(i)]
-                W2 = self.__weights["W" + str(i)]
-                b2 = self.__weights["b" + str(i)]
-                A1 = cache["A" + str(i - 1)]
-                W1 = self.__weights["W" + str(i - 1)]
-                b1 = self.__weights["b" + str(i - 1)]
-                
-                dz2 = (cache["A" + str(i)] - Y)
+        adj = {}
+        
+        X = cache["A0"]
+        dz2 = (A_cur - Y)
+        dW2 = (1 / N) * np.dot(dz2, A_prev.T)
+        db2 = (1 / N) * np.sum(dz2, keepdims=True)
 
-                dW2 = (1 / N) * np.dot(dz2, A1.T)
- 
-                db2 = (1 / N) * np.sum(dz2, keepdims=True)
-                dg1 = cache["A" + str(i - 1)]
+        adj["W" + str(leng - 1)] = W_cur - alpha * dW2
+        adj["b" + str(leng - 1)] = b_cur - alpha * db2
 
-                dg = dg1 * (1 - cache["A" + str(i - 1)])
-                dz11 = self.__weights["W" + str(i)].T
-
-                dz12 = dz2
-
-                dz1 = (np.dot(dz11, dz12)) * dg
-
-                dw11 = np.dot(dz1, cache["A0"].T[:, :self.__weights["W" + str(i - 1)].shape[1]])
-
-                dw1 = (1 / N) * dw11
+        for l in range(leng - 2, 0, -1):
+            if l> 0:
+                W_cur = self.__weights["W" + str(l)]
+                W_prev = self.__weights["W" + str(l + 1)]
+                A_cur = cache["A" + str(l)]
+                A_prev = cache["A" + str(l - 1)]
+                b_cur = self.__weights["b" + str(l)]
+                dg = A_cur * (1.0000001 - A_cur)
+                dz1 = (np.dot(W_prev.T, dz2)) * dg
+                dw1 = (1 / N) * np.dot(dz1, A_prev.T)
                 db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
+                dz2 = dz1
+                
+                adj["W" + str(l)] = W_cur - alpha * dw1
+                adj["b" + str(l)] = b_cur - alpha * db1
+                
 
-
-
-
-
-                temp = alpha * dw1
-                temp2 = alpha * db1
-                if i == leng - 1:
-                    self.__weights["W" + str(i)] -= alpha * dW2
-                    self.__weights["b" + str(i)] -= alpha * db2
-                self.__weights["W" + str(i - 1)] = self.__weights["W" + str(i - 1)] - temp
-                self.__weights["b" + str(i - 1)] = self.__weights["b" + str(i - 1)] - temp2
-
+        
+        self.__weights = adj
