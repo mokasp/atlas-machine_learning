@@ -30,25 +30,27 @@ class DeepNeuralNetwork():
         self.__cache = {}
         self.__weights = {}
         self.__weights = {}
-        for l in range (1, self.__L + 1):
+        for l in range(1, self.__L + 1):
             if layers[l] < 1:
                 raise TypeError("layers must be a list of positive integers")
-            self.__weights["W" + str(l)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2.0 / (layers[l- 1]))
+            he = np.random.randn(layers[l], layers[l - 1])
+            self.weights["W" + str(l)] = he * np.sqrt(2.0 / (layers[l - 1]))
             self.__weights["b" + str(l)] = np.zeros((layers[l], 1))
 
     @property
     def L(self):
-        """ getter for [] """
+        """ getter for value of number of layers in network """
         return self.__L
 
     @property
     def cache(self):
-        """ getter for [] """
+        """ getter for cache containing all activation function outputs, as
+            well as X """
         return self.__cache
 
     @property
     def weights(self):
-        """ getter for [] """
+        """ getter for  the dictionary containing entire network """
         return self.__weights
 
     def sigmoid(self, z):
@@ -66,15 +68,15 @@ class DeepNeuralNetwork():
             A = self.sigmoid(z)
             self.__cache["A" + str(l)] = A
         return A, self.__cache
-    
+
     def cost(self, Y, A):
-        """ [] """
-        inner1 = np.multiply(np.log(1.0000001 - A), (1 -Y))
+        """ calculate the total cost of models output """
+        inner1 = np.multiply(np.log(1.0000001 - A), (1 - Y))
         inner2 = np.multiply(np.log(A), Y) + inner1
         summa = np.sum(inner2)
         cel = (-(1 / Y.shape[1]) / A.shape[0]) * summa
         return cel
- 
+
     def evaluate(self, X, Y):
         """ evaluate networks predictions """
         A, hidden = self.forward_prop(X)
