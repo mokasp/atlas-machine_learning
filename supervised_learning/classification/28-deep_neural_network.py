@@ -36,12 +36,12 @@ class DeepNeuralNetwork():
         self.__cache = {}
         self.__weights = {}
         self.__weights = {}
-        for l in range(1, self.__L + 1):
-            if layers[l] < 1:
+        for lay in range(1, self.__L + 1):
+            if layers[lay] < 1:
                 raise TypeError("layers must be a list of positive integers")
-            he = np.random.randn(layers[l], layers[l - 1])
-            self.weights["W" + str(l)] = he * np.sqrt(2.0 / (layers[l - 1]))
-            self.__weights["b" + str(l)] = np.zeros((layers[l], 1))
+            he = np.random.randn(layers[lay], layers[lay - 1])
+            self.weights["W" + str(lay)] = he * np.sqrt(2.0 / (layers[lay - 1]))
+            self.__weights["b" + str(lay)] = np.zeros((layers[lay], 1))
 
     @property
     def L(self):
@@ -69,9 +69,11 @@ class DeepNeuralNetwork():
         return 1 / (1 + np.exp(-z))
 
     def sig_deriv(self, A):
+        """ derivative of sigmoid"""
         return A * (1 - A)
 
     def tanh(self, x):
+        """ tanh activation func"""
         return np.tanh(x)
 
     def tanh_derv(self, X):
@@ -97,18 +99,18 @@ class DeepNeuralNetwork():
         """ one forward pass of neuron """
         self.__cache["A0"] = X
         A = X
-        for l in range(1, self.__L + 1):
-            W = self.__weights["W" + str(l)]
-            b = self.__weights["b" + str(l)]
+        for lay in range(1, self.__L + 1):
+            W = self.__weights["W" + str(lay)]
+            b = self.__weights["b" + str(lay)]
             z = np.dot(W, A) + b[0]
-            if l == self.__L:
+            if lay == self.__L:
                 A = self.softmax(z)
             else:
                 if self.__activation == 'sig':
                     A = self.sigmoid(z)
                 else:
                     A = self.tanh(z)
-            self.__cache["A" + str(l)] = A
+            self.__cache["A" + str(lay)] = A
         return A, self.__cache
 
     def cost(self, Y, A):
@@ -143,13 +145,13 @@ class DeepNeuralNetwork():
         adj["W" + str(leng - 1)] = W_cur - alpha * dW2
         adj["b" + str(leng - 1)] = b_cur - alpha * db2
 
-        for l in range(leng - 2, 0, -1):
-            if l > 0:
-                W_cur = self.__weights["W" + str(l)]
-                W_prev = self.__weights["W" + str(l + 1)]
-                A_cur = cache["A" + str(l)]
-                A_prev = cache["A" + str(l - 1)]
-                b_cur = self.__weights["b" + str(l)]
+        for lay in range(leng - 2, 0, -1):
+            if lay > 0:
+                W_cur = self.__weights["W" + str(lay)]
+                W_prev = self.__weights["W" + str(lay + 1)]
+                A_cur = cache["A" + str(lay)]
+                A_prev = cache["A" + str(lay - 1)]
+                b_cur = self.__weights["b" + str(lay)]
                 if self.__activation == 'sig':
                     dg = self.sig_deriv(A_cur)
                 else:
@@ -159,8 +161,8 @@ class DeepNeuralNetwork():
                 db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
                 dz2 = dz1
 
-                adj["W" + str(l)] = W_cur - alpha * dw1
-                adj["b" + str(l)] = b_cur - alpha * db1
+                adj["W" + str(lay)] = W_cur - alpha * dw1
+                adj["b" + str(lay)] = b_cur - alpha * db1
 
         self.__weights = adj
 
