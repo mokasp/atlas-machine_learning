@@ -119,7 +119,7 @@ class DeepNeuralNetwork():
         X = cache["A0"]
         dz2 = (A_cur - Y)
         dW2 = (1 / N) * np.dot(dz2, A_prev.T)
-        db2 = (1 / N) * np.sum(dz2, keepdims=True)
+        db2 = (1 / N) * np.sum(dz2, axis=1, keepdims=True)
 
         adj["W" + str(leng - 1)] = W_cur - alpha * dW2
         adj["b" + str(leng - 1)] = b_cur - alpha * db2
