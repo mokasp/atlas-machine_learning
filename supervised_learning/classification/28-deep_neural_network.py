@@ -29,7 +29,7 @@ class DeepNeuralNetwork():
         if type(layers) is not list or len(layers) == 0:
             raise TypeError("layers must be a list of positive integers")
         if activation != 'sig' and activation != 'tanh':
-            raise ValueError("activation must be 'sig or 'tanh'")
+            raise ValueError("activation must be 'sig' or 'tanh'")
         self.__L = len(layers)
         self.__activation = activation
         layers.insert(0, nx)
@@ -70,12 +70,15 @@ class DeepNeuralNetwork():
         return 1 / (1 + np.exp(-z))
 
     def sig_deriv(self, A):
+        """ derivative of sigmoid func"""
         return A * (1 - A)
 
     def tanh(self, x):
+        """ tanh func"""
         return np.tanh(x)
 
     def tanh_derv(self, X):
+        """ derivative of tanh func """
         return 1 - (np.tanh(X))**2
 
     def softmax(self, z):
