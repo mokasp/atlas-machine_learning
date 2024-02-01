@@ -78,6 +78,7 @@ class DeepNeuralNetwork():
         return np.tanh(x)
 
     def tanh_derv(self, X):
+        """ derivative of tanh func """
         return 1 - (np.tanh(X))**2
 
     def softmax(self, z):
