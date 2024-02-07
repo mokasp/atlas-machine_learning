@@ -11,9 +11,7 @@ def evaluate(X, Y, save_path):
     y_pred = tf.get_collection("y_pred")[0]
     accuracy = tf.get_collection("accuracy")[0]
     loss = tf.get_collection("loss")[0]
-    init = tf.global_variables_initializer()
     with tf.Session() as sess:
-        sess.run(init)
         saver.restore(sess, save_path)
         y_p, acc, los = sess.run([y_pred, accuracy, loss], feed_dict={x: X, y: Y})
     return y_p, acc, los
