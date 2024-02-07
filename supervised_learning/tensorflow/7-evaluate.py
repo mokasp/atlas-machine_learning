@@ -16,4 +16,5 @@ def evaluate(X, Y, save_path):
     sess.run(tf.global_variables_initializer())
     model = saver.restore(sess, save_path)
     y_p, acc, los = sess.run([y_pred, accuracy, loss], feed_dict={x: X, y: Y})
+    sess.close()
     return y_p, acc, los
