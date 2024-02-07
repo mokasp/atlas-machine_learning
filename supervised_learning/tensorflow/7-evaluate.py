@@ -5,7 +5,7 @@ import tensorflow.compat.v1 as tf
 
 def evaluate(X, Y, save_path):
     """ function that evaluates the output of a neural network"""
-    saver = tf.train.import_meta_graph('model.ckpt.meta')
+    saver = tf.train.import_meta_graph(f'{save_path}.meta')
     x = tf.get_collection("x")[0]
     y = tf.get_collection("y")[0]
     y_pred = tf.get_collection("y_pred")[0]
