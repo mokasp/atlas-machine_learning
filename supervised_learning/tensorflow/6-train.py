@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import tensorflow.compat.v1 as tf
-""" module containing function that fully trains a model """
+""" module containing function that fully trains a model and calculates the
+    loss and accuracy """
 calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
 calculate_loss = __import__('4-calculate_loss').calculate_loss
 create_placeholders = __import__('0-create_placeholders').create_placeholders
