@@ -17,4 +17,7 @@ def shuffle_data(X, Y):
                             ny - number of features in Y
 
     """
-    return np.random.permutation(X), np.random.permutation(Y)
+    perm_x = np.random.permutation(X)
+    np.random.seed(0)
+    perm_y = np.random.permutation(Y)
+    return perm_x, perm_y
