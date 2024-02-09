@@ -17,8 +17,5 @@ def shuffle_data(X, Y):
                             ny - number of features in Y
 
     """
-    state = np.random.get_state()[1][0]
-    perm_x = np.random.permutation(X)
-    np.random.seed(state)
-    perm_y = np.random.permutation(Y)
-    return perm_x, perm_y
+    perm = np.random.permutation(X.shape[0])
+    return X[perm], Y[perm]
