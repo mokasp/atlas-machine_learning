@@ -16,14 +16,11 @@ def moving_average(data, beta):
 
     """
     m_a = []
-    for dp in range(len(data) + 1):
-        weights = []
-        m_a.append(0)
-        for idx in reversed(range(dp)):
-            weights.append(beta ** idx)
-        s_o_w = sum(weights)
-        for idx in range(len(weights)):
-            weights[idx] = weights[idx] / s_o_w
-        for idx in range(dp):
-            m_a[dp] += weights[idx] * data[idx]
-    return m_a[1:]
+    for dp in range(len(data)):
+        if dp == 0:
+            cur_value = 0
+        cur_value = (beta * cur_value) + (1 - beta) * data[dp]
+        bias = (1 - (beta ** (dp + 1)))
+        m_a.append(cur_value / bias)
+    return m_a
+
