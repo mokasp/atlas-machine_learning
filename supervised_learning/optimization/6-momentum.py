@@ -2,7 +2,6 @@
 """ module containing function that creates the training operation for a
     neural network in tensorflow using the gradient descent with momentum
     optimization algorithm """
-import numpy as np
 import tensorflow.compat.v1 as tf
 
 
