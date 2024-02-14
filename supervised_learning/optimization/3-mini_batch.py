@@ -43,8 +43,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
         saver.restore(sess, load_path)
-        t_feed_dict = {x: X_train, y: Y_train}
-        v_feed_dict = {x: X_valid, y: Y_valid}
+
+    t_feed_dict = {x: X_train, y: Y_train}
+    v_feed_dict = {x: X_valid, y: Y_valid}
+    init = tf.global_variables_initializer()
+    saver = tf.train.Saver()
+
+    with tf.Session() as sess:
+        sess.run(init)
         for i in range(epochs):
             e_t_acc, e_t_loss = sess.run([accuracy, loss], feed_dict=t_feed_dict)
             e_v_acc, e_v_loss = sess.run([accuracy, loss], feed_dict=v_feed_dict)
