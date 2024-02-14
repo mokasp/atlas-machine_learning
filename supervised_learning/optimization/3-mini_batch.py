@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """ module containing function that trains a loaded neural network model
     using mini-batch gradient descent """
@@ -57,20 +56,16 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             X_shuffled, Y_shuffled = shuffle_data(X_train, Y_train)
 
 
-            batches = 0
             num_samples = X_train.shape[0]
-            last_batch = num_samples % batch_size
-            steps =  (num_samples - last_batch) / batch_size
 
-            for j in range(0, int(steps) + 1):
+            for j in range(0, num_samples, batch_size):
                 # get X_batch and Y_batch from X_train shuffled and Y_train shuffled
-                if j != steps:
-                    X_batch = X_shuffled[batches:batches + batch_size]
-                    Y_batch = Y_shuffled[batches:batches + batch_size]
-                    batches += batch_size
+                if j != num_samples - (num_samples % batch_size):
+                    X_batch = X_shuffled[j:j + batch_size]
+                    Y_batch = Y_shuffled[j:j + batch_size]
                 else:
-                    X_batch = X_shuffled[batches:batches + batch_size]
-                    Y_batch = Y_shuffled[batches:batches + batch_size]
+                    X_batch = X_shuffled[j:j + num_samples % batch_size]
+                    Y_batch = Y_shuffled[j:j + num_samples % batch_size]
 
                 # run training operation
                 feed_dict = {x: X_batch, y: Y_batch}
