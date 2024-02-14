@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """ module containing function that trains a loaded neural network model
     using mini-batch gradient descent """
 import tensorflow.compat.v1 as tf
