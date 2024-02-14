@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import tensorflow.compat.v1 as tf
 import numpy as np
 def forward_prop(prev, layers, activations, epsilon):
