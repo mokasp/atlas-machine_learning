@@ -2,7 +2,6 @@
 #!/usr/bin/env python3
 """ module containing function that trains a loaded neural network model
     using mini-batch gradient descent """
-import numpy as np
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
@@ -83,5 +82,5 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         print(f'\tTraining Accuracy: {e_t_acc}')
         print(f'\tValidation Cost: {e_v_loss}')
         print(f'\tValidation Accuracy: {e_v_acc}')
-        save_p = saver.save(sess, save_path)
+
     return save_p 
