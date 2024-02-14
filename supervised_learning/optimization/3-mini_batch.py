@@ -44,13 +44,13 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         train_op = tf.get_collection("train_op")[0]
         saver.restore(sess, load_path)
 
-    t_feed_dict = {x: X_train, y: Y_train}
-    v_feed_dict = {x: X_valid, y: Y_valid}
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
         sess.run(init)
+        t_feed_dict = {x: X_train, y: Y_train}
+        v_feed_dict = {x: X_valid, y: Y_valid}
         for i in range(epochs):
             e_t_acc, e_t_loss = sess.run([accuracy, loss], feed_dict=t_feed_dict)
             e_v_acc, e_v_loss = sess.run([accuracy, loss], feed_dict=v_feed_dict)
@@ -75,7 +75,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
 
                 # run training operation
                 feed_dict = {x: X_batch, y: Y_batch}
-                _, y_p, acc, los = sess.run([train_op, y_pred, accuracy, loss], feed_dict=feed_dict)
+                _, acc, los = sess.run([train_op, accuracy, loss], feed_dict=feed_dict)
 
                 if j % 100 == 0:
                     print(f'\tStep {j}:')
