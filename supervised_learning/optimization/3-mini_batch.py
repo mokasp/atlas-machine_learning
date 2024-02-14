@@ -2,6 +2,7 @@
 """ module containing function that trains a loaded neural network model
     using mini-batch gradient descent """
 import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
