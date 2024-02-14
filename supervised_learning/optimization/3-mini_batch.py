@@ -59,6 +59,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             batches = 0
             num_samples = X_train.shape[0]
             last_batch = num_samples % batch_size
+            if last_batch == 0:
+                last_batch = batch_size
             steps =  (num_samples - last_batch) / batch_size
 
             for j in range(0, int(steps) + 1):
@@ -68,8 +70,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     Y_batch = Y_shuffled[batches:batches + batch_size]
                     batches += batch_size
                 else:
-                    X_batch = X_shuffled[batches:batches + batch_size]
-                    Y_batch = Y_shuffled[batches:batches + batch_size]
+                    X_batch = X_shuffled[batches:batches + last_batch]
+                    Y_batch = Y_shuffled[batches:batches + last_batch]
 
                 # run training operation
                 feed_dict = {x: X_batch, y: Y_batch}
