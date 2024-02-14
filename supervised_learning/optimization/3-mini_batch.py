@@ -29,7 +29,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             epochs [int]: number of times the training should pass through
                             the whole dataset
             load_path [str]: path from which to load the model from
-            save_path [str]: path to where the model should be saved after training
+            save_path [str]: path to where the model should be saved after
+                                training
 
         RETURNS:
             save_path [str]: path where the model was saved
@@ -57,17 +58,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tValidation Accuracy: {}".format(e_v_acc))
 
             X_shuffled, Y_shuffled = shuffle_data(X_train, Y_train)
-
-
             batches = 0
             num_samples = X_train.shape[0]
             last_batch = num_samples % batch_size
             if last_batch == 0:
                 last_batch = batch_size
-            steps =  (num_samples - last_batch) / batch_size
+            steps = (num_samples - last_batch) / batch_size
 
             for j in range(0, int(steps) + 1):
-                # get X_batch and Y_batch from X_train shuffled and Y_train shuffled
                 if j != steps:
                     X_batch = X_shuffled[batches:batches + batch_size]
                     Y_batch = Y_shuffled[batches:batches + batch_size]
@@ -76,7 +74,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     X_batch = X_shuffled[batches:batches + last_batch]
                     Y_batch = Y_shuffled[batches:batches + last_batch]
 
-                # run training operation
                 feed_dict = {x: X_batch, y: Y_batch}
                 sess.run(train_op, feed_dict=feed_dict)
                 acc = sess.run(accuracy, feed_dict=feed_dict)
@@ -96,4 +93,4 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         print("\tValidation Cost: {}".format(e_v_loss))
         print("\tValidation Accuracy: {}".format(e_v_acc))
         save_p = saver.save(sess, save_path)
-    return save_p 
+    return save_p
