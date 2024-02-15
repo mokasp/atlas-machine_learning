@@ -24,5 +24,5 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
         return alpha
     else:
         step = int(global_step / decay_step)
-        alpha = alpha * (1 / (1 + decay_rate * step))
+        alpha = alpha * 1 / (1 + decay_rate * step)
     return alpha
