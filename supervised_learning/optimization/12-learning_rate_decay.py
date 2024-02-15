@@ -21,5 +21,6 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
             train [tensor operation]: the learning rate decay operation
 
     """
-    optim = tf.train.inverse_time_decay(alpha, global_step, decay_step, decay_rate, staircase=True)
+    optim = tf.train.inverse_time_decay(alpha, global_step, decay_step,
+                                        decay_rate, staircase=True)
     return optim

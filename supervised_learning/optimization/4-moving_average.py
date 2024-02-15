@@ -23,4 +23,3 @@ def moving_average(data, beta):
         bias = (1 - (beta ** (dp + 1)))
         m_a.append(cur_value / bias)
     return m_a
-

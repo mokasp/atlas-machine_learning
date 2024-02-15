@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """ module containing function that shuffles the data points in two matrices
     the same way """
