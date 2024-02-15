@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
+""" module containing function that builds, trains,
+    and saves a NN using Adam optimization, mini-batch
+    gradient descent, learning rate decay, and batch normalization """
 import tensorflow.compat.v1 as tf
 import numpy as np
+
+
 def forward_prop(prev, layers, activations, epsilon):
-    #all layers get batch_normalization but the last one, that stays without any activation or normalization
+    """ FORWARD PROP pass"""
+    # all layers get batch_normalization but the last one, that
+    # stays without any activation or normalization
     for lay in range(len(layers)):
         if lay != len(layers) - 1:
             x = create_layer(prev, layers[lay], activations[lay], epsilon)
@@ -10,7 +17,9 @@ def forward_prop(prev, layers, activations, epsilon):
             x = create_last_layer(x, layers[lay])
     return x
 
+
 def create_layer(prev, n, activation, epsilon):
+    """ creates hidden layer """
     init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     layer = tf.keras.layers.Dense(
         units=n,
@@ -25,7 +34,9 @@ def create_layer(prev, n, activation, epsilon):
     activated = tf.keras.layers.Activation(activation)
     return activated(norm)
 
+
 def create_last_layer(prev, n):
+    """ creates last layer """
     init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     layer = tf.keras.layers.Dense(
         units=n,
@@ -54,20 +65,24 @@ def shuffle_data(X, Y):
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
           beta2=0.999, epsilon=1e-8, decay_rate=1, batch_size=32, epochs=5,
           save_path='/tmp/model.ckpt'):
+    """ function that builds, trains,
+    and saves a NN using Adam optimization, mini-batch
+    gradient descent, learning rate decay, and batch normalization """
     # get X_train, Y_train, X_valid, and Y_valid from Data_train and Data_valid
     X_train, Y_train = Data_train
     X_valid, Y_valid = Data_valid
 
     # initialize x, y and add them to collection
-    x = tf.placeholder(dtype=tf.float32, shape=[None, X_train.shape[1]], name="x")
-    y = tf.placeholder(dtype=tf.float32, shape=[None, Y_train.shape[1]], name="y")
+    x = tf.placeholder(dtype=tf.float32, shape=[None,
+                                                X_train.shape[1]], name="x")
+    y = tf.placeholder(dtype=tf.float32, shape=[None,
+                                                Y_train.shape[1]], name="y")
     tf.compat.v1.add_to_collection('x', x)
     tf.compat.v1.add_to_collection('y', y)
 
     # initialize y_pred and add it to collection
     y_pred = forward_prop(x, layers, activations, epsilon)
     tf.compat.v1.add_to_collection('y_pred', y_pred)
-
 
     # intialize loss and add it to collection
     loss = tf.compat.v1.losses.softmax_cross_entropy(
@@ -91,11 +106,11 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     steps = round(X_train.shape[0] / batch_size)
     decay_step = steps * epochs
 
-
     # create "alpha" the learning rate decay operation in tensorflow
-    alpha = tf.train.inverse_time_decay(alpha, global_step, decay_step, decay_rate, staircase=True)
+    alpha = tf.train.inverse_time_decay(alpha, global_step, decay_step,
+                                        decay_rate, staircase=True)
 
-    # initizalize train_op and add it to collection 
+    # initizalize train_op and add it to collection
     # hint: don't forget to add global_step parameter in optimizer().minimize()
     optim = tf.train.AdamOptimizer(learning_rate=alpha, beta1=beta1,
                                    beta2=beta2, epsilon=epsilon)
