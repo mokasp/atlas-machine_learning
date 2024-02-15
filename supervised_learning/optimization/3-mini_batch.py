@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+""" module containing function that trains a loaded neural network model
+    using mini-batch gradient descent """
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
@@ -6,6 +8,32 @@ shuffle_data = __import__('2-shuffle_data').shuffle_data
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      epochs=5, load_path="/tmp/model.ckpt",
                      save_path="/tmp/model.ckpt"):
+    """ trains a loaded neural network model using mini-batch gradient descent
+
+        PARAMETERS:
+            X_train [np.ndarray]: np array of shape (m, 784) containing
+                                    training data
+                                    m - number of data points
+                                    784 - number of features
+            Y_train [np.ndarray]: one-hot encoded np array of shape (m, 10)
+                                    containing the training labels
+                                    m - same number of data points as in X
+                                    ny - number of classes the model should
+                                            classify
+            X_valid [np.ndarray]: np array of shape (m, 784) containing
+                                    the validation data
+            Y_valid [np.ndarray]: one-hot encoded np array of shape (m, 10)
+                                    containing the validation labels
+            batch_size [int]: number of datapoints in a batch
+            epochs [int]: number of times the training should pass through
+                            the whole dataset
+            load_path [str]: path from which to load the model from
+            save_path [str]: path to where the model should be saved after
+                                training
+
+        RETURNS:
+            save_path [str]: path where the model was saved
+            """
     with tf.Session() as sess:
         saver = tf.train.import_meta_graph("{}.meta".format(load_path))
         saver.restore(sess, load_path)
