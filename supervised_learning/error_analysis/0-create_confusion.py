@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing function that creates a confusion matrix and a function
     that decodes a one-hot array """
+import numpy as np
 
 
 def create_confusion_matrix(labels, logits):
@@ -27,14 +27,15 @@ def create_confusion_matrix(labels, logits):
                         indices representing the correct labels and column
                         indices representing the logitsicted labels
     """
-    classes = np.arange(0, labels.shape[1], 1)
+    class_num = labels.shape[1]
+    class_list = np.arange(0, class_num, 1)
     labels = decode(labels)
     logits = decode(logits)
-    confusion = np.zeros((len(classes), len(classes)))
-    for i in range(len(classes)):
-        for j in range(len(classes)):
-            confusion[i, j] = np.sum((labels == classes[i]) &
-                                     (logits == classes[j]))
+    confusion = np.zeros((class_num, class_num))
+    for i in range(class_num):
+        for j in range(class_num):
+            confusion[i, j] = np.sum((labels == class_list[i]) &
+                                     (logits == class_list[j]))
 
     return confusion
 
