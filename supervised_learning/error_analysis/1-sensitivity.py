@@ -25,5 +25,5 @@ def sensitivity(confusion):
     """
     sense = []
     for i in range(len(confusion)):
-        sense.append(confusion[i][i] / np.sum(confusion[i]))
+        sense.append(round(confusion[i][i] / np.sum(confusion[i]), 8))
     return sense
