@@ -40,11 +40,11 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     adj = {}
 
     dz2 = (A_cur - Y)
-    dW2 = (1 / N) * np.dot(dz2, A_prev.T)
+    dW2 = (1 / N) * np.matmul(dz2, A_prev.T)
     db2 = (1 / N) * np.sum(dz2, axis=1, keepdims=True)
 
-    adj["W" + str(L - 1)] = W_cur - alpha * (W_cur * (dW2 + (lambtha / N)))
-    adj["b" + str(L - 1)] = b_cur - alpha * (W_cur * (db2 + (lambtha / N)))
+    adj["W" + str(L - 1)] = W_cur - (alpha * (dW2 + (W_cur * (lambtha / N))))
+    adj["b" + str(L - 1)] = b_cur - (alpha * db2)
 
     for lay in range(L - 1, 0, -1):
         if lay > 0:
@@ -54,12 +54,12 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
             A_prev = cache["A" + str(lay - 1)]
             b_cur = weights["b" + str(lay)]
             dg = 1 - (np.tanh(A_cur) ** 2) 
-            dz1 = (np.dot(W_prev.T, dz2)) * dg
-            dw1 = (1 / N) * np.dot(dz1, A_prev.T)
+            dz1 = (np.matmul(W_prev.T, dz2)) * dg
+            dw1 = (1 / N) * np.matmul(dz1, A_prev.T)
             db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
             dz2 = dz1
 
-            adj["W" + str(lay)] = W_cur - alpha * (W_cur * (dw1 + (lambtha / N)))
-            adj["b" + str(lay)] = b_cur - alpha * (W_cur * (db1 + (lambtha / N)))
+            weights["W" + str(lay)] = W_cur - (alpha * (dw1 + (W_cur * (lambtha / N))))
+            weights["b" + str(lay)] = b_cur - (alpha * db1)
 
     weights = adj
