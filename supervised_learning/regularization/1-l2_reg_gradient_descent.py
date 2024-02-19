@@ -33,30 +33,23 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         None
     """
     N = Y.shape[1]
-    W_cur = weights["W" + str(L)]
+    adj = weights
     A_cur = cache["A" + str(L)]
-    A_prev = cache["A" + str(L - 1)]
-    b_cur = weights["b" + str(L)]
+    dz = (A_cur - Y)
 
-    dz2 = (A_cur - Y)
-    dW2 = (1 / N) * np.matmul(dz2, A_prev.T) + (W_cur * (lambtha / N))
-    db2 = (1 / N) * np.sum(dz2, axis=1, keepdims=True)
+    for lay in range(L, 0, -1):
+        W_cur = adj["W" + str(lay)]
+        A_cur = cache["A" + str(lay)]
+        A_prev = cache["A" + str(lay - 1)]
+        b_cur = adj["b" + str(lay)]
 
-    weights["W" + str(L)] = W_cur - (alpha * dW2)
-    weights["b" + str(L)] = b_cur - (alpha * db2)
+        dW1 = ((1 / N) * np.dot(dz, A_prev.T)) + (W_cur * (lambtha / N))
+        db1 = (1 / N) * np.sum(dz, axis=1, keepdims=True)
 
-    for lay in range(L - 1, 0, -1):
-        if lay > 0:
-            W_cur = weights["W" + str(lay)]
-            W_prev = weights["W" + str(lay + 1)]
-            A_cur = cache["A" + str(lay)]
-            A_prev = cache["A" + str(lay - 1)]
-            b_cur = weights["b" + str(lay)]
-            dg = 1 - (np.tanh(A_cur) ** 2) 
-            dz1 = (np.matmul(W_prev.T, dz2)) * dg
-            dw1 = ((1 / N) * np.matmul(dz1, A_prev.T)) + (W_cur * (lambtha / N))
-            db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
-            dz2 = dz1
+        dg = ((1 - A_prev ** 2))
+        dz = (np.dot(W_cur.T, dz)) * dg
 
-            weights["W" + str(lay)] = W_cur - (alpha * dw1)
-            weights["b" + str(lay)] = b_cur - (alpha * db1)
+        adj["W" + str(lay)] = W_cur - (alpha * dW1)
+        adj["b" + str(lay)] = b_cur - (alpha * db1)
+
+    weights = adj
