@@ -45,7 +45,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     for lay in range(1, L + 1):
         W = weights["W" + str(lay)]
         b = weights["b" + str(lay)]
-        z = np.dot(W, A) + b[0]
+        z = np.dot(W, A) + b
         if lay == L:
             A = softmax(z)
         else:
