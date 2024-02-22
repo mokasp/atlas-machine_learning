@@ -20,4 +20,3 @@ def l2_reg_cost(cost):
     """
     reg_loss = tf.compat.v1.losses.get_regularization_losses()
     return cost + reg_loss
-
