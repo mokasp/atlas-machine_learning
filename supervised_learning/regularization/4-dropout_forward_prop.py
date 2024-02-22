@@ -10,12 +10,6 @@ def softmax(z):
     return ez / np.sum(ez, axis=0, keepdims=True)
 
 
-def drop(A, keep_prob):
-    mask = np.random.rand(A.shape[0], A.shape[1])
-    mask = (mask < keep_prob).astype(int) 
-    return A * mask, mask
-
-
 def dropout_forward_prop(X, weights, L, keep_prob):
     """ function that conducts forward propagation using Dropout
 
