@@ -21,15 +21,18 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         =======
             the model
     """
-    L2 = K.regularizers.L2(lambtha)
+    L2 = K.regularizers.l2(lambtha)
     inputs = K.Input(shape=(nx, ))
     for i in range(len(layers)):
         if i == 0:
-            x = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=L2)(inputs)
+            x = K.layers.Dense(layers[i], activation=activations[i],
+                               kernel_regularizer=L2)(inputs)
         elif i == len(layers) - 1:
             drop = K.layers.Dropout(1 - keep_prob)(x)
-            outputs = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=L2)(drop)
+            outputs = K.layers.Dense(layers[i], activation=activations[i],
+                                     kernel_regularizer=L2)(drop)
         else:
             drop = K.layers.Dropout(1 - keep_prob)(x)
-            x = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=L2)(drop)
+            x = K.layers.Dense(layers[i], activation=activations[i],
+                               kernel_regularizer=L2)(drop)
     return K.Model(inputs, outputs)
