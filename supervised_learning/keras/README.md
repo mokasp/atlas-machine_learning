@@ -1,4 +1,4 @@
-# Keras Example
+# Keras
 
 This repository contains a collection of functions and scripts demonstrating how to build, train, optimize, and evaluate neural network models using the Keras library. The functions provided cover various aspects of deep learning model development, including model architecture design, training, optimization techniques, and saving/loading model configurations and weights.
 
