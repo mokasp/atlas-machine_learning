@@ -2,6 +2,7 @@
 """ module containing function that trains a model using mini-batch gradient
     descent, learning rate decay, analyzes validation data, performs early
     stopping and also saves the best iteration of the model """
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
@@ -41,3 +42,27 @@ def train_model(network, data, labels, batch_size, epochs,
     =======
         History object
     """
+    cbs = []
+
+    def scheduler(epoch):
+        return alpha / (1 + decay_rate * epoch)
+
+    if validation_data:
+        if early_stopping:
+            es = K.callbacks.EarlyStopping(patience=patience)
+            cbs.append(es)
+        if learning_rate_decay:
+            lr = K.callbacks.LearningRateScheduler(scheduler, verbose=1)
+            cbs.append(lr)
+        if save_best:
+            ckpt = K.callbacks.ModelCheckpoint(save_weights_only=False,
+                                               filepath=filepath,
+                                               moniter='val_loss',
+                                               save_best_only=True)
+            cbs.append(ckpt)
+        return network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                           verbose=verbose, shuffle=shuffle,
+                           callbacks=cbs,
+                           validation_data=validation_data)
+    return network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                       verbose=verbose, shuffle=shuffle)
