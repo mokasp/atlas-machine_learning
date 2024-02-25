@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ module containing function that trains a model using mini-batch gradient
     descent, analyzes validation data, and performs earlystopping """
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
@@ -30,3 +31,12 @@ def train_model(network, data, labels, batch_size, epochs,
     =======
         History object
     """
+    if validation_data and early_stopping:
+        callback = K.callbacks.EarlyStopping(patience=patience)
+        return network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                           verbose=verbose, shuffle=shuffle,
+                           callbacks=[callback],
+                           validation_data=validation_data)
+    return network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                       verbose=verbose, shuffle=shuffle,
+                       validation_data=validation_data)
