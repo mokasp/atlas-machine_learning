@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ module containing two functions that save and load a kera's model
     configuration in JSON format """
+import tensorflow.keras as K
 
 
 def save_config(network, filename):
@@ -17,6 +18,8 @@ def save_config(network, filename):
         =======
             None
     """
+    with open(filename, 'w') as f:
+        f.write(network.to_json())
 
 
 def load_config(filename):
@@ -31,3 +34,6 @@ def load_config(filename):
         =======
             the loaded model
     """
+    with open(filename, 'r') as f:
+        config = f.read()
+    return K.models.model_from_json(config)
