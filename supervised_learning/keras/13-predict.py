@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ module containing function that makes a prediction using a neural
     network """
+import tensorflow.keras as K
 
 
 def predict(network, data, verbose=False):
@@ -17,3 +18,4 @@ def predict(network, data, verbose=False):
         =======
             prediction for the data
     """
+    return network.predict(data, verbose=verbose)
