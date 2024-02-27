@@ -4,13 +4,13 @@ import numpy as np
 
 
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
-    """ function that 
-        
+    """ function that
+
         PARAMETERS
         ==========
-            []: 
             []:
-        
+            []:
+
         RETURNS
         =======
             []:
@@ -22,12 +22,13 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         op = np.zeros((m, h, w))
         p_h = int(round(((h * sh) - h + kern1 - sh) / 2)) + 1
         p_w = int(round(((w * sw) - w + kern2 - sw) / 2)) + 1
-        pad = np.pad(images, ((0, 0), (p_h, p_h), (p_w , p_w)),
-                    mode='constant')
+        pad = np.pad(images, ((0, 0), (p_h, p_h), (p_w, p_w)),
+                     mode='constant')
         for row in range(h):
             for col in range(w):
                 cur = pad[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2]
-                op[:, row, col] = np.sum(np.multiply(cur, kernel), axis=(1, 2))
+                op[:, row, col] = np.sum(np.multiply(cur, kernel),
+                                         axis=(1, 2))
         return op
     elif padding == 'valid':
         op_size1 = int(((h - kern1) + 1) / sh)
@@ -36,17 +37,18 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         for row in range(op_size1):
             for col in range(op_size2):
                 cur = images[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2]
-                op[:, row, col] = np.sum(np.multiply(cur, kernel), axis=(1, 2))
+                op[:, row, col] = np.sum(np.multiply(cur, kernel),
+                                         axis=(1, 2))
         return op
-    else:
+    elif isinstance(padding, tuple):
         ph, pw = padding
-        new_h = (h - kern1 + (2 * ph) + 1)
-        new_w = (w - kern2 + (2 * pw) + 1)
+        new_h = int(round((h - kern1 + (2 * ph) + sh) / sh)) - 1
+        new_w = int(round((w - kern2 + (2 * pw) + sw) / sw)) - 1
         op = np.zeros((m, new_h, new_w))
         pad = np.pad(images, ((0, 0), (ph, ph), (pw, pw)),
-                    mode='constant')
-        for row in range(0, new_h, sh):
-            for col in range(0, new_w, sw):
-                cur = pad[:, row:row+kern1, col:col+kern2]
+                     mode='constant')
+        for row in range(new_h):
+            for col in range(new_w):
+                cur = pad[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2]
                 op[:, row, col] = np.sum(np.multiply(cur, kernel), axis=(1, 2))
         return op
