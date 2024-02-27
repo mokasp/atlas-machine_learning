@@ -24,7 +24,6 @@ def convolve_grayscale_valid(images, kernel):
     op_size1 = (images.shape[1] - kernel.shape[0]) + 1
     op_size2 = (images.shape[2] - kernel.shape[0]) + 1
     op = np.zeros((images.shape[0], op_size1, op_size2))
-    print(op.shape)
     kern = kernel.shape[0]
     m = images.shape[0]
     h = images.shape[1]
