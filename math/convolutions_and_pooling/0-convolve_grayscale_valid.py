@@ -29,7 +29,6 @@ def convolve_grayscale_valid(images, kernel):
     m = images.shape[0]
     h = images.shape[1]
     w = images.shape[2]
-    print(images[0])
     for i in range(m):
         row = 0
         col = 0
