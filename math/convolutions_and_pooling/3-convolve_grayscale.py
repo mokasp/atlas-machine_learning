@@ -33,9 +33,9 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         return op
     elif padding == 'valid':
         op_size1 = int(((h - kern1) + 1) / sh)
-        op_size2 = int(((w - kern2) + 1) / sw)
+        op_size2 = int(((w - kern2) + 1) / sw) + 1
         op = np.zeros((images.shape[0], op_size1, op_size2))
-        for row in range( op_size1):
+        for row in range(op_size1):
             for col in range(op_size2):
                 cur = images[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2]
                 op[:, row, col] = np.sum(np.multiply(cur, kernel), axis=(1, 2))
