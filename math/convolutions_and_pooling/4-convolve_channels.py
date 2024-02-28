@@ -32,8 +32,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
         return op
 
     elif padding == 'valid':
-        op_size1 = int(np.ceil((h - kern1 + 1) / sh))
-        op_size2 = int(np.ceil((w - kern2 + 1) / sw))
+        op_size1 = int(np.ceil((h - kern1 + 1) / sh)) + 1
+        op_size2 = int(np.ceil((w - kern2 + 1) / sw)) + 1
         op = np.zeros((images.shape[0], op_size1, op_size2))
         for row in range(op_size1):
             for col in range(op_size2):
