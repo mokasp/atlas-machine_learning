@@ -20,8 +20,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
     if padding == 'same':
         op = np.zeros((m, h, w))
-        p_h = int(round(((h * sh) - h + kern1 - sh) / 2)) + 1
-        p_w = int(round(((w * sw) - w + kern2 - sw) / 2)) + 1
+        p_h = int(round(((h * sh) - h + kern1 - sh) / 2))
+        p_w = int(round(((w * sw) - w + kern2 - sw) / 2))
         pad = np.pad(images, ((0, 0), (p_h, p_h), (p_w, p_w), (0, 0)),
                      mode='constant')
         for row in range(h):
