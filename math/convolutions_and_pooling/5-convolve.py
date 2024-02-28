@@ -28,7 +28,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
             for row in range(h):
                 for col in range(w):
                     cur = pad[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2, :]
-                    op[:, row, col] = np.sum(
+                    op[:, row, col, filt] = np.sum(
                         np.multiply(cur, kernels[:, :, :, filt]),
                         axis=(1, 2, 3))
         return op
@@ -58,7 +58,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
             for row in range(new_h):
                 for col in range(new_w):
                     cur = pad[:, row*sh:row*sh+kern1, col*sw:col*sw+kern2, :]
-                    op[:, row, col] = np.sum(
+                    op[:, row, col, filt] = np.sum(
                         np.multiply(cur, kernels[:, :, :, filt]),
                         axis=(1, 2, 3))
         return op
