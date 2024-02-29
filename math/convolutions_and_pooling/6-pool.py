@@ -18,8 +18,8 @@ def pool(images, kernel_shape, stride, mode='max'):
     k_h, k_w = kernel_shape
     m, h, w, c = images.shape
     sh, sw = stride
-    op_h = int(h / k_h)
-    op_w = int(w / k_w)
+    op_h = int((h - k_h) / sh) + 1
+    op_w = int((w - k_w) / sw) + 1
     pooled = np.zeros((m, op_h, op_w, c))
     for row in range(op_h):
         for col in range(op_w):
