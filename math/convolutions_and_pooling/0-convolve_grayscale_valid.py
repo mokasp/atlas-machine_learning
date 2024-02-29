@@ -21,22 +21,13 @@ def convolve_grayscale_valid(images, kernel):
         =======
             numpy.ndarray containing the convolved images
     """
-    op_size1 = (images.shape[1] - kernel.shape[0]) + 1
-    op_size2 = (images.shape[2] - kernel.shape[0]) + 1
-    op = np.zeros((images.shape[0], op_size1, op_size2))
-    kern = kernel.shape[0]
-    m = images.shape[0]
-    h = images.shape[1]
-    w = images.shape[2]
-    for i in range(m):
-        row = 0
-        col = 0
-        for j in range(h * w):
-            if col == w:
-                row += 1
-                col = 0
-            if row < h - (kern - 1) and col < w - (kern - 1):
-                cur = images[i][row:row+kern, col:col+kern]
-                op[i, row, col] = np.sum(np.multiply(cur, kernel))
-            col += 1
+    kern1, kern2 = kernel.shape
+    m, h, w = images.shape
+    op_size1 = (h - kern1) + 1
+    op_size2 = (w - kern2) + 1
+    op = np.zeros((m, op_size1, op_size2))
+    for row in range(op_size1):
+        for col in range(op_size2):
+            cur = images[:, row:row+kern1, col:col+kern2]
+            op[:, row, col] = np.sum(np.multiply(cur, kernel), axis=(1, 2))
     return op
