@@ -9,8 +9,10 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         pad_h = 0
         pad_w = 0
     else:
-        pad_h = int(((h_prev * sh) - h_prev + kh - sh) / 2) + 1
-        pad_w = int(((w_prev * sw) - w_prev + kh - sw) / 2) + 1
+        pad_h = int(((h_prev * sh) - h_prev + kh - sh) / 2)
+        pad_w = int(((w_prev * sw) - w_prev + kh - sw) / 2)
+        A_prev = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w), (0, 0)),
+                     mode='constant')
     out_h = int(1 + (h_prev + (2 * pad_h) - kh) / sh)
     out_w = int(1 + (w_prev + (2 * pad_w) - kw) / sw)
     op = np.zeros((m, out_h, out_w, c_new))
