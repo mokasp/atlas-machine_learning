@@ -5,7 +5,7 @@ import tensorflow.compat.v1 as tf
 def lenet5(x, y):
     init = tf.keras.initializers.VarianceScaling(scale=2.0)
     conv1 = tf.layers.Conv2D(
-        kernel_initializer=init, filters=6, kernel_size=(5, 5), padding='same', activation='relu', input_shape=x.shape[1:])(x)
+        kernel_initializer=init, filters=6, kernel_size=(5, 5), padding='same', activation='relu')(x)
 
     maxpool1 = tf.layers.MaxPooling2D(pool_size=[2, 2], strides=(2,2))(conv1)
 
@@ -22,14 +22,15 @@ def lenet5(x, y):
 
     logits = tf.layers.Dense(kernel_initializer=init, units=10, activation='softmax')(dense2)
 
-    cost = tf.compat.v1.losses.softmax_cross_entropy(
+    cost = tf.losses.softmax_cross_entropy(
         onehot_labels=y,
         logits=logits
     )
 
     optim = tf.train.AdamOptimizer()
-
     train_op = optim.minimize(cost)
+
+    op = tf.nn.softmax(logits)
 
     pred = tf.math.argmax(logits, axis=1)
     act = tf.math.argmax(y, axis=1)
@@ -37,4 +38,4 @@ def lenet5(x, y):
 
     acc = tf.math.reduce_mean(tf.cast(equality, tf.float32))
 
-    return logits, train_op, cost, acc
+    return op, train_op, cost, acc
