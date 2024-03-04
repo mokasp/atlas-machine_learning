@@ -12,7 +12,12 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
         for row in range(h_new):
             for col in range(w_new):
                 for i in range(c_new):
-                    cur = A_prev[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, i]
-                    maxed = (cur == np.max(cur))
-                    out[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, i] += dA[sample, row, col, i] * maxed
+                    if mode == 'max':
+                        cur = A_prev[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, i]
+                        maxed = (cur == np.max(cur))
+                        out[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, i] += dA[sample, row, col, i] * maxed
+                    else:
+                        da = dA[sample, row, col, i]
+                        avg = da / (kh * kw)
+                        out[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, i] += np.ones(kernel_shape) * avg
     return out
