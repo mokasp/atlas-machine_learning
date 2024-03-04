@@ -25,5 +25,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     dX[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, :] += dZ[sample, row, col, i] * W[:, :, :, i]
 
                     dW[:, :, :, i] += A_prev[sample, row*sh:row*sh+kh, col*sw:col*sw+kw, :] * dZ[sample, row, col, i]
+    if padding == 'same':
+        dX = dX[:, pad_h:dX.shape[1]-pad_h, pad_w:dX.shape[2]-pad_w, :]
 
     return dX, dW, db
