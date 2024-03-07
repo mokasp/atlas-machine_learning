@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import tensorflow.compat.v1 as tf
 """ module containing function that b uilds a modified version of the LeNet-5
     architecture using TensorFlow. """
+import tensorflow.compat.v1 as tf
 
 
 def lenet5(x, y):
