@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing Function that performs back propagation over a
-    pooling layer of a neural network."""
+    pooling layer of a neural network. """
+import numpy as np
 
 
 def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
