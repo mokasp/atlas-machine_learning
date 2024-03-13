@@ -36,6 +36,7 @@ def resnet50():
     x4 = identity_block(x4, [256, 256, 1024])
     x4 = identity_block(x4, [256, 256, 1024])
     x4 = identity_block(x4, [256, 256, 1024])
+    x4 = identity_block(x4, [256, 256, 1024])
 
     x5 = projection_block(x4, [512, 512, 2048], 2)
     x5 = identity_block(x5, [512, 512, 2048])
