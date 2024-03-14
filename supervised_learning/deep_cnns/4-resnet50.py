@@ -44,5 +44,6 @@ def resnet50():
 
     x6 = K.layers.AveragePooling2D((7, 7), padding='same')(x5)
 
-    x7 = K.layers.Dense(1000, activation='softmax', kernel_initializer=init)(x6)
+    x7 = K.layers.Dense(1000, activation='softmax',
+                        kernel_initializer=init)(x6)
     return K.Model(inp, x7)

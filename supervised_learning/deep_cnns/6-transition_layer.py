@@ -21,7 +21,7 @@ def transition_layer(X, nb_filters, compression):
     x1 = K.layers.BatchNormalization(axis=3)(X)
     x1 = K.layers.Activation('relu')(x1)
     x1 = K.layers.Conv2D(nb_filters, (1, 1),
-                             kernel_initializer=init,
-                             padding='same')(x1)
+                         kernel_initializer=init,
+                         padding='same')(x1)
     x1 = K.layers.AveragePooling2D((2, 2))(x1)
     return x1, nb_filters
