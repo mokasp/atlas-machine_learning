@@ -32,8 +32,6 @@ def densenet121(growth_rate=32, compression=1.0):
     x, filters = dense_block(x, filters, growth_rate, 24)
     x, filters = transition_layer(x, filters, compression)
     x, filters = dense_block(x, filters, growth_rate, 16)
-    x = K.layers.BatchNormalization(axis=3)(x)
-    x = K.layers.Activation('relu')(x)
     x = K.layers.AveragePooling2D((7, 7), padding='valid', strides=(1, 1))(x)
     x = K.layers.Dense(1000, activation='softmax', kernel_initializer=init)(x)
     return K.Model(inp, x)
