@@ -39,4 +39,3 @@ feature extraction, resizing, avg pooling, dropout, flatten, dense layers, batch
 ### Results
 
 
-
