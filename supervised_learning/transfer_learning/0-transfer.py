@@ -47,7 +47,7 @@ def main():
     e_s = K.callbacks.EarlyStopping(patience=6, restore_best_weights=True)
     cbs.append(e_s)
     lrr = K.callbacks.ReduceLROnPlateau(monitor='val_accuracy', factor=0.1,
-                                        patience=3, min_lr=0.000001)
+                                        patience=3, min_lr=0.00001)
     cbs.append(lrr)
 
     x = K.layers.GlobalAveragePooling2D()(x)
