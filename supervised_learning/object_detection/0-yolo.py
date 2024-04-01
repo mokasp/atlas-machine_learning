@@ -73,8 +73,8 @@ class Yolo():
         class_txt = open(classes_path, 'r')
         classes = class_txt.read()
         classes_list = classes.replace('\n', ' ').split(' ')
-        if ' ' in classes_list:
-            classes_list.remove(' ')
+        if '' in classes_list:
+            classes_list.remove('')
         self.class_names = classes_list
         self.class_t = class_t
         self.nms_t = nms_t
