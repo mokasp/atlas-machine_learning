@@ -69,7 +69,7 @@ class Yolo():
 
 
         """
-        self.model = tf.keras.models.load_model(model_path, compile=False)
+        self.model = tf.keras.models.load_model(model_path)
         class_txt = open(classes_path, 'r')
         classes = class_txt.read()
         classes_list = classes.replace('\n', '.').split('.')
@@ -88,7 +88,7 @@ class Yolo():
         box_confidences = []
         box_class_probs = []
         image_height, image_width = image_size
-        _, input_height, input_width, _ = self.model.input.shape
+        _, input_height, input_width, _ = self.model.input.shape.as_list()
 
         # loop through each output and its respective anchors
         for output, anchors in zip(outputs, self.anchors):
