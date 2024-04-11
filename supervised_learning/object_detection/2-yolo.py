@@ -156,4 +156,4 @@ class Yolo():
                   box_classes.append(list(box_class_probs[i][j][x][y]).index(max_class_prob))
                   filtered_boxes.append(boxes[i][j][x][y])
 
-        return (np.array(filtered_boxes), np.array(box_classes), np.array(box_scores))
+        return np.array(filtered_boxes), np.array(box_classes), np.array(box_scores)
