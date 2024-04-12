@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ module containing class that represents the YOLOv3 algorithm """
-import tensorflow.keras as K
+import tensorflow as tf
 import numpy as np
 
 
@@ -79,7 +79,7 @@ class Yolo():
 
 
         """
-        self.model = K.models.load_model(model_path)
+        self.model = tf.keras.models.load_model(model_path)
         class_txt = open(classes_path, 'r')
         classes = class_txt.read()
         classes_list = classes.replace('\n', '.').split('.')
