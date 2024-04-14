@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ module containing class that represents the YOLOv3 algorithm """
-import numpy as np
 import tensorflow as tf
+import numpy as np
 
 
 class Yolo():
@@ -274,7 +274,7 @@ class Yolo():
             nms_box_classes), np.array(nms_box_scores)
 
     def find_iou(self, box1, box2):
-        """ finds iou """
+        """ finding iou """
         a1, b1, c1, d1 = box1
         a2, b2, c2, d2 = box2
 
