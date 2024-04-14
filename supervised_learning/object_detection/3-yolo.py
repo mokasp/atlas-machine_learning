@@ -85,7 +85,37 @@ class Yolo():
         return 1 / (1 + np.exp(-x))
 
     def process_outputs(self, outputs, image_size):
-        """" processing outputs"""
+        """" function that processes darknet model predictions
+
+        PARAMETERS
+        ==========
+        outputs [list of np.ndarray]: Predictions from the Darknet model,
+        shape (grid_height, grid_width, anchor_boxes, 4 + 1 + classes)
+            grid_height [int]: Height of the grid used for the output.
+            grid_width [int]: Width of the grid used for the output.
+            anchor_boxes [int]: Number of anchor boxes used.
+            4 [int]: Tuple containing (t_x, t_y, t_w, t_h).
+            1 [int]: Box confidence.
+            classes [int]: Number of classes.
+
+        image_size [np.ndarray]: Array containing the images original
+                                    size [image_height, image_width].
+
+        RETURNS
+        =======
+            tuple (boxes, box_confidences, box_class_probs):
+                boxes [list of np.ndarray]: Processed boundary boxes for
+                                            each output.
+                    Shape: (grid_height, grid_width, anchor_boxes, 4)
+                    4 [int]: Tuple containing (x1, y1, x2, y2) representing
+                             the boundary box relative to the original image.
+                box_confidences [list of np.ndarray]: Box confidences for
+                                                        each output.
+                    Shape: (grid_height, grid_width, anchor_boxes, 1)
+                box_class_probs [list of np.ndarray]: Box class probabilities
+                                                        for each output.
+                    Shape: (grid_height, grid_width, anchor_boxes, classes)
+                """
         boxes = []
         box_confidences = []
         box_class_probs = []
@@ -100,13 +130,16 @@ class Yolo():
             # empty zero arrays for each output
             b_coords = np.zeros((grid_height, grid_width, num_anchors, 4))
             b_conf = np.zeros((grid_height, grid_width, num_anchors, 1))
-            c_prob = np.zeros((grid_height, grid_width, num_anchors, len(self.class_names)))
+            c_prob = np.zeros(
+                (grid_height, grid_width, num_anchors, len(
+                    self.class_names)))
 
             for row in range(grid_width):
                 for col in range(grid_height):
                     for b in range(num_anchors):
 
-                        # raw box output coords, box confidence, and class probabilites along with the current anchor box
+                        # raw box output coords, box confidence, and class
+                        # probabilites along with the current anchor box
                         t_x, t_y, t_w, t_h = output[row, col, b, :4]
                         box_confidence = output[row, col, b, 4]
                         class_probs = output[row, col, b, 5:]
@@ -141,81 +174,121 @@ class Yolo():
         return boxes, box_confidences, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
+        """
+        Filter the bounding boxes based on box confidences and class
+        probabilities.
+
+        PARAMETERS
+        ==========
+            boxes [list of np.ndarray]: Processed boundary boxes for each
+                                        output.
+                Shape: (grid_height, grid_width, anchor_boxes, 4)
+
+            box_confidences [list of np.ndarray]: Processed box confidences
+                                                    for each output.
+                Shape: (grid_height, grid_width, anchor_boxes, 1)
+
+            box_class_probs [list of np.ndarray]: Processed box class
+                                                  probabilities for each
+                                                  output.
+                Shape: (grid_height, grid_width, anchor_boxes, classes)
+
+        RETURNS
+        =======
+            tuple (filtered_boxes, box_classes, box_scores):
+                filtered_boxes [np.ndarray]: Filtered bounding boxes.
+                    Shape: (?, 4)
+                    ?: Number of filtered boxes
+                box_classes [np.ndarray]: Class number that each box in
+                                            filtered_boxes predicts.
+                    Shape: (?,)
+                box_scores [np.ndarray]: Box scores for each box in
+                                            filtered_boxes.
+                    Shape: (?)
+        """
         # Flatten the lists of boxes, confidences, and class probabilities
         box_scores = []
         box_classes = []
         filtered_boxes = []
 
         for i in range(len(boxes)):
-          for j in range(len(boxes[i])):
-            for x in range(len(boxes[i][j])):
-              for y in range(len(boxes[i][j][x])):
-                max_class_prob = np.max(box_class_probs[i][j][x][y])
-                box_score = box_confidences[i][j][x][y][0] * max_class_prob
-                if box_score > self.class_t:
-                  box_scores.append(box_score)
-                  box_classes.append(list(box_class_probs[i][j][x][y]).index(max_class_prob))
-                  filtered_boxes.append(boxes[i][j][x][y])
+            for j in range(len(boxes[i])):
+                for x in range(len(boxes[i][j])):
+                    for y in range(len(boxes[i][j][x])):
+                        max_class_prob = np.max(box_class_probs[i][j][x][y])
+                        box_score = box_confidences[i][j][x][y][0] * \
+                            max_class_prob
+                        if box_score > self.class_t:
+                            box_scores.append(box_score)
+                            box_classes.append(
+                                list(box_class_probs[i][j][x][y]).index(
+                                    max_class_prob))
+                            filtered_boxes.append(boxes[i][j][x][y])
 
-        return np.array(filtered_boxes), np.array(box_classes), np.array(box_scores)
+        return np.array(filtered_boxes), np.array(
+            box_classes), np.array(box_scores)
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-
+        """ non max supression """
         nms_box = []
         nms_box_classes = []
         nms_box_scores = []
-      # sorting
+        # sorting
         all_classes = {}
         for i in range(len(self.class_names)):
-          one_class = []
-          for j in range(len(filtered_boxes)):
-            if box_classes[j] == i:
-              one_box = {}
-              one_box["score"] = box_scores[j]
-              one_box["box"] = filtered_boxes[j]
-              one_class.append(one_box)
-          all_classes[i] = one_class
+            one_class = []
+            for j in range(len(filtered_boxes)):
+                if box_classes[j] == i:
+                    one_box = {}
+                    one_box["score"] = box_scores[j]
+                    one_box["box"] = filtered_boxes[j]
+                    one_class.append(one_box)
+            all_classes[i] = one_class
         sorted_classes = {}
         for x in range(len(self.class_names)):
-          sorted_data = sorted(all_classes[x], key=lambda x: x['score'], reverse=True)
-          sorted_classes[x] = sorted_data
+            sorted_data = sorted(
+                all_classes[x],
+                key=lambda x: x['score'],
+                reverse=True)
+            sorted_classes[x] = sorted_data
         # sorted by class and conf
 
         final_list = []
         for i in range(len(sorted_classes)):
-          for j in range(len(sorted_classes[i])):
-            if len(sorted_classes[i][j]) > 0:
-              final_list.append((i, sorted_classes[i][j]))
-              for k in range(j + 1, len(sorted_classes[i])):
-                if len(sorted_classes[i][k]) > 0:
-                  iou = self.find_iou(sorted_classes[i][j]["box"], sorted_classes[i][k]["box"])
-                  if iou > self.nms_t:
-                    sorted_classes[i][k] = {}
+            for j in range(len(sorted_classes[i])):
+                if len(sorted_classes[i][j]) > 0:
+                    final_list.append((i, sorted_classes[i][j]))
+                    for k in range(j + 1, len(sorted_classes[i])):
+                        if len(sorted_classes[i][k]) > 0:
+                            iou = self.find_iou(
+                                sorted_classes[i][j]["box"],
+                                sorted_classes[i][k]["box"])
+                            if iou > self.nms_t:
+                                sorted_classes[i][k] = {}
         for i in range(len(final_list)):
-          nms_box.append(final_list[i][1]['box'])
-          nms_box_classes.append(final_list[i][0])
-          nms_box_scores.append(final_list[i][1]['score'])
+            nms_box.append(final_list[i][1]['box'])
+            nms_box_classes.append(final_list[i][0])
+            nms_box_scores.append(final_list[i][1]['score'])
 
-
-
-        return np.array(nms_box), np.array(nms_box_classes), np.array(nms_box_scores)
+        return np.array(nms_box), np.array(
+            nms_box_classes), np.array(nms_box_scores)
 
     def find_iou(self, box1, box2):
-      a1, b1, c1, d1 = box1
-      a2, b2, c2, d2 = box2
-      
-      a_inter = max(a1, a2)
-      b_inter = max(b1, b2)
-      c_inter = min(c1, c2)
-      d_inter = min(d1, d2)
+        a1, b1, c1, d1 = box1
+        a2, b2, c2, d2 = box2
 
-      if c_inter < a_inter or d_inter < b_inter:
-          return 0
+        a_inter = max(a1, a2)
+        b_inter = max(b1, b2)
+        c_inter = min(c1, c2)
+        d_inter = min(d1, d2)
 
-      intersection = (c_inter - a_inter) * (d_inter - b_inter)
-      b1_area = (c1 - a1) * (d1 - b1)
-      b2_area = (c2 - a2) * (d2 - b2)
-      union = b1_area + b2_area - intersection
+        if c_inter < a_inter or d_inter < b_inter:
+            return 0
 
-      iou = intersection / float(union)
-      return iou
+        intersection = (c_inter - a_inter) * (d_inter - b_inter)
+        b1_area = (c1 - a1) * (d1 - b1)
+        b2_area = (c2 - a2) * (d2 - b2)
+        union = b1_area + b2_area - intersection
+
+        iou = intersection / float(union)
+        return iou
