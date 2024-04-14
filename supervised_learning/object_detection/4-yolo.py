@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 import numpy as np
 import tensorflow as tf
 
@@ -227,9 +226,9 @@ class Yolo():
         image_paths = tf.io.gfile.glob(folder_path + '/*')
 
         for file_path in image_paths:
-          img = tf.io.read_file(file_path)
-          img = tf.image.decode_jpeg(img, channels=3)
-          img = img[:, :, ::-1]
-          imgs.append(img.numpy())
+            img = tf.io.read_file(file_path)
+            img = tf.image.decode_jpeg(img, channels=3)
+            img = img[:, :, ::-1]
+            imgs.append(np.array(img))
 
         return imgs, image_paths
