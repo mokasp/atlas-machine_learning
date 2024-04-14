@@ -2,8 +2,7 @@
 import numpy as np
 import tensorflow as tf
 
-
-class Yolo():
+class Yolo:
     """ class that represents the YOLOv3 algorithm to perform object detection
 
             METHODS
@@ -236,7 +235,7 @@ class Yolo():
 
         for file_path in image_paths:
             img = tf.io.read_file(file_path)
-            img = tf.image.decode_jpeg(img, channels=3)
+            img = tf.image.decode_image(img, channels=3)
             img = img[:, :, ::-1]
             imgs.append(np.array(img))
 
