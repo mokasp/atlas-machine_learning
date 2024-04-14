@@ -2,9 +2,6 @@
 import os
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import cv2
-import glob
 
 
 class Yolo():
