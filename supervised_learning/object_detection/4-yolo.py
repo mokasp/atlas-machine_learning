@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+""" module containing class that represents the YOLOv3 algorithm """
 import numpy as np
 import tensorflow as tf
 
-class Yolo:
+class Yolo():
     """ class that represents the YOLOv3 algorithm to perform object detection
 
             METHODS
@@ -231,11 +232,15 @@ class Yolo:
     def load_images(folder_path):
         imgs = []
 
+        # load image paths
         image_paths = tf.io.gfile.glob(folder_path + '/*')
 
+        # loop through each path
         for file_path in image_paths:
             img = tf.io.read_file(file_path)
+            # decode
             img = tf.image.decode_image(img, channels=3)
+            # change from rgb to bgr
             img = img[:, :, ::-1]
             imgs.append(np.array(img))
 
