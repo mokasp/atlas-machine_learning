@@ -296,6 +296,7 @@ class Yolo():
 
     @staticmethod
     def load_images(folder_path):
+        """ loading images """
         imgs = []
 
         # load image paths
