@@ -302,6 +302,11 @@ class Yolo():
         # load image paths
         image_paths = tf.io.gfile.glob(folder_path + '/*')
 
+        for i in range(len(image_paths)):
+            k = image_paths[i].split('/')[-2:]
+            k = '.' + '/' + k[0] + '/' + k[1]
+            image_paths[i] = k
+
         # loop through each path
         for file_path in image_paths:
             img = tf.io.read_file(file_path)
