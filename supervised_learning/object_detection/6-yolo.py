@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """ module containing class that represents the YOLOv3 algorithm """
+import os
 import numpy as np
 import tensorflow as tf
+import cv2
 import os
 
 
@@ -33,6 +35,9 @@ class Yolo():
                 preprocess_images(images):
                     preprocesses images for input to the YOLO model
 
+                show_boxes(image, boxes, box_classes, box_scores, file_name):
+                    displays the image with boundary boxes, class names,
+                    and box scores.
 
             Static Methods:
 
@@ -442,3 +447,58 @@ class Yolo():
             rescaled_image = (resize - minimum) / (maximum - minimum)
             resized.append(rescaled_image)
         return np.array(resized), np.array(og_shape)
+
+    def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
+        """
+        displays the image with boundary boxes, class names, and box scores.
+
+        PARAMETERS
+        ==========
+            image - [numpy.ndarray]:
+                unprocessed image as a numpy.ndarray
+
+            boxes - [numpy.ndarray]:
+                the boundary boxes for the image
+
+            box_classes - [numpy.ndarray]:
+                the class indices for each box
+
+            box_scores - [numpy.ndarray]:
+                the box scores for each box
+
+            file_name - [str]:
+                file path where the original image is stored
+
+        RETURNS
+        =======
+            None
+        """
+        for i in range(len(boxes)):
+            x1, y1, x2, y2 = boxes[i]
+            im = cv2.rectangle(
+                image, (int(x1), int(y1)), (int(x2), int(y2)), color=(
+                    255, 0, 0), thickness=2)
+            bc = box_classes[i]
+            bs = box_scores[i]
+            im = cv2.putText(
+                im,
+                f'{self.class_names[bc]} {str(round(bs, 2))}',
+                (int(x1),
+                 int(y1) - 5),
+                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5,
+                color=(
+                    0,
+                    0,
+                    255),
+                thickness=1)
+        cv2.imshow(file_name, im)
+        key_press = cv2.waitKey(0)
+        if key_press == ord('s'):
+            if os.path.exists('detections') is False:
+                os.makedirs('detections')
+            os.chdir('detections')
+            cv2.imwrite(file_name, im)
+            os.chdir('..')
+            cv2.destroyAllWindows()
+        cv2.destroyAllWindows()
