@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """ module containing class that represents the YOLOv3 algorithm """
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+import os
 
 
 class Yolo():
@@ -9,6 +10,32 @@ class Yolo():
 
             METHODS
             =======
+
+            Public Instance Methods:
+
+                process_outputs(outputs, image_size): function that processes
+                                                    darknet model predictions
+
+                sigmoid(x): sigmoid function
+
+                filter_boxes(boxes, box_confidences, box_class_probs): Filter
+                    the bounding boxes based on box confidences and class
+                    probabilities.
+
+                non_max_suppression(filtered_boxes, box_classes, box_scores):
+                    performs non-max suppression on the bounding boxes
+                    predictions
+
+                find_iou(box1, box2):
+                    calculates the Intersection over Union (IoU)
+                    between two bounding boxes
+
+
+            Static Methods:
+
+                load_images(folder_path):
+                    loads all images from a folder
+
 
 
             PUBLIC INSTANCE ATTRIBUTES
@@ -33,25 +60,25 @@ class Yolo():
 
                 PARAMETERS
                 ==========
-                model_path [str]: path to where a Darknet Keras model is
-                stored
+                    model_path [str]: path to where a Darknet Keras model is
+                    stored
 
-                classes_path [str]: path to where the list of class names
-                used for the Darknet model, listed in
-                order of index, can be found
+                    classes_path [str]: path to where the list of class names
+                    used for the Darknet model, listed in
+                    order of index, can be found
 
-                class_t [float]: the box score threshold for the initial
-                filtering step
+                    class_t [float]: the box score threshold for the initial
+                    filtering step
 
-                nms_t [float]: the IOU threshold for non-max suppression
+                    nms_t [float]: the IOU threshold for non-max suppression
 
-                anchors [np.ndarry]: all of the anchor boxes,
-                shape (outputs, anchor_boxes, 2)
-                    - outputs [int]: # of outputs (predictions) made by the
-                        Darknet model
-                    - anchor_boxes [int]: # of anchor boxes used for each
-                        prediction
-                    - 2 => [anchor_box_width, anchor_box_height
+                    anchors [np.ndarry]: all of the anchor boxes,
+                    shape (outputs, anchor_boxes, 2)
+                        - outputs [int]: # of outputs (predictions) made by
+                            the Darknet model
+                        - anchor_boxes [int]: # of anchor boxes used for each
+                            prediction
+                        - 2 => [anchor_box_width, anchor_box_height
 
 
                 PUBLIC INSTANCE ATTRIBUTES
@@ -85,36 +112,41 @@ class Yolo():
         return 1 / (1 + np.exp(-x))
 
     def process_outputs(self, outputs, image_size):
-        """" function that processes darknet model predictions
+        """"
+        processes darknet model predictions
 
         PARAMETERS
         ==========
-        outputs [list of np.ndarray]: Predictions from the Darknet model,
-        shape (grid_height, grid_width, anchor_boxes, 4 + 1 + classes)
-            grid_height [int]: Height of the grid used for the output.
-            grid_width [int]: Width of the grid used for the output.
-            anchor_boxes [int]: Number of anchor boxes used.
-            4 [int]: Tuple containing (t_x, t_y, t_w, t_h).
-            1 [int]: Box confidence.
-            classes [int]: Number of classes.
+            outputs - [list]: (grid_height, grid_width, anchor_boxes,
+                                                        4 + 1 + classes)
+                predictions as np.ndarrays from the Darknet model,
+                    grid_height - [int]:
+                        height of the grid used for the output.
+                    grid_width - [int]:
+                        width of the grid used for the output.
+                    anchor_boxes - [int]:
+                        number of anchor boxes used.
+                    4 - [int]:
+                        tuple containing (t_x, t_y, t_w, t_h).
+                    1 - [int]:
+                        box confidence.
+                    classes - [int]:
+                        number of classes.
 
-        image_size [np.ndarray]: Array containing the images original
-                                    size [image_height, image_width].
+            image_size - [np.ndarray]: [image_height, image_width]
+                array containing the images original size
 
         RETURNS
         =======
-            tuple (boxes, box_confidences, box_class_probs):
-                boxes [list of np.ndarray]: Processed boundary boxes for
-                                            each output.
-                    Shape: (grid_height, grid_width, anchor_boxes, 4)
-                    4 [int]: Tuple containing (x1, y1, x2, y2) representing
-                             the boundary box relative to the original image.
-                box_confidences [list of np.ndarray]: Box confidences for
-                                                        each output.
-                    Shape: (grid_height, grid_width, anchor_boxes, 1)
-                box_class_probs [list of np.ndarray]: Box class probabilities
-                                                        for each output.
-                    Shape: (grid_height, grid_width, anchor_boxes, classes)
+            (boxes, box_confidences, box_class_probs) - [tuple]
+                boxes - [list]: (grid_height, grid_width, anchor_boxes, 4)
+                    processed boundary boxes for each output.
+                box_confidences - [list]: (grid_height, grid_width,
+                                                        anchor_boxes, 1)
+                    box confidences for each output.
+                box_class_probs [list]: (grid_height, grid_width,
+                                                    anchor_boxes, classes)
+                    box class probabilities for each output.
                 """
         boxes = []
         box_confidences = []
@@ -175,36 +207,34 @@ class Yolo():
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """
-        Filter the bounding boxes based on box confidences and class
+        filters the bounding boxes based on box confidences and class
         probabilities.
 
         PARAMETERS
         ==========
-            boxes [list of np.ndarray]: Processed boundary boxes for each
-                                        output.
-                Shape: (grid_height, grid_width, anchor_boxes, 4)
+            boxes - [list]: (grid_height, grid_width, anchor_boxes, 4)
+                processed boundary boxes for each output as np.ndarrays
 
-            box_confidences [list of np.ndarray]: Processed box confidences
-                                                    for each output.
-                Shape: (grid_height, grid_width, anchor_boxes, 1)
+            box_confidences - [list]: (grid_height, grid_width,
+                                                    anchor_boxes, 1)
+                processed box confidences for each output as np.ndarrays
 
-            box_class_probs [list of np.ndarray]: Processed box class
-                                                  probabilities for each
-                                                  output.
-                Shape: (grid_height, grid_width, anchor_boxes, classes)
+            box_class_probs - [list]: (grid_height, grid_width,
+                                                    anchor_boxes, classes)
+                processed box class probabilities for each output as np.arrays
 
         RETURNS
         =======
-            tuple (filtered_boxes, box_classes, box_scores):
-                filtered_boxes [np.ndarray]: Filtered bounding boxes.
-                    Shape: (?, 4)
-                    ?: Number of filtered boxes
-                box_classes [np.ndarray]: Class number that each box in
-                                            filtered_boxes predicts.
-                    Shape: (?,)
-                box_scores [np.ndarray]: Box scores for each box in
-                                            filtered_boxes.
-                    Shape: (?)
+            (filtered_boxes, box_classes, box_scores) - [tuple]:
+                filtered_boxes - [np.ndarray]: (?, 4)
+                    Filtered bounding boxes.
+                        ?: Number of filtered boxes
+                box_classes - [np.ndarray]: (?,)
+                    class number that each box in filtered_boxes predicts.
+                        ?: Number of filtered boxes
+                box_scores - [np.ndarray]: (?)
+                    box scores for each box in filtered_boxes.
+                        ?: Number of filtered boxes
         """
         # Flatten the lists of boxes, confidences, and class probabilities
         box_scores = []
@@ -229,7 +259,33 @@ class Yolo():
             box_classes), np.array(box_scores)
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-        """ non max supression """
+        """
+        performs non-max suppression on the bounding boxes predictions
+
+        PARAMETERS
+        ==========
+            filtered_boxes - [numpy.ndarray]: (?, 4)
+                containins all of the filtered bounding boxes
+            box_classes - [numpy.ndarray]: (?,)
+                A numpy.ndarray of shape (?,) containing the class number
+                for the class that filtered_boxes predicts, respectively
+            box_scores - [numpy.ndarray]: (?)
+                contains the box scores for each box in filtered_boxes,
+                respectively
+
+        RETURNS
+        =======
+            (nms_box, nms_box_classes, nms_box_scores) - [tuple]:
+                nms_box - [numpy.ndarray]: (?, 4)
+                    contains all of the predicted bounding boxes ordered by
+                    class and box score
+                nms_box_classes - [numpy.ndarray]: (?,)
+                    contains the class number for nms_box ordered by class
+                    and box score, respectively
+                predicted_box_scores - [numpy.ndarray]: (?)
+                    containing the box scores for nms_box ordered by class
+                    and box score, respectively
+        """
         nms_box = []
         nms_box_classes = []
         nms_box_scores = []
@@ -274,7 +330,29 @@ class Yolo():
             nms_box_classes), np.array(nms_box_scores)
 
     def find_iou(self, box1, box2):
-        """ finding iou """
+        """
+        calculates the Intersection over Union (IoU) between two bounding
+        boxes
+
+        PARAMETERS
+        ==========
+            box1 - [list]: (x1, y1, x2, y2)
+                (x1, y1):
+                    coordinates of top-left corner
+                (x2, y2)
+                    coordinates of bottom-right corner
+
+            box2 - [list]: (x1, y1, x2, y2)
+                (x1, y1):
+                    coordinates of top-left corner
+                (x2, y2)
+                    coordinates of bottom-right corner
+
+        RETURNS
+        =======
+            iou - [float]
+                IoU score between the two bounding boxes
+        """
         a1, b1, c1, d1 = box1
         a2, b2, c2, d2 = box2
 
@@ -296,7 +374,22 @@ class Yolo():
 
     @staticmethod
     def load_images(folder_path):
-        """ loading images """
+        """
+        loads all images from a folder
+
+        PARAMETERS
+        ==========
+            folder_path - [str]
+                the path to the folder holding all the images to load
+
+        RETURNS
+        =======
+            (images, image_paths) - [tuple]
+                images - [list]
+                    all images as numpy.ndarrays
+                image_paths - [list]
+                    every path to the individual images in images
+        """
         imgs = []
 
         # load image paths
