@@ -404,13 +404,17 @@ class Yolo():
         """
         imgs = []
 
+        # load image paths
         image_paths = tf.io.gfile.glob(folder_path + '/*')
 
+        # loop through each path
         for file_path in image_paths:
             img = tf.io.read_file(file_path)
-            img = tf.image.decode_jpeg(img, channels=3)
+            # decode
+            img = tf.image.decode_image(img, channels=3)
+            # change from rgb to bgr
             img = img[:, :, ::-1]
-            imgs.append(img.numpy())
+            imgs.append(np.array(img))
 
         return imgs, image_paths
 
