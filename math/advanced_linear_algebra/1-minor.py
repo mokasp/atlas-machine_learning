@@ -106,6 +106,6 @@ def minor(matrix):
 
                 # recursively calculate the matrix of minors using determinate
                 # function
-                mnr[i][j] = (((-1) ** (i + j)) * determinate(sm))
+                mnr[i][j] = determinate(sm)
 
         return mnr
