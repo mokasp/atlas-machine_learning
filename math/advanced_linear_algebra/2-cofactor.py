@@ -92,6 +92,8 @@ def cofactor(matrix):
                     for y in range(length):
                         if x != i and y != j:
                             mnr[i][j] = matrix[x][y]
+                if (i == 0 and j == 1) or (i == 1 and j == 0):
+                    mnr[i][j] *= -1
         return mnr
 
     # if matrix is non-empty, square, and a list of lists and have a length
@@ -109,6 +111,8 @@ def cofactor(matrix):
                 # function
                 mnr[i][j] = determinate(sm)
 
+                # if length is any other side, multiple every other value
+                # by -1
                 if pos > 0 and pos % 2 != 0:
                     mnr[i][j] *= -1
                 pos += 1
