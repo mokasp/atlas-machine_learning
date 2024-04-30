@@ -78,8 +78,8 @@ def determinant(matrix):
         else:
             det = 0
             for i in range(len(matrix)):
-                submatrix = submatrix(matrix, i)
-                det = det + ((-1) ** i) * matrix[0][i] * determinant(submatrix)
+                sm = submatrix(matrix, i)
+                det = det + ((-1) ** i) * matrix[0][i] * determinant(sm)
             return det
 
     # once again raise error if all of the above didnt apply to matrix
