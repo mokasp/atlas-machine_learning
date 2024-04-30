@@ -26,6 +26,11 @@ def determinant(matrix):
     if len(matrix) == 1 and len(matrix[0]) == 1:
         return matrix[0][0]
     if len(matrix) == len(matrix[0]):
+        for x in range(len(matrix)):
+            if type(matrix[x]) is not list:
+                raise TypeError('matrix must be a list of lists')
+            if len(matrix[x]) != len(matrix):
+                raise ValueError('matrix must be a square matrix')
         if len(matrix) == 2:
             return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
         else:
