@@ -7,12 +7,16 @@
 # (a * ((f * j) - (g * i))) - (b * ((e * j) - (g * h))) + (c * ((e * i) - (f * h)))
 
 def minor(matrix, col):
-    temp = []
+    row = []
+    mino = []
     for i in range(len(matrix)):
         for j in range(len(matrix)):
             if i != 0 and j != col:
-                temp.append(matrix[i][j])
-    return temp
+                row.append(matrix[i][j])
+        if i != 0:
+            mino.append(row)
+            row = []
+    return mino
 
 def determinant(matrix):
     if type(matrix) is not list or len(matrix) == 0 or type(matrix[0]) is not list:
@@ -25,14 +29,10 @@ def determinant(matrix):
         if len(matrix) == 2:
             return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
         else:
-            temp2 = 0
+            det = 0
             for i in range(len(matrix)):
                 mino = minor(matrix, i)
-                a = matrix[0][i] * ((mino[0] * mino[3]) - (mino[1] * mino[2]))
-                if i != 1:
-                    temp2 += a
-                else:
-                    temp2 -= a
-            return temp2
+                det = det + ((-1) ** i) * matrix[0][i] * determinant(mino)
+            return det
     else:
         raise ValueError('matrix must be a square matrix')
