@@ -52,14 +52,15 @@ def inverse(matrix):
     function that calculates the inverse of a given square matrix.
 
     Args:
-        matrix (list of lists): A square matrix whose inverse is to be calculated.
+        matrix (list of lists): A square matrix whose inverse is to be
+                                calculated.
 
     Returns:
-        list of lists or None: The inverse of the input matrix, or None if the matrix is singular.
+        list of lists or None: The inverse of the input matrix, or None if
+                                the matrix is singular.
     """
     # first store length of outer list
     length = len(matrix)
-    det = determinate(matrix)
 
     # if length is 0, raise value error indicating the list does not contain
     # other lists
@@ -74,10 +75,13 @@ def inverse(matrix):
             elif not isinstance(matrix[i], list):
                 raise TypeError('matrix must be a list of lists')
 
-            # if both inner and outer list have length of 1, return a list
-            # containing 1 in a list
-            elif len(matrix[i]) == 1 and length == 1:
-                return [[1]]
+    det = determinate(matrix)
+    # if both inner and outer list have length of 1, return a list
+    # containing 1 in a list
+    if len(matrix[i]) == 1 and length == 1:
+        return [[1 / matrix[0][0]]]
+    elif det == 0:
+        return None
 
     # make copy of matrix
     mnr = [x[:] for x in matrix]
@@ -119,7 +123,7 @@ def inverse(matrix):
                     mnr[i][j] *= -1
                 pos += 1
 
-                mnr[i][j] /= det 
+                mnr[i][j] /= det
 
     res = []
     for i in range(len(matrix[0])):
