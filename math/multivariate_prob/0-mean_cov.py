@@ -13,7 +13,7 @@ def mean_cov(X):
         s = 0
         for j in range(n):
             s += X[j][i]
-        mean.append(s / n)
+        mean.append(round(s / n, 8))
     
     for i in range(d):
         for j in range(i, d):
@@ -21,5 +21,5 @@ def mean_cov(X):
             for h in range(n):
                 s += (X[h][i] - mean[i]) * (X[h][j] - mean[j])
                 cov[i][j] = s / (n - 1)
-                cov[j][i] = cov[i][j]
+                cov[j][i] = round(cov[i][j], 8)
     return mean, cov
