@@ -22,3 +22,12 @@ class MultiNormal():
                     cov[j][i] = round(cov[i][j], 8)
 
         self.cov = cov
+
+    def pdf(self, x):
+        d = len(self.mean)
+
+        coeff = 1 / ((2 * np.pi) ** (d / 2) * np.sqrt(np.linalg.det(self.cov)))
+
+        expo = (-1/2) * ((x - self.mean).T @ np.linalg.inv(self.cov) @ (x - self.mean))
+
+        return float(coeff * np.exp(expo))
