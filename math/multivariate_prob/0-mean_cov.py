@@ -22,4 +22,4 @@ def mean_cov(X):
                 s += (X[h][i] - mean[i]) * (X[h][j] - mean[j])
                 cov[i][j] = s / (n - 1)
                 cov[j][i] = round(cov[i][j], 8)
-    return np.array(mean), np.array(cov)
+    return np.array([mean]), np.array(cov)
