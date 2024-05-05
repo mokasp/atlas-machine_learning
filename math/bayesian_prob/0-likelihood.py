@@ -12,9 +12,8 @@ def likelihood(x, n, P):
     if x > n:
         raise ValueError('x cannot be greater than n')
 
-    if type(P) != type(np.array([])) or len(P.shape) < 1:
+    if type(P) != type(np.array([])) or len(P.shape) < 1 or P.shape[0] <= 1:
         raise TypeError('P must be a 1D numpy.ndarray')
-    print(P.shape)
 
 
 
