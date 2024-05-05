@@ -3,8 +3,6 @@ import numpy as np
 
 
 def likelihood(x, n, P):
-    print(P.shape)
-
     if type(n) is not int or n < 1:
         raise ValueError('n must be a positive integer')
 
@@ -16,6 +14,7 @@ def likelihood(x, n, P):
 
     if type(P) != type(np.array([])) or len(P.shape) < 1:
         raise TypeError('P must be a 1D numpy.ndarray')
+    print(P.shape)
 
 
 
