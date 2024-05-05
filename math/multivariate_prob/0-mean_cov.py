@@ -3,9 +3,9 @@ import numpy as np
 
 
 def mean_cov(X):
-    if type(X) == type(np.array([])) and X.shape[0]:
+    if (type(X) == type(np.array([])) and len(X.shape) > 1 and X.shape[0] < 2):
         raise ValueError('X must contain multiple data points')
-    if type(X) != type(np.array([])) or len(X.shape) < 2 or X.shape[0] != X.shape[1]:
+    if type(X) != type(np.array([])) or len(X.shape) < 2:
         raise TypeError('X must be a 2D numpy.ndarray')
     
     n = len(X)
