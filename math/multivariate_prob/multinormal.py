@@ -5,10 +5,10 @@ import numpy as np
 class MultiNormal():
 
     def __init__(self, data):
-        if (type(data) == type(np.array([])) and len(data.shape) < 2):
-            raise ValueError('data must contain multiple data points')
         if type(data) != type(np.array([])) or len(data.shape) < 2:
             raise TypeError('data must be a 2D numpy.ndarray')
+        if type(data) == type(np.array([])) and data.shape[1] < 2:
+            raise ValueError('data must contain multiple data points')
         n = data.shape[1]
         d = data.shape[0]
 
