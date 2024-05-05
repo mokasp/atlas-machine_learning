@@ -18,4 +18,4 @@ def likelihood(x, n, P):
         coeff = n_f / (x_f * nx_f)
         Lp = coeff * (P[i] ** x) * ((1 - P[i]) ** (n - x))
         temp.append(Lp)
-    return temp
+    return np.array(temp)
