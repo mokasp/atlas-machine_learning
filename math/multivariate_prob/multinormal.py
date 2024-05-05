@@ -5,7 +5,7 @@ import numpy as np
 class MultiNormal():
 
     def __init__(self, data):
-        if (type(data) == type(np.array([])) and len(data.shape) > 1 and data.shape[0] < 2) or (type(data) == type(np.array([])) and len(data.shape) > 1 and data.shape[1] < 2):
+        if (type(data) == type(np.array([])) and len(data.shape) < 2):
             raise ValueError('data must contain multiple data points')
         if type(data) != type(np.array([])) or len(data.shape) < 2:
             raise TypeError('data must be a 2D numpy.ndarray')
