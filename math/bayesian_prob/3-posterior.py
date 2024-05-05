@@ -26,4 +26,4 @@ def posterior(x, n, P, Pr):
     marginal = sum(intersections)
     for i in range(len(P)):
         posterior.append((intersections[i] / marginal))
-    return posterior
+    return np.array(posterior)
