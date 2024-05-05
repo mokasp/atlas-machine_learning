@@ -44,4 +44,7 @@ def intersection(x, n, P, Pr):
         Lp = coeff * (P[i] ** x) * ((1 - P[i]) ** (n - x))
         ints = Lp * Pr[i]
         temp.append(ints)
+    
+    if not np.isclose(sum(Pr), 1):
+        raise ValueError('Pr must sum to 1')
     return np.array(temp)
