@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
+""" tbw """
 import numpy as np
 
 
 def mean_cov(X):
-    if (type(X) == type(np.array([])) and len(X.shape) > 1 and X.shape[0] < 2):
+    """ tbw """
+    if (isinstance(X, type(np.array([])))
+            and len(X.shape) > 1 and X.shape[0] < 2):
         raise ValueError('X must contain multiple data points')
-    if type(X) != type(np.array([])) or len(X.shape) < 2:
+    if not isinstance(X, type(np.array([]))) or len(X.shape) < 2:
         raise TypeError('X must be a 2D numpy.ndarray')
-    
+
     n = len(X)
     d = len(X[0])
 
@@ -19,7 +22,7 @@ def mean_cov(X):
         for j in range(n):
             s += X[j][i]
         mean.append(round(s / n, 8))
-    
+
     for i in range(d):
         for j in range(i, d):
             s = 0
