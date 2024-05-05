@@ -4,7 +4,6 @@ import numpy as np
 
 def intersection(x, n, P, Pr):
     temp = []
-    print(Pr)
 
     for i in range(len(P)):
         n_f = 1
