@@ -34,7 +34,7 @@ class MultiNormal():
         
         d = len(self.mean)
 
-        if x.shape[0] != d or x.shape != 1:
+        if x.shape[0] != d or x.shape[1] != 1:
             raise ValueError('x must have the shape ({}, 1)'.format(d))
 
         coeff = 1.0 / ((2 * np.pi) ** (d / 2) * np.sqrt(np.linalg.det(self.cov)))
