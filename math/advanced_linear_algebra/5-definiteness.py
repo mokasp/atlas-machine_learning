@@ -7,9 +7,7 @@ def definiteness(matrix):
     if matrix.shape == (0,) or matrix.shape[0] != matrix.shape[1]:
         return None
     values, _ = np.linalg.eig(matrix)
-    if values[0] == 1 and values[1] == 1:
-        return None
-    elif values[0] > 0 and values[1] > 0:
+    if values[0] > 0 and values[1] > 0:
         return 'Positive definite'
     elif (values[0] == 0 and values[1] > 0) or (values[0] > 0 and values[1] == 0):
         return 'Positive semi-definite'
