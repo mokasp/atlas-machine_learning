@@ -3,6 +3,9 @@ import numpy as np
 
 
 def initialize(X, k):
+
+    if type(X) != type(np.array([])) or type(k) != int:
+        return None
     
     d = X.shape[1]
 
