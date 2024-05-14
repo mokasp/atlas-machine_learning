@@ -4,9 +4,12 @@ import numpy as np
 
 def initialize(X, k):
 
-    if type(X) != type(np.array([])) or type(k) != int:
+    if type(X) != type(np.array([])) or len(X.shape) < 2 or type(X[0][0]) == type(np.array([])) :
         return None
     
+    if type(k) != int or k <= 0:
+        return None
+
     d = X.shape[1]
 
     min_v = np.min(X, axis=0)
