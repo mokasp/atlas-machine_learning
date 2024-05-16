@@ -19,7 +19,7 @@ def pca(X, ndim):
 
     length = len(selected[0])
 
-    selected[:, 0:length - 1] *= -1
+    selected[:, 1:length - 1] *= -1
 
 
     transformed = np.matmul(standardized, selected)
