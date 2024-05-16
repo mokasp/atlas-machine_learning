@@ -27,6 +27,6 @@ def pca(X, var=0.95):
     r_cumsum = np.argmax(test >= var) + 2
 
 
-    selected = s_vectors[:, :r_cumsum]
+    selected = s_vectors[:, :r_cumsum] * -1
 
     return selected
