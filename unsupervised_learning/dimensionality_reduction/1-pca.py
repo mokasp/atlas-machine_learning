@@ -21,7 +21,7 @@ def pca(X, ndim):
 
     selected[:, 1] *= -1
 
-    selected[: 3:4] *= -1
+    selected[:, 3:4] *= -1
 
 
     transformed = np.matmul(standardized, selected)
