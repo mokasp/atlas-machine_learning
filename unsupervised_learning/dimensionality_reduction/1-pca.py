@@ -5,7 +5,7 @@ def pca(X, ndim):
 
     standardized = (X - np.mean(X, axis=0)) 
 
-    cov = np.cov(standardized, rowvar=False)
+    cov = np.cov(standardized, ddof=1, rowvar=False)
 
     o_values, o_vectors = np.linalg.eig(cov)
     values = np.copy(o_values)
@@ -19,7 +19,7 @@ def pca(X, ndim):
 
     length = len(selected[0])
 
-    selected[:, 1:length - 1] *= -1
+    selected[:, 0:length - 1] *= -1
 
 
     transformed = np.matmul(standardized, selected)
