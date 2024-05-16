@@ -7,7 +7,7 @@ def pca(X, ndim):
 
     cov = np.cov(standardized, rowvar=False)
 
-    o_values, o_vectors = np.linalg.eigh(cov)
+    o_values, o_vectors = np.linalg.eig(cov)
     values = np.copy(o_values)
     vectors = np.copy(o_vectors)
 
