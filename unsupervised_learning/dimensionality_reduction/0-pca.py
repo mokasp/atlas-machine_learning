@@ -18,7 +18,6 @@ def pca(X, var=0.95):
     v_ex = []
     for i in s_values:
         v_ex.append((i/sum(s_values)))
-    print(v_ex)
 
     total = np.sum(s_values)
 
@@ -26,7 +25,6 @@ def pca(X, var=0.95):
 
     
     r_cumsum = np.argmax(test >= var) + 2
-    print(r_cumsum)
 
 
     selected = s_vectors[:, :r_cumsum]
