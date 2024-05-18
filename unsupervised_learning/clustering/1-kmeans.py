@@ -7,10 +7,13 @@ def get_centroid(X, centroids):
 
 def kmeans(X, k, iterations=1000):
     if type(X) != type(np.array([])) or len(X.shape) < 2 or type(X[0][0]) == type(np.array([])) :
-        return None
+        return None, None
     
     if type(k) != int or k <= 0:
-        return None
+        return None, None
+
+    if type(iterations) != int or iterations <= 0:
+        return None, None
 
     d = X.shape[1]
 
