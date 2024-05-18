@@ -32,4 +32,5 @@ def kmeans(X, k, iterations=1000):
         
         centroids = new_centroids
 
-    return None, None
+
+    return centroids, labels
