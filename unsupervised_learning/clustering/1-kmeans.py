@@ -23,7 +23,11 @@ def kmeans(X, k, iterations=1000):
 
         new_centroids = np.zeros((k, d))
 
-        new_centroids = np.array([np.mean(X[labels == i], axis=0) if np.sum(labels == i) > 0 else np.random.uniform(min_v, labels, size=d) for i in range(k)])
+        for i in range(k):
+            if np.sum(labels == i) <= 0:
+                new_centroids[i] = np.random.uniform(low=min_v, high=max_v, size=d)
+            else:
+                new_centroids[i] = np.mean(X[labels == i], axis=0)
 
         if np.allclose(new_centroids, centroids):
             labels = get_centroid(X, centroids)
