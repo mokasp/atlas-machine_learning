@@ -6,7 +6,7 @@ variance = __import__('2-variance').variance
 
 def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     if kmax == None:
-        kmax = 2
+        kmax = 20
     results, labels, d_vars = [], [], []
     for i in range(kmin, kmax + 1):
         res, lab = kmeans(X, i, iterations)
