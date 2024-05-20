@@ -4,6 +4,10 @@ kmeans = __import__('1-kmeans').kmeans
 
 
 def initialize(X, k):
+    if type(X) != type(np.array([])) or len(X.shape) != 2:
+        return None, None, None
+    if type(k) != int or k < 1:
+        return None, None, None
     n, d = X.shape
     m, _ = kmeans(X, k)
     s = np.identity(d)
