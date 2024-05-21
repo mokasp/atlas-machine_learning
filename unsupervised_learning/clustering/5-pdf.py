@@ -20,9 +20,12 @@ def pdf(X,m, S):
     diff = (X - mm.T)
 
     exp_term = -0.5 * (np.dot(diff, inv).dot(diff.T))
-    res = np.log(scale) + exp_term
 
-    row, col = res.shape
+    row, col = exp_term.shape
     diag = np.eye(row, col, dtype=bool)
 
-    return np.exp(res[diag])
+    exp_diag = exp_term[diag]
+    
+    res = np.log(scale) + exp_diag
+
+    return np.exp(res)
