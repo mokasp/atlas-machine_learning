@@ -19,7 +19,7 @@ def pdf(X,m, S):
 
     diff = (X - mm.T)
 
-    exp_term = -0.5 * (np.dot(diff, inv.T).dot(diff.T))
+    exp_term = -0.5 * (np.dot(diff, inv).dot(diff.T))
 
     res = scale * np.exp(exp_term)
 
