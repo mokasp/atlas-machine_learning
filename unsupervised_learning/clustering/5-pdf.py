@@ -25,7 +25,11 @@ def pdf(X,m, S):
     diag = np.eye(row, col, dtype=bool)
 
     exp_diag = exp_term[diag]
-    
+
     res = np.log(scale) + exp_diag
 
-    return np.exp(res)
+    p_d_f = np.exp(res)
+
+    p_d_f[p_d_f < 1e-300] = 1e-300
+
+    return p_d_f
