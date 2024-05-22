@@ -14,8 +14,11 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         g, likelihood = expectation(X, pi, m, S)
         if i % 10 == 0 and verbose is True:
             print(message.format(i, round(likelihood, 5)))
-        if i > 0 and (likelihood - prev_likelihood) <= tol:
-            print(message.format(i, round(likelihood, 5)))
+        if i > 0 and abs(likelihood - prev_likelihood) <= tol:
+            if verbose:
+                print(message.format(i, round(likelihood, 5)))
             return pi, m, S, g, likelihood
         pi, m, S = maximization(X, g)
+    if verbose:
+        print(message.format(i, round(likelihood, 5)))
     return pi, m, S, g, likelihood
