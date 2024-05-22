@@ -37,7 +37,7 @@ def expectation(X, pi, m, S):
 
     # check validity of m
     if not isinstance(m, type(np.array([]))) or len(m.shape) < 2 or isinstance(
-            m[0][0], type(np.array([]))) or m.shape[1] != S.shape[1]:
+            m[0][0], type(np.array([]))) or m.shape[1] != X.shape[1]:
         return None, None
 
     # check validity of pi
