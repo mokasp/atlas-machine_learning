@@ -27,9 +27,12 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         return None, None
 
     # check validity of kmin and kmax
-    if not isinstance(kmin, int) or kmin <= 0 or not isinstance(
-            kmax, int) or kmax <= 0:
+    if not isinstance(kmin, int) or kmin <= 0:
         return None, None
+    
+    if kmax:
+        if not isinstance(kmax, int) or kmax <= 0:
+            return None, None
 
     # check validity of iterations
     if not isinstance(iterations, int) or iterations <= 0:
