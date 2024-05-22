@@ -51,6 +51,6 @@ def maximization(X, g):
         h = g[i] * t.T
         # calc weighted sum of squared distances of each dp from the mean
         j = np.dot(h, t)
-        # adjust for varying sizes of components
+        # adjust fur varying sizes of components
         cov[i] = j / np.sum(g[i])
     return pi, m, cov
