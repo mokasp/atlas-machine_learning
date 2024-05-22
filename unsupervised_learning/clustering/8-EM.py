@@ -6,15 +6,16 @@ maximization = __import__('7-maximization').maximization
 
 
 def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
+    message = 'Log Likelihood after {} iterations: {}'
     pi, m, S = initialize(X, k)
     for i in range(iterations):
         if i > 0:
-            last_l = l
-        g, l = expectation(X, pi, m, S)
-        if i % 10 == 0 and verbose == True:
-            print('Log Likelihood after {} iterations: {}'.format(i, round(l, 5)))
-        if i > 0 and l - last_l <= tol:
-            print('Log Likelihood after {} iterations: {}'.format(i, round(l, 5)))
-            return pi, m, S, g, l
+            prev_likelihood = likelihood
+        g, likelihood = expectation(X, pi, m, S)
+        if i % 10 == 0 and verbose is True:
+            print(message.format(i, round(likelihood, 5)))
+        if i > 0 and (likelihood - prev_likelihood) <= tol:
+            print(message.format(i, round(likelihood, 5)))
+            return pi, m, S, g, likelihood
         pi, m, S = maximization(X, g)
-    return pi, m, S, g, l
+    return pi, m, S, g, likelihood
