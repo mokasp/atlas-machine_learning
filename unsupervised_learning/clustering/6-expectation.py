@@ -5,7 +5,7 @@ pdf = __import__('5-pdf').pdf
 
 def expectation(X, pi, m, S):
     d, _ = X.shape
-    k, _ = m.shape
+    k, _= m.shape
     nums = np.zeros(shape=(k, d))
     e_step = np.zeros(shape=(k, d))
     for i in range(len(m)):
