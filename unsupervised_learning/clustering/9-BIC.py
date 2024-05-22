@@ -8,7 +8,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     l_s = []
     for i in range(kmin, kmax):
 
-        # calc EM for each cluster sie
+        # calc EM fur each cluster sie
         pi, m, S, g, l = expectation_maximization(X, i, iterations, tol, verbose)
 
         # get shapes
