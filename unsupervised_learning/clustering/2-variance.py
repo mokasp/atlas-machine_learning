@@ -41,6 +41,14 @@ def variance(X, C):
     var : float or None
         Total intra-cluster variance. Returns None on failure.
     """
+    if not isinstance(X, type(np.array([]))) or len(
+            X.shape) < 2 or isinstance(X[0][0], type(np.array([]))):
+        return None
+
+    if not isinstance(C, type(np.array([]))) or len(
+            C.shape) < 2 or isinstance(C[0][0], type(
+                np.array([]))) or X.shape[1] != C.shape[1]:
+        return None
 
     # get labels with which centroids each point belongs to, along with the
     # squared distances
