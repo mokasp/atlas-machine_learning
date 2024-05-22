@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
+""" function that calculatea the maximization step in the EM algorithm for
+    a Gaussian Mixture Model. """
 import numpy as np
 
 
 def maximization(X, g):
-    """
-    Calculate the maximization step in the EM algorithm for a Gaussian Mixture Model.
+    """ function that calculatea the maximization step in the EM algorithm
+        for a Gaussian Mixture Model.
 
         Parameters
         ----------
         X : numpy.ndarray
             Data set with shape (n, d).
         g : numpy.ndarray
-            Posterior probabilities for each data point in each cluster with shape (k, n).
+            Posterior probabilities for each data point in each cluster
+            with shape (k, n).
 
         Returns
         -------
