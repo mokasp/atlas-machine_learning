@@ -43,7 +43,7 @@ def maximization(X, g):
 
     # create empty matrix to store covariance matrix
     cov = np.zeros((k, d, d))
-    # for each cluster
+    # fur each cluster
     for i in range(k):
         # center data around mean
         t = X - m[i]
