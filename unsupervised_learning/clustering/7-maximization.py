@@ -25,7 +25,6 @@ def maximization(X, g):
             Updated covariance matrices for each cluster with shape (k, d, d).
             Returns None on failure.
     """
-    print(g)
     # get shapes
     n, d = X.shape
     k, _ = g.shape
