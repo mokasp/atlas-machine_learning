@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+""" module containing function that perform K-means clustering on a
+dataset using sklearn"""
 import sklearn.cluster
 
 
 def kmeans(X, k):
-    """function that perform K-means clustering on a dataset using sklearn
+    """ function that perform K-means clustering on a dataset using sklearn
 
     Parameters
     ----------
