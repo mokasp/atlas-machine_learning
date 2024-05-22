@@ -31,13 +31,13 @@ def maximization(X, g):
     # check validity of X
     if not isinstance(X, type(np.array([]))) or len(
             X.shape) < 2 or isinstance(X[0][0], type(np.array([]))):
-        return None, None
+        return None, None, None
 
     # check validity of g
     if not isinstance(g, type(np.array([]))) or \
         len(g.shape) < 2 or g.shape[1] != X.shape[0] or \
             not np.isclose(np.sum(g[0]), 1):
-        return None, None
+        return None, None, None
 
     # get shapes
     n, d = X.shape
