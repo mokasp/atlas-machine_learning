@@ -23,15 +23,14 @@ def pdf(X, m, S):
             PDF values for each data point with shape (n,).
             Returns None on failure.
     """
-
     # check validity of X
     if not isinstance(X, type(np.array([]))) or len(
-            X.shape) < 2 or isinstance(X[0][0], type(np.array([]))):
+            X.shape) < 2:
         return None
 
     # check validity of m
     if not isinstance(m, type(np.array([]))) or len(
-            m.shape) > 1 or not isinstance(m[0], np.int64):
+            m.shape) > 1 or not m[0].is_integer():
         return None
 
     # check validity of S
