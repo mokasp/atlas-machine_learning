@@ -30,10 +30,7 @@ def pdf(X, m, S):
 
     # check validity of m
     if not isinstance(m, type(np.array([]))) or len(
-            m.shape) > 1:
-        return None
-    
-    if not isinstance(m[0], np.int64) or not m[0].is_integer():
+            m.shape) > 1 or m.shape[0] != X.shape[1]:
         return None
 
     # check validity of S
