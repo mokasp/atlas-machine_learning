@@ -42,7 +42,7 @@ def expectation(X, pi, m, S):
 
     # check validity of pi
     if not isinstance(pi, type(np.array([]))) or len(
-            pi.shape) < 2:
+            pi.shape) < 1 or not np.isclose(np.sum(pi), 1):
         return None, None
 
     # check validity of S
