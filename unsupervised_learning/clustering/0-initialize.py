@@ -31,7 +31,5 @@ def initialize(X, k):
 
     min_v = np.min(X, axis=0)
     max_v = np.max(X, axis=0)
-    print(min_v)
-    print(max_v)
 
     return np.random.uniform(low=min_v, high=max_v, size=(k, d))
