@@ -23,8 +23,16 @@ def agglomerative(X, dist):
             Index of the cluster in C that each data point belongs to
             with shape (n,).
     """
+    # hierarchical clustering with ward linkage
     z = scipy.cluster.hierarchy.linkage(X, 'ward')
+
+    # visualize the dendrogram with color threshold dist
     den = scipy.cluster.hierarchy.dendrogram(z, color_threshold=dist)
+
+    # assign each dp to a cluster based on distance threshold
     clss = scipy.cluster.hierarchy.fcluster(z, t=dist, criterion='distance')
+
+    # display
     plt.show()
+
     return clss
