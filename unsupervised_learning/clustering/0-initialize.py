@@ -20,8 +20,8 @@ def initialize(X, k):
         Initialized centroids for each cluster with shape (k, d).
         Returns None on failure."""
 
-    if not isinstance(X, np.array([])) or len(X.shape) < 2 or type(
-            X[0][0]) is type(np.array([])):
+    if not isinstance(X, type(np.array([]))) or len(X.shape) < 2 or isinstance(
+            X[0][0], type(np.array([]))):
         return None
 
     if type(k) is not int or k <= 0:
