@@ -36,7 +36,7 @@ def pdf(X, m, S):
     # check validity of S
     if not isinstance(S, type(np.array([]))) or len(
             S.shape) < 2 or isinstance(S[0][0], type(np.array([]))) \
-                or S.shape[0] != S.shape[1]:
+            or S.shape[0] != S.shape[1]:
         return None
 
     # get shapes
