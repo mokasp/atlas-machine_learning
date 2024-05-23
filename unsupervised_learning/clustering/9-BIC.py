@@ -52,27 +52,27 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     # check validity of X
     if not isinstance(X, type(np.array([]))) or len(
             X.shape) < 2 or isinstance(X[0][0], type(np.array([]))):
-        return None, None, None
+        return None, None, None, None
 
     # check validity of kmin and kmax
     if not isinstance(kmin, int) or kmin <= 0:
-        return None, None
+        return None, None, None, None
 
     if kmax is None:
         kmax = X.shape[0]
 
     if kmax is not None:
         if not isinstance(kmax, int) or kmax <= 0 or kmin >= kmax:
-            return None, None
+            return None, None, None, None
 
     # check validity of iterations
     if not isinstance(iterations, int) or iterations <= 0:
-        return None, None
+        return None, None, None, None
 
     # check validity of tol and verbose
     if not isinstance(tol, float) or tol <= 0 or \
             not isinstance(verbose, bool):
-        return None, None
+        return None, None, None, None
 
     bic_s = []
     l_s = []
