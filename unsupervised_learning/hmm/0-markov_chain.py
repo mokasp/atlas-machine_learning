@@ -16,4 +16,4 @@ def markov_chain(P, s, t=1):
         
         dist.append(p_dist)
         state = np.random.choice(states, p=p_dist)
-    return np.array(np.mean(dist, axis=0))
+    return np.array([np.mean(dist, axis=0)])
