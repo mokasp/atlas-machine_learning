@@ -12,7 +12,7 @@ def markov_chain(P, s, t=1):
     for i in range(t):
         current = state
 
-        p_dist = P[list(states).index(current)]
+        p_dist = P[current]
         
         dist.append(p_dist)
         state = np.random.choice(states, p=p_dist)
