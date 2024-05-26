@@ -1,19 +1,35 @@
 #!/usr/bin/env python3
+""" function that calculates the probability of a markov chain being in a
+        particular state after a specified number of iterations """
 import numpy as np
 
 
 def markov_chain(P, s, t=1):
-    n = len(s[0])
-    states = np.arange(n)
-    state = np.random.choice(states, p=s[0])
+    """ function that calculates the probability of a markov chain being in a
+        particular state after a specified number of iterations
 
-    dist = []
+        Parameters
+        ----------
+        P : numpy.ndarray
+            Transition matrix of shape (n x n) where
+            n is the number of states.
+        s : numpy.ndarray
+            Probability of starting in each state, shape
+            (1, n)
+        t : int
+            number of iterations the markov chain went through
 
-    for i in range(t):
-        current = state
+        Returns
+        -------
+        S : numpy.ndarray or None
+            probability matrix of being in a specific state after t iterations
+            None on failure
 
-        p_dist = P[current]
-        
-        dist.append(p_dist)
-        state = np.random.choice(states, p=p_dist)
-    return np.array([np.mean(dist, axis=0)])
+        """
+    # transition matrix t times
+    p_t = np.linalg.matrix_power(P, t)
+
+    # starting prob matrix times transition^t
+    S = np.matmul(s, p_t)
+
+    return S
