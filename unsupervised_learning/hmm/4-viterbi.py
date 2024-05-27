@@ -1,9 +1,38 @@
 #!/usr/bin/env python3
+""" function that calculates the most likely sequence of hidden states for a
+    Hidden Markov Model using the Viterbi algorithm. """
 import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
+    """ function that calculates the most likely sequence of hidden states for a Hidden Markov Model using the Viterbi algorithm.
 
+        Parameters
+        ----------
+        Observation : numpy.ndarray
+            Array of shape (T,) containing the index of the observation.
+        Emission : numpy.ndarray
+            Array of shape (N, M) containing emission probabilities.
+            Emission[i, j] is the probability of observing j given the
+            hidden state i.
+        Transition : numpy.ndarray
+            Array of shape (N, N) containing transition probabilities.
+            Transition[i, j] is the probability of transitioning from
+            hidden state i to j.
+        Initial : numpy.ndarray
+            Array of shape (N, 1) containing the probability of starting
+            in a particular hidden state.
+
+        Returns
+        -------
+        path : list or None
+            A list of length T containing the most likely sequence of
+            hidden states.
+            None on failure.
+        P : float or None
+            The probability of obtaining the path sequence.
+            None on failure.
+    """
     # reshape initial dist to make compatible with other matrices
     init = Initial.T[0]
 
