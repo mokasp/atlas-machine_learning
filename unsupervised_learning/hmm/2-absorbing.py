@@ -1,8 +1,25 @@
 #!/usr/bin/env python3
+""" module containing function that determines if a markov chain is absorbing """
 import numpy as np
 
 
 def absorbing(P):
+    """ function that determines if a markov chain is absorbing
+
+        Parameters
+        ----------
+        P : numpy.ndarray
+            Transition matrix of shape (n x n) where
+            n is the number of states.
+            P[i, j] is the probability of transitioning from
+            state i to state j
+
+        Returns
+        -------
+        bool
+            True if markov chain is absorbing, otherwise False
+
+        """
     # get size of P
     n = len(P)
 
