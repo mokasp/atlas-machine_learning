@@ -3,7 +3,7 @@ import numpy as np
 
 
 def forward(Observation, Emission, Transition, Initial):
-    
+
     # reshape initial dist to make compatible with other matrices
     init = Initial.T[0]
 
@@ -14,7 +14,8 @@ def forward(Observation, Emission, Transition, Initial):
     # create empty matrix to store forward path probabilities
     F = np.zeros((T, N))
 
-    # get first forward probability with probability of the initial state times the emission probability of first observation
+    # get first forward probability with probability of the initial state
+    # times the emission probability of first observation
     F[0, :] = init * Emission[:, Observation[0]]
 
     # for each observation
@@ -23,11 +24,14 @@ def forward(Observation, Emission, Transition, Initial):
         # iterate through each state
         for j in range(N):
 
-            # calculate the forward probaility of that state with that observation
-            F[t, j] = F[t - 1].dot(Transition[:, j]) * Emission[j, Observation[t]]
+            # calculate the forward probaility of that state with that
+            # observation
+            F[t, j] = F[t - 1].dot(Transition[:, j]) * \
+                Emission[j, Observation[t]]
 
-    # get likelihood of the observations by summing the forward probabilities from the last timestep
-    likelihood = np.sum(F[T- 1])
+    # get likelihood of the observations by summing the forward probabilities
+    # from the last timestep
+    likelihood = np.sum(F[T - 1])
 
     # transform to get correct shape and return
     return likelihood, F.T

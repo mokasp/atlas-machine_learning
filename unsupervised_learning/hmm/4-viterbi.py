@@ -3,7 +3,7 @@ import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
-    
+
     # reshape initial dist to make compatible with other matrices
     init = Initial.T[0]
 
@@ -24,7 +24,7 @@ def viterbi(Observation, Emission, Transition, Initial):
 
         # iterate through each state
         for j in range(N):
-            
+
             # get probability to use to find max's
             prob = V[:, t - 1] * Transition[:, j] * Emission[j, Observation[t]]
 
@@ -36,7 +36,7 @@ def viterbi(Observation, Emission, Transition, Initial):
 
     # get last state
     final = np.argmax(V[:, -1])
-    
+
     # get last prob in last determined state
     P = V[final, -1]
 
@@ -44,9 +44,9 @@ def viterbi(Observation, Emission, Transition, Initial):
     best_path[-1] = final
 
     # back tracking
-    for t in range(T  - 2, -1, -1):
+    for t in range(T - 2, -1, -1):
 
         # add appropriate state at each time t to best_path
         best_path[t] = M[best_path[t + 1], t + 1]
-    
+
     return list(best_path), P
