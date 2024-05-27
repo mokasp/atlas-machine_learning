@@ -3,21 +3,21 @@ import numpy as np
 
 
 def regular(p):
-         
-        # check to make sure all values in matrix are positive
-        if p.all() > 0:
 
-            # get the eigen values and eigen vectors
-            values, vectors = np.linalg.eig(p.T)
+    # check to make sure all values in matrix are positive
+    if p.all() > 0:
 
-            # find the index of the eigenvalue that equals 1
-            idx = list(np.round(values, decimals=1)).index(1)
+        # get the eigen values and eigen vectors
+        values, vectors = np.linalg.eig(p.T)
 
-            # get the vector associated with the value of 1
-            sstate_prob = vectors[:, idx]
+        # find the index of the eigenvalue that equals 1
+        idx = list(np.round(values, decimals=1)).index(1)
 
-            # normalize so probabilities add to 1
-            sstate_prob /= sum(sstate_prob)
+        # get the vector associated with the value of 1
+        sstate_prob = vectors[:, idx]
 
-            return  np.array([sstate_prob])
-        return None
+        # normalize so probabilities add to 1
+        sstate_prob /= sum(sstate_prob)
+
+        return np.array([sstate_prob])
+    return None
