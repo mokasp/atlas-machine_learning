@@ -30,4 +30,4 @@ def forward(Observation, Emission, Transition, Initial):
     likelihood = np.sum(F[T- 1])
 
     # transform to get correct shape and return
-    return F.T, likelihood
+    return likelihood, F.T
