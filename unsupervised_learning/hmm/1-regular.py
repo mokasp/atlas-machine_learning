@@ -19,5 +19,5 @@ def regular(p):
             # normalize so probabilities add to 1
             sstate_prob /= sum(sstate_prob)
 
-            return  sstate_prob
+            return  np.array([sstate_prob])
         return None
