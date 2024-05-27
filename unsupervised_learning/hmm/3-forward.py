@@ -22,9 +22,12 @@ def forward(Observation, Emission, Transition, Initial):
 
         # iterate through each state
         for j in range(N):
-            
+
             # calculate the forward probaility of that state with that observation
             F[t, j] = F[t - 1].dot(Transition[:, j]) * Emission[j, Observation[t]]
-    
+
+    # get likelihood of the observations by summing the forward probabilities from the last timestep
+    likelihood = np.sum(F[T- 1])
+
     # transform to get correct shape and return
-    return F.T
+    return F.T, likelihood
