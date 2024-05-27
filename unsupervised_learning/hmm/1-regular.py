@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
+""" module containing function that that determines the steady state
+    probabilities of a regular markov chain """
 import numpy as np
 
 
 def regular(p):
+    """ function that that determines the steady state probabilities of a
+        regular markov chain
 
+        Parameters
+        ----------
+        P : numpy.ndarray
+            Transition matrix of shape (n x n) where
+            n is the number of states.
+
+        Returns
+        -------
+        sstate_prob : numpy.ndarray or None
+            the steady state probabilities, or None on failure
+
+        """
     # check to make sure all values in matrix are positive
     if p.all() > 0:
 
