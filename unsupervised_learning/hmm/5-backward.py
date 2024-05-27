@@ -4,6 +4,9 @@ import numpy as np
 
 def backward(Observation, Emission, Transition, Initial):
 
+    # reshape initial dist to make compatible with other matrices
+    init = Initial.T[0]
+
     # get shapes
     T = Observation.shape[0]
     N, M = Emission.shape
@@ -23,8 +26,8 @@ def backward(Observation, Emission, Transition, Initial):
             # calculate the backward probaility of that state with that observation
             B[t, j] = (B[t + 1] * Emission[:, Observation[t + 1]]).dot(Transition[j, :])
 
-    # get likelihood of the observations by summing the backward probabilities from the first timestep
-    likelihood = np.sum(B[0])
+    # get likelihood of the observations by summing the initial state times the first observation times the backward probabilities from the first timestep
+    likelihood = np.sum(init * Emission[:, Observation[0]] * B[0, :])
 
     # transform to get correct shape and return
     return likelihood, B.T
