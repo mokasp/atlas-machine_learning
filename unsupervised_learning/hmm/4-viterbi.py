@@ -5,7 +5,8 @@ import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
-    """ function that calculates the most likely sequence of hidden states for a Hidden Markov Model using the Viterbi algorithm.
+    """ function that calculates the most likely sequence of hidden states for
+        a Hidden Markov Model using the Viterbi algorithm.
 
         Parameters
         ----------
