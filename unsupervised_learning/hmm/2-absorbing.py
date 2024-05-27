@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" module containing function that determines if a markov chain is absorbing """
+""" module containing function that determines if a markov chain is
+    absorbing """
 import numpy as np
 
 
