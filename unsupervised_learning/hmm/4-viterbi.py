@@ -49,4 +49,4 @@ def viterbi(Observation, Emission, Transition, Initial):
         # add appropriate state at each time t to best_path
         best_path[t] = M[best_path[t + 1], t + 1]
     
-    return best_path, P
+    return list(best_path), P
