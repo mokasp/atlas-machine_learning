@@ -23,10 +23,14 @@ def backward(Observation, Emission, Transition, Initial):
         # iterate through each state
         for j in range(N):
 
-            # calculate the backward probaility of that state with that observation
-            B[t, j] = (B[t + 1] * Emission[:, Observation[t + 1]]).dot(Transition[j, :])
+            # calculate the backward probaility of that state with that
+            # observation
+            B[t, j] = (B[t + 1] * Emission[:, Observation[t + 1]]
+                       ).dot(Transition[j, :])
 
-    # get likelihood of the observations by summing the initial state times the first observation times the backward probabilities from the first timestep
+    # get likelihood of the observations by summing the initial state times
+    # the first observation times the backward probabilities from the first
+    # timestep
     likelihood = np.sum(init * Emission[:, Observation[0]] * B[0, :])
 
     # transform to get correct shape and return
