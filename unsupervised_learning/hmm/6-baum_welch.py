@@ -130,6 +130,7 @@ def backward(Observation, Transition, Emission, Initial):
     # transform to get correct shape and return
     return likelihood, B
 
+
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """ tbc """
 
@@ -145,24 +146,28 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
         for t in range(T - 1):
 
-            denom = np.dot(np.dot(F[t, :].T, Transition) * Emission[:, Observations[t + 1]].T, B[t + 1, :])
-            
+            denom = np.dot(np.dot(F[t, :].T, Transition) *
+                           Emission[:, Observations[t + 1]].T, B[t + 1, :])
+
             for i in range(N):
-                numer = F[t, i] * Transition[i, :] * Emission[:, Observations[t + 1]].T *  B[t + 1, :].T
+                numer = F[t, i] * Transition[i, :] * \
+                    Emission[:, Observations[t + 1]].T * B[t + 1, :].T
 
                 delta[i, :, t] = numer / denom
-        
+
         gamma = np.sum(delta, axis=1)
 
-        Transition = np.sum(delta, axis=2) / np.sum(gamma, axis=1)[:, np.newaxis]
+        Transition = np.sum(delta, axis=2) / \
+            np.sum(gamma, axis=1)[:, np.newaxis]
 
-        gamma = np.column_stack((gamma, np.sum(delta[:, :,T - 2], axis=0)[:, np.newaxis]))
+        gamma = np.column_stack(
+            (gamma, np.sum(delta[:, :, T - 2], axis=0)[:, np.newaxis]))
 
         denom = np.sum(gamma, axis=1)[:, np.newaxis]
 
-        for l in range(M):
-            Emission[:, l] = np.sum(gamma[:, Observations == l], axis=1)
+        for i in range(M):
+            Emission[:, i] = np.sum(gamma[:, Observations == i], axis=1)
 
         Emission /= denom
-        
+
     return Transition, Emission
