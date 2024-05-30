@@ -137,6 +137,9 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     N, M = Emission.shape
     T = Observations.shape[0]
 
+    if iterations > T:
+        iterations = T
+
     for _ in range(iterations):
 
         l_f, F = forward(Observations, Transition, Emission, Initial)
