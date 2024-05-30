@@ -138,7 +138,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     T = Observations.shape[0]
 
     if iterations > T:
-        iterations = T
+        iterations = T + 15
 
     for _ in range(iterations):
 
