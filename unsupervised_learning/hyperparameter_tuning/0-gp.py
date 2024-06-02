@@ -67,8 +67,8 @@ class GaussianProcess():
         self.sigma_f = sigma_f
         X = np.concatenate((self.X, self.X), axis=1)
         Y = np.concatenate((self.X.T, self.X.T), axis=0)
-        K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2 / (2
-                                                              * self.l ** 2))))
+        K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2 /
+                                              (2 * self.ll ** 2))))
         self.K = K
 
     def kernel(self, X1, X2):
