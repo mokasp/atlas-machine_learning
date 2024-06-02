@@ -92,7 +92,6 @@ class GaussianProcess():
         K = self.sigma_f ** 2 * np.exp(-0.5 / self.l ** 2 * dist_mat)
         return K
 
-
     def predict(self, X_s):
         """ predicts the mean and standard deviation of points in a
             Gaussian process.
