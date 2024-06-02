@@ -85,6 +85,7 @@ class GaussianProcess():
         """
         X = np.concatenate((X1, X1), axis=1)
         Y = np.concatenate((X2.T, X2.T), axis=0)
-        expn = np.exp(-1 * (((X - Y) ** 2 / (2 * self.l ** 2))))
+        dist = (X - Y) ** 2
+        expn = np.exp(-(dist / (2 * self.l ** 2)))
         K = self.sigma_f ** 2 * expn
         return K
