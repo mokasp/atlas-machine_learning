@@ -61,6 +61,11 @@ class GaussianProcess():
             K : numpy.ndarray
                 Current covariance kernel matrix for the Gaussian process.
         """
+        self.X = X_init
+        self.Y = Y_init
+        self.l = l
+        self.sigma_f = sigma_f
+        self.K = self.kernel(self.X, self.X)
 
     def kernel(self, X1, X2):
         """ Calculates the covariance kernel matrix between two matrices using
@@ -78,3 +83,8 @@ class GaussianProcess():
             K : numpy.ndarray
                 Covariance kernel matrix, shape (m, n).
         """
+        X = np.concatenate((X1, X1), axis=1)
+        Y = np.concatenate((X1.T, X1.T), axis=0)
+        K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2 / (2
+                                                              * self.l ** 2))))
+        return K
