@@ -75,3 +75,8 @@ class BayesianOptimization():
                     Determines whether optimization should be performed for
                     minimization or maximization.
         """
+        self.f = f
+        self.gp = GP(X_init, Y_init, l, sigma_f)
+        self.X_s = np.array([np.linspace(bounds[0], bounds[1], ac_samples)]).T
+        self.xsi = xsi
+        self.minimize = minimize
