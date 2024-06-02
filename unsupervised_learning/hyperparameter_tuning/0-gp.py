@@ -65,11 +65,7 @@ class GaussianProcess():
         self.Y = Y_init
         self.l = l
         self.sigma_f = sigma_f
-        X = np.concatenate((self.X, self.X), axis=1)
-        Y = np.concatenate((self.X.T, self.X.T), axis=0)
-        K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2
-                                              / (2 * self.ll ** 2))))
-        self.K = K
+        self.K = self.kernel(self.X, self.X)
 
     def kernel(self, X1, X2):
         """ Calculates the covariance kernel matrix between two matrices using
@@ -89,6 +85,6 @@ class GaussianProcess():
         """
         X = np.concatenate((X1, X1), axis=1)
         Y = np.concatenate((X2.T, X2.T), axis=0)
-        K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2
-                                              / (2 * self.l ** 2))))
+        expn = np.exp(-1 * (((X - Y) ** 2 / (2 * self.l ** 2))))
+        K = self.sigma_f ** 2 * expn
         return K
