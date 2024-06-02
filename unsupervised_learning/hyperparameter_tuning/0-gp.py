@@ -83,9 +83,8 @@ class GaussianProcess():
             K : numpy.ndarray
                 Covariance kernel matrix, shape (m, n).
         """
-        X = np.concatenate((X1, X1), axis=1)
-        Y = np.concatenate((X2.T, X2.T), axis=0)
-        dist = (X - Y) ** 2
-        expn = np.exp(-(dist / (2 * self.l ** 2)))
-        K = self.sigma_f ** 2 * expn
+
+        dist_mat = (np.array([np.sum(X1 ** 2, 1)]).T + np.sum(
+            X2 ** 2, 1)) - (2 * np.dot(X1, X2.T))
+        K = self.sigma_f ** 2 * np.exp(-0.5 / self.l ** 2 * dist_mat)
         return K
