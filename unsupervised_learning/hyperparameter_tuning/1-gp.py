@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ module containing class that represents a noiseless 1D gaussian
     process """
+import numpy as np
 
 
 class GaussianProcess():
