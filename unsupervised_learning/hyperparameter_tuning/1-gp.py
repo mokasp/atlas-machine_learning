@@ -64,6 +64,11 @@ class GaussianProcess():
             K : numpy.ndarray
                 Current covariance kernel matrix for the Gaussian process.
         """
+        self.X = X_init
+        self.Y = Y_init
+        self.l = l
+        self.sigma_f = sigma_f
+        self.K = self.kernel(self.X, self.X)
 
     def kernel(self, X1, X2):
         """ Calculates the covariance kernel matrix between two matrices using
@@ -82,6 +87,12 @@ class GaussianProcess():
                 Covariance kernel matrix, shape (m, n).
         """
 
+        dist_mat = (np.array([np.sum(X1 ** 2, 1)]).T + np.sum(
+            X2 ** 2, 1)) - (2 * np.dot(X1, X2.T))
+        K = self.sigma_f ** 2 * np.exp(-0.5 / self.l ** 2 * dist_mat)
+        return K
+
+
     def predict(self, X_s):
         """ predicts the mean and standard deviation of points in a
             Gaussian process.
@@ -99,3 +110,10 @@ class GaussianProcess():
             sigma : numpy.ndarray
                 Variance for each point in X_s, shape (s,).
         """
+        k = self.kernel(self.X, self.X) + np.square(1e-8) * np.eye(len(self.X))
+        k_cv = self.kernel(self.X, X_s)
+        k_prior = self.kernel(X_s, X_s)
+        k_inv = np.linalg.inv(k)
+        mu = np.dot(np.dot(k_cv.T, k_inv), self.Y)
+        cov = k_prior - np.dot(np.dot(k_cv.T, k_inv), k_cv)
+        return mu.T[0], np.diag(cov)
