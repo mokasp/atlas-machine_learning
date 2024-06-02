@@ -88,7 +88,7 @@ class GaussianProcess():
                 Covariance kernel matrix, shape (m, n).
         """
         X = np.concatenate((X1, X1), axis=1)
-        Y = np.concatenate((X1.T, X1.T), axis=0)
+        Y = np.concatenate((X2.T, X2.T), axis=0)
         K = self.sigma_f ** 2 * np.exp(-1 * (((X - Y) ** 2 / (2
                                                               * self.l ** 2))))
         return K
