@@ -102,8 +102,15 @@ class BayesianOptimization():
                     shape (ac_samples,).
         """
         mu, std = self.gp.predict(self.X_s)
-        f_best = np.min(self.gp.Y)
+        if self.minimize:
+            f_best = np.min(self.gp.Y)
+        else:
+            f_best = np.max(self.gp.Y)
         impr = f_best - mu - self.xsi
         Z = impr / std
         ei = impr * norm.cdf(Z) + std * norm.pdf(Z)
-        return self.X_s[np.where(ei == np.max(ei))[0][0]], ei
+        if self.minimize:
+            X_next = self.X_s[np.where(ei == np.max(ei))[0][0]]
+        else:
+            X_next = self.X_s[np.where(ei == np.min(ei))[0][0]]
+        return X_next, ei
