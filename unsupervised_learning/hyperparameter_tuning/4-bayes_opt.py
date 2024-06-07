@@ -2,6 +2,7 @@
 """ module containing class that creates the class BayesianOptimization that
     performs Bayesian optimization on a noiseless 1D Gaussian process. """
 import numpy as np
+from scipy.stats import norm
 GP = __import__('2-gp').GaussianProcess
 
 
@@ -81,6 +82,12 @@ class BayesianOptimization():
                     Determines whether optimization should be performed for
                     minimization or maximization.
         """
+        self.f = f
+        self.gp = GP(X_init, Y_init, l, sigma_f)
+        self.X_s = np.array([np.linspace(bounds[0], bounds[1], ac_samples)]).T
+        self.xsi = xsi
+        self.minimize = minimize
+
 
     def acquisition(self):
         """ calculates the next best sample location using the Expected
@@ -94,3 +101,9 @@ class BayesianOptimization():
                     Expected improvement of each potential sample,
                     shape (ac_samples,).
         """
+        mu, std = self.gp.predict(self.X_s)
+        f_best = np.min(self.gp.Y)
+        impr = f_best - mu - self.xsi
+        Z = impr / std
+        ei = impr * norm.cdf(Z) + std * norm.pdf(Z)
+        return self.X_s[np.where(ei == np.max(ei))[0][0]], ei
