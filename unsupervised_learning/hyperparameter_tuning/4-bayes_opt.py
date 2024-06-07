@@ -88,7 +88,6 @@ class BayesianOptimization():
         self.xsi = xsi
         self.minimize = minimize
 
-
     def acquisition(self):
         """ calculates the next best sample location using the Expected
             Improvement acquisition function.
