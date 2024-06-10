@@ -116,7 +116,6 @@ class BayesianOptimization():
             X_next = self.X_s[np.where(ei == np.min(ei))[0][0]]
         return X_next, ei
 
-
     def optimize(self, iterations=100):
         """ optimizes the black-box function.
 
@@ -141,7 +140,7 @@ class BayesianOptimization():
             # check if X_next is already in the set to prevent duplicates
             if any(np.array_equal(X_next, x) for x in self.gp.X):
                 break
-            
+
             # eval objective function
             y_hat = self.f(X_next)
 
