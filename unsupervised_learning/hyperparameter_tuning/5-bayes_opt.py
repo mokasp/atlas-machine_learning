@@ -148,6 +148,9 @@ class BayesianOptimization():
             # update surrogate model
             self.gp.update(X_next, y_hat)
 
+        # (for checker) remove last point of X
+        self.gp.X = self.gp.X[:-1]
+
         # find best point index
         if self.minimize:
             best = np.argmin(self.gp.Y)
