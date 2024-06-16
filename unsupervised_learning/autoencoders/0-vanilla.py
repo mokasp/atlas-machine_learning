@@ -9,7 +9,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     first_hidden = K.layers.Dense(units=hidden_layers[0], activation='relu')(encode_inpt)
     second_hidden = K.layers.Dense(units=hidden_layers[1], activation='relu')(first_hidden)
     latent = K.layers.Dense(units=latent_dims, activation='relu')(second_hidden)
-    encode = K.Model(inputs=inpt, outputs=latent)
+    encode = K.Model(inputs=encode_inpt, outputs=latent)
 
     # decoder
     inpt = K.layers.Input(shape=(latent_dims,))
