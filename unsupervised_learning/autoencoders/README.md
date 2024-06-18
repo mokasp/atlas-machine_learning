@@ -1,5 +1,8 @@
-# AUTOENCODERS
-![image](https://github.com/mokasp/atlas-machine_learning/assets/125315163/790443bb-37f5-43a4-bfa4-1caad81b4b9c)
+<h1 align='center'>AUTOENCODERS</h1>
+
+<div class='image' align='center'>
+  <img src='https://github.com/mokasp/atlas-machine_learning/assets/125315163/75f816ae-59ca-481a-ac33-e1c7573c46f2' alt='h'>
+</div>
 
 ## Overview
 This repository contains implementations of various types of autoencoders using TensorFlow. Autoencoders are a type of artificial neural network used to learn efficient representations of data, typically for the purpose of dimensionality reduction or feature learning. The network consists of two main parts:
