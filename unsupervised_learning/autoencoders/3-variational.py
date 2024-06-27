@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ tbw """
-import tensorflow.keras as K
 import tensorflow as tf
 
 
@@ -10,13 +9,13 @@ def autoencoder(input_dims, filters, latent_dims):
     def sample(params):
         """ tbw """
         z_mean, z_logsig = params
-        eps = K.backend.random_normal(
+        eps = tf.keras.backend.random_normal(
             shape=(
-                K.backend.shape(z_mean)[0],
-                K.backend.int_shape(z_mean)[1]),
+                tf.keras.backend.shape(z_mean)[0],
+                tf.keras.backend.int_shape(z_mean)[1]),
             mean=0.0,
             stddev=0.1)
-        out = z_mean + K.backend.exp(z_logsig)
+        out = z_mean + tf.keras.backend.exp(z_logsig)
 
         return out * eps
 
@@ -24,35 +23,41 @@ def autoencoder(input_dims, filters, latent_dims):
     decode_layers = filters[::-1]
 
     # encoder
-    encode_inpt = K.layers.Input(shape=(input_dims,))
+    encode_inpt = tf.keras.layers.Input(shape=(input_dims,))
     layer = encode_inpt
     for i in range(layers):
-        layer = K.layers.Dense(units=filters[i],
-                               activation='relu')(layer)
-    z_mean = K.layers.Dense(units=latent_dims)(layer)
-    z_logsig = K.layers.Dense(units=latent_dims)(layer)
-    points = K.layers.Lambda(sample, output_shape=(
+        layer = tf.keras.layers.Dense(units=filters[i],
+                                      activation='relu')(layer)
+    z_mean = tf.keras.layers.Dense(units=latent_dims)(layer)
+    z_logsig = tf.keras.layers.Dense(units=latent_dims)(layer)
+    points = tf.keras.layers.Lambda(sample, output_shape=(
         latent_dims,))([z_mean, z_logsig])
-    encode = K.Model(inputs=encode_inpt, outputs=[z_mean, z_logsig, points])
+    encode = tf.keras.Model(
+        inputs=encode_inpt, outputs=[
+            z_mean, z_logsig, points])
 
     # decoder
-    inpt = K.layers.Input(shape=(latent_dims,))
+    inpt = tf.keras.layers.Input(shape=(latent_dims,))
     layer = inpt
     for i in range(layers):
-        layer = K.layers.Dense(units=decode_layers[i],
-                               activation='relu')(layer)
-    latent = K.layers.Dense(units=input_dims, activation='sigmoid')(layer)
-    decode = K.Model(inputs=inpt, outputs=latent)
+        layer = tf.keras.layers.Dense(units=decode_layers[i],
+                                      activation='relu')(layer)
+    latent = tf.keras.layers.Dense(
+        units=input_dims,
+        activation='sigmoid')(layer)
+    decode = tf.keras.Model(inputs=inpt, outputs=latent)
 
     # full autoencoder
-    autoencode = K.Model(inputs=encode_inpt, outputs=decode(encode
-                                                            (encode_inpt)[2]))
+    autoencode = tf.keras.Model(inputs=encode_inpt,
+                                outputs=decode(encode(encode_inpt)[2]))
 
-    r_loss = K.losses.binary_crossentropy(encode_inpt, latent) * input_dims
-    kl_div = K.backend.sum(
-        1 + z_logsig - K.backend.square(z_mean) - K.backend.exp(z_logsig),
+    r_loss = tf.keras.losses.binary_crossentropy(
+        encode_inpt, latent) * input_dims
+    kl_div = tf.keras.backend.sum(
+        1 + z_logsig -
+        tf.keras.backend.square(z_mean) - tf.keras.backend.exp(z_logsig),
         axis=-1) * -0.5
-    total_loss = K.backend.mean(r_loss + kl_div)
+    total_loss = tf.keras.backend.mean(r_loss + kl_div)
 
     # compile
     autoencode.compile(optimizer='adam', loss=total_loss)
