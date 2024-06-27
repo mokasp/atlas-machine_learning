@@ -26,48 +26,81 @@ def autoencoder(input_dims, filters, latent_dims):
             The full autoencoder model.
     """
 
-    def sample(params):
-        z_mean, z_logsig = params
-        eps = K.backend.random_normal(shape=(K.backend.shape(z_mean)[0], K.backend.int_shape(z_mean)[1]), mean=0.0, stddev=0.1)
-        out = z_mean + K.backend.exp(z_logsig)
+    class Encoder(tf.keras.Model):
+        def __init__(self, name=None):
+            super().__init__(name=name)
+            self.hidden_layers = [
+                tf.keras.layers.Dense(
+                    units=f,
+                    activation='relu') for f in filters]
+            self.z_mean = tf.keras.layers.Dense(units=latent_dims)
+            self.z_logsig = tf.keras.layers.Dense(units=latent_dims)
 
-        return out * eps
+        def __call__(self, x):
+            for layer in self.hidden_layers:
+                x = layer(x)
+            z_mean = self.z_mean(x)
+            z_logsig = self.z_logsig(x)
+            return z_mean, z_logsig
 
-    layers = len(filters)
-    decode_layers = filters[::-1]
+    class Decoder(tf.keras.Model):
+        def __init__(self, name=None):
+            super().__init__(name=name)
+            decode_layers = filters[::-1]
+            self.hidden_layers = [
+                tf.keras.layers.Dense(
+                    units=f,
+                    activation='relu') for f in decode_layers]
+            self.output_layer = tf.keras.layers.Dense(
+                units=input_dims, activation='sigmoid')
 
-    # encoder
-    encode_inpt = K.layers.Input(shape=(input_dims,))
-    layer = encode_inpt
-    for i in range(layers):
-        layer = K.layers.Dense(units=filters[i],
-                               activation='relu')(layer)
-    z_mean = K.layers.Dense(units=latent_dims)(layer)
-    z_logsig = K.layers.Dense(units=latent_dims)(layer)
-    points = K.layers.Lambda(sample, output_shape=(latent_dims,))([z_mean, z_logsig])
-    encode = K.Model(inputs=encode_inpt, outputs=[z_mean, z_logsig, points])
+        def __call__(self, x):
+            for layer in self.hidden_layers:
+                x = layer(x)
+            return self.output_layer(x)
 
-    # decoder
-    inpt = K.layers.Input(shape=(latent_dims,))
-    layer = inpt
-    for i in range(layers):
-        layer = K.layers.Dense(units=decode_layers[i],
-                               activation='relu')(layer)
-    latent = K.layers.Dense(units=input_dims, activation='sigmoid')(layer)
-    decode = K.Model(inputs=inpt, outputs=latent)
+    class VariationalAutoencoder(tf.keras.Model):
+        def __init__(self, name=None):
+            super().__init__(name=name)
+            self.encoder = Encoder()
+            self.decoder = Decoder()
 
+        def reparameterize(self, z_mean, z_logsig):
+            eps = tf.random.normal(shape=tf.shape(z_mean))
+            return z_mean + tf.exp(0.5 * z_logsig) * eps
 
-    # full autoencoder
-    autoencode = K.Model(inputs=encode_inpt, outputs=decode(encode
-                                                            (encode_inpt)[2]))
+        def __call__(self, x):
+            z_mean, z_logsig = self.encoder(x)
+            z = self.reparameterize(z_mean, z_logsig)
+            x_recon = self.decoder(z)
+            return x_recon, z_mean, z_logsig
 
+    def compute_loss(x, x_recon, z_mean, z_logsig):
+        reconstruction_loss = tf.reduce_mean(
+            tf.reduce_sum(
+                tf.keras.losses.binary_crossentropy(
+                    x, x_recon), axis=1))
+        kl_divergence = -0.5 * \
+            tf.reduce_mean(
+                tf.reduce_sum(
+                    1 +
+                    z_logsig -
+                    tf.square(z_mean) -
+                    tf.exp(z_logsig),
+                    axis=1))
+        return reconstruction_loss + kl_divergence
 
-    r_loss = K.losses.binary_crossentropy(encode_inpt, latent) * input_dims
-    kl_div = K.backend.sum(1 + z_logsig - K.backend.square(z_mean) - K.backend.exp(z_logsig), axis=-1) * -0.5
-    total_loss = K.backend.mean(r_loss + kl_div)
+    encode = Encoder()
+    decode = Decoder()
+    autoencode = VariationalAutoencoder()
 
-
-    # compile
-    autoencode.compile(optimizer='adam', loss=total_loss)
+    autoencode.compile(
+        optimizer=tf.keras.optimizers.Adam(),
+        loss=lambda x,
+        x_recon: compute_loss(
+            x,
+            x_recon,
+            encode.z_mean,
+            encode.z_logsig))
 
     return encode, decode, autoencode
