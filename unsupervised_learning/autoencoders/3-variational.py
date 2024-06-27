@@ -59,7 +59,7 @@ def autoencoder(input_dims, filters, latent_dims):
         axis=-1) * -0.5
     total_loss = tf.keras.backend.mean(r_loss + kl_div)
 
-    # compile
-    autoencode.compile(optimizer='adam', loss=total_loss)
+    # # compile
+    # autoencode.compile(optimizer='adam', loss=total_loss)
 
     return encode, decode, autoencode
