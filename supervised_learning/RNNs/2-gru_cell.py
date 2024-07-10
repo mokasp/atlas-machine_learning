@@ -21,10 +21,19 @@ class GRUCell():
     def forward(self, h_prev, x_t):
         """ forward pass """
         h = np.concatenate((h_prev, x_t), axis=1)
-        h_t = np.tanh(np.dot(h, self.Wh) + self.bh)
+
+        z_t = self.sigmoid(np.dot(h, self.Wz) + self.bz)
+        r_t = self.sigmoid(np.dot(h, self.Wr) + self.br)
+        
+        h_tt = np.concatenate((r_t * h_prev, x_t), axis=1)
+        h_hat_t = np.tanh(np.dot(h_tt, self.Wh) + self.bh)
+        h_t = (1 - z_t) * h_prev + z_t * h_hat_t
         y = self.softmax(np.dot(h_t, self.Wy) + self.by)
 
         return h_t, y
+    
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
     
     def softmax(self, x):
         """ softmax activation """
