@@ -22,8 +22,19 @@ class LSTMCell():
     
     def forward(self, h_prev, c_prev, x_t):
         """ forward pass """
-        temp = np.ndarray([])
-        return temp, temp, temp
+        x = np.concatenate((h_prev, x_t), axis=1)
+
+        f_t = self.sigmoid(np.dot(x, self.Wf) + self.bf)
+        u_t = self.sigmoid(np.dot(x, self.Wu) + self.bu)
+        o_t = self.sigmoid(np.dot(x, self.Wo) + self.bo)
+        
+        c_t = f_t * c_prev + u_t * np.tanh(np.dot(x, self.Wc) + self.bc)
+
+        h_t = o_t * np.tanh(c_t)
+
+        y = self.softmax(np.dot(h_t, self.Wy) + self.by)
+
+        return h_t, c_t, y
     
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
