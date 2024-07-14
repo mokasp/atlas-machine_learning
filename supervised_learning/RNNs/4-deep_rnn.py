@@ -10,7 +10,6 @@ def deep_rnn(rnn_cells, X, h_0):
     Y = []
     H.append(h_0)
     for i in range(X.shape[0]):
-        print('timestep', i)
         t_H = []
         x = X[i]
         for cell in range(len(rnn_cells)):
