@@ -31,9 +31,11 @@ class BidirectionalCell():
     
     def output(self, H):
         """ calculate output """
-        y = self.softmax(np.dot(H, self.Wy) + self.by)
+        y = []
+        for t in range(len(H)):
+            y.append(self.softmax(np.dot(H[t], self.Wy) + self.by))
 
-        return y
+        return np.array(y)
     
     def softmax(self, x):
         """ softmax activation """
