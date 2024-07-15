@@ -19,11 +19,8 @@ class BidirectionalCell():
         """ forward pass """
         h = np.concatenate((h_prev, x_t), axis=1)
         hf_t = np.tanh(np.dot(h, self.Whf) + self.bhf)
-        hb_t = np.tanh(np.dot(h, self.Whb) + self.bhb)
-        h_fb = np.concatenate((hf_t, hb_t), axis=1)
-        y = self.softmax(np.dot(h_fb, self.Wy) + self.by)
 
-        return h_fb
+        return hf_t
     
     def softmax(self, x):
         """ softmax activation """
