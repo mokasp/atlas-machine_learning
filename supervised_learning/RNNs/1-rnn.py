@@ -14,5 +14,5 @@ def rnn(rnn_cell, X, h_0):
         h_prev, y = rnn_cell.forward(h_prev, X[i])
         H.append(h_prev)
         Y.append(y)
-    
+
     return np.array(H), np.array(Y)

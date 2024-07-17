@@ -18,9 +18,8 @@ def deep_rnn(rnn_cells, X, h_0):
             x = h_prev
         Y.append(y)
         H.append(t_H)
-    
-    return np.array(H), np.array(Y) 
 
+    return np.array(H), np.array(Y)
 
     # H = []
     # h_now = []

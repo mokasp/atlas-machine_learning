@@ -5,7 +5,9 @@ import numpy as np
 
 
 def bi_rnn(rnn_cell, X, h_0, h_t):
-    """ function that performs full forward propagation of an bidirectional RNN """
+    """ function that performs full forward propagation of a
+    bidirectional RNN """
+
     h_for = []
     h_back = []
     t_steps = X.shape[0]
