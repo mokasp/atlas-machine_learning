@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing a representation of a Gated Recurrent Unit cell """
+import numpy as np
 
 
 class GRUCell():
@@ -32,6 +32,7 @@ class GRUCell():
         return h_t, y
 
     def sigmoid(self, x):
+        """ sigmoid activation function """
         return 1 / (1 + np.exp(-x))
 
     def softmax(self, x):

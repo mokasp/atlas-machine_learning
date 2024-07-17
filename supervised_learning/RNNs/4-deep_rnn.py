@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing function that performs full forward propagation
     with a deep RNN """
+import numpy as np
 
 
 def deep_rnn(rnn_cells, X, h_0):
