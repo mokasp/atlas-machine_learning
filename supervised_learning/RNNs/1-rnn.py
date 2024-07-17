@@ -4,7 +4,6 @@
 import numpy as np
 
 
-
 def rnn(rnn_cell, X, h_0):
     """ function that performs full forward propagation of an RNN """
     h_prev = h_0
