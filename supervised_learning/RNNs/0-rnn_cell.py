@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing a representation of a simple RNN cell """
+import numpy as np
 
 
 class RNNCell():
     """ representation of a simple RNN cell """
 
     def __init__(self, i, h, o):
-        """ initialize """
+        """ initialize weights and biases """
         self.Wh = np.random.randn(h + i, h)
         self.bh = np.zeros((1, h))
         self.Wy = np.random.randn(h, o)
