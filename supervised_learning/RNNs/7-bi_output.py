@@ -2,9 +2,9 @@
 import numpy as np
 """ module containing a representation of a bidirectional RNN cell """
 
+
 class BidirectionalCell():
     """ representation of a Bidirectional RNN cell """
-    
 
     def __init__(self, i, h, o):
         """ initialize """
@@ -14,7 +14,7 @@ class BidirectionalCell():
         self.bhb = np.zeros((1, h))
         self.Wy = np.random.randn(h + h, o)
         self.by = np.zeros((1, o))
-    
+
     def forward(self, h_prev, x_t):
         """ forward """
         h = np.concatenate((h_prev, x_t), axis=1)
@@ -28,7 +28,7 @@ class BidirectionalCell():
         hb_t = np.tanh(np.dot(h, self.Whb) + self.bhb)
 
         return hb_t
-    
+
     def output(self, H):
         """ calculate output """
         y = []
@@ -36,7 +36,7 @@ class BidirectionalCell():
             y.append(self.softmax(np.dot(H[t], self.Wy) + self.by))
 
         return np.array(y)
-    
+
     def softmax(self, x):
         """ softmax activation """
         z = x - np.max(x, axis=1, keepdims=True)
