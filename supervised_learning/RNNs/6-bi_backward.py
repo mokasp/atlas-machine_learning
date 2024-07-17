@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing a representation of a bidirectional RNN cell """
+import numpy as np
 
 
 class BidirectionalCell():

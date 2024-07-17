@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 """ module containing a representation of an LSTM cell """
+import numpy as np
 
 
 class LSTMCell():
@@ -36,6 +36,7 @@ class LSTMCell():
         return h_t, c_t, y
 
     def sigmoid(self, x):
+        """ sigmoid activation function """
         return 1 / (1 + np.exp(-x))
 
     def softmax(self, x):
