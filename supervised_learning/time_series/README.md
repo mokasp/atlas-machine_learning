@@ -14,7 +14,7 @@ The dataset includes Bitcoin prices at 60-second intervals from 2014-12-01 to 20
 ## Usage
 1. Clone the repository.
 2. Ensure all required packages are installed.
-3. Place the dataset (coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv) in the project directory.
+3. Place the dataset (coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv.zip) in the project directory.
 4. Run ```unzip coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv.zip```
 5. Run forecast_btc.py to preprocess data and train the model.
 ## Modules
