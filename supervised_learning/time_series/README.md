@@ -2,12 +2,13 @@
 This project provides a pipeline to clean, preprocess, and forecast Bitcoin closing prices using an LSTM model.
 
 ## Requirements
-Python 3
-pandas
-numpy
-matplotlib
-tensorflow
-Dataset
+- Python 3
+- pandas
+- numpy
+- matplotlib
+- tensorflow
+  
+## Dataset
 The dataset includes Bitcoin prices at 60-second intervals from 2014-12-01 to 2019-01-09. It is resampled to hourly intervals.
 
 ## Usage
