@@ -9,7 +9,10 @@ def bag_of_words(sentences, vocb=None):
 
     # create vocab list if one does not exist
     if vocb is None:
+        flag = 1
         vocb = []
+    else:
+        flag = 0
 
     split_sentences = []
 
@@ -32,17 +35,19 @@ def bag_of_words(sentences, vocb=None):
             split_sentence.append(token)
 
             # add token to vocab list if not already present
-            if token not in vocb:
-                vocb.append(token)
+            if flag == 1:
+                if token not in vocb:
+                    vocb.append(token)
         split_sentences.append(split_sentence)
-    vocb = sorted(vocb)
+    if flag == 1:
+        vocb = sorted(vocb)
 
     # create empty vectors
     embeddings = np.zeros((len(sentences), len(vocb)))
 
     # check each vocab word for presence in each sentence
-    for x in range(len(vocb)):
-        for y in range(len(sentences)):
+    for x in range(embeddings.shape[1]):
+        for y in range(embeddings.shape[0]):
             if vocb[x] in split_sentences[y]:
                 embeddings[y][x] = 1
         
