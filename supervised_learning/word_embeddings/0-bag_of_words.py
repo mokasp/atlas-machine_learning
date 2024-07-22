@@ -49,6 +49,6 @@ def bag_of_words(sentences, vocb=None):
     for x in range(embeddings.shape[1]):
         for y in range(embeddings.shape[0]):
             if vocb[x] in split_sentences[y]:
-                embeddings[y][x] = 1
+                embeddings[y][x] += 1
         
     return embeddings.astype(int), vocb
