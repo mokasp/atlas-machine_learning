@@ -46,9 +46,9 @@ def bag_of_words(sentences, vocb=None):
     embeddings = np.zeros((len(sentences), len(vocb)))
 
     # check each vocab word for presence in each sentence
-    for x in range(embeddings.shape[1]):
-        for y in range(embeddings.shape[0]):
-            if vocb[x] in split_sentences[y]:
-                embeddings[y][x] += 1
+    for x in range(embeddings.shape[0]):
+        for y in range(len(split_sentences[x])):
+            if split_sentences[x][y] in vocb:
+                embeddings[x][vocb.index(split_sentences[x][y])] += 1
         
     return embeddings.astype(int), vocb
