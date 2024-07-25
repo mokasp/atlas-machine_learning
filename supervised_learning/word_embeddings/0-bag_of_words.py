@@ -29,9 +29,12 @@ def bag_of_words(sentences, vocb=None):
             # remove any 's
             if token.endswith("'s"):
                 token = token[:-2]
-            token = ''.join(filter(lambda x: x.islower() or x.isspace(), token))
+            token = ''.join(
+                filter(
+                    lambda x: x.islower() or x.isspace(),
+                    token))
 
-            #save cleaned split sentences
+            # save cleaned split sentences
             split_sentence.append(token)
 
             # add token to vocab list if not already present
@@ -50,5 +53,5 @@ def bag_of_words(sentences, vocb=None):
         for y in range(len(split_sentences[x])):
             if split_sentences[x][y] in vocb:
                 embeddings[x][vocb.index(split_sentences[x][y])] += 1
-        
+
     return embeddings.astype(int), vocb
