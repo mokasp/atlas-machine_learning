@@ -31,11 +31,11 @@ def cumulative_bleu(references, sentences, n):
                     ref_lengths.append(len(references[j]))
                 counts.append(rn_grams[j].count(unique_candidate[i]))
             maximums.append(max(counts))
-            
+
         bleu = (sum(maximums) / len(n_grams))
         bleu = np.log(bleu) * (1 / N)
         bleus.append(bleu)
-    
+
     bleu = np.exp(sum(bleus))
 
     if num_candidate <= min(ref_lengths):
