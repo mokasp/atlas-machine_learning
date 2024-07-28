@@ -19,9 +19,6 @@ def cumulative_bleu(references, sentences, n):
             for i in range(len(reference) - n + 1):
                 rn_gram.append(" ".join(reference[i:i + n]))
             rn_grams.append(rn_gram)
-        
-        print(n_grams)
-        print(rn_grams)
 
         num_candidate = len(sentences)
         maximums = []
