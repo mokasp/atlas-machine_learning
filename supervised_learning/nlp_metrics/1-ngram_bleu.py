@@ -8,12 +8,12 @@ def ngram_bleu(references, sentences, n):
     """ function that calculates the N-gram BLEU score for a sentence """
     n_grams = []
     for i in range(len(sentences) - n + 1):
-        n_grams.append(" ".join(sentences[i:i+n]))
+        n_grams.append(" ".join(sentences[i:i + n]))
     rn_grams = []
     for reference in references:
         rn_gram = []
         for i in range(len(reference) - n + 1):
-            rn_gram.append(" ".join(reference[i:i+n]))
+            rn_gram.append(" ".join(reference[i:i + n]))
         rn_grams.append(rn_gram)
 
     num_candidate = len(sentences)
