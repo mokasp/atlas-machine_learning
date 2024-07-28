@@ -18,4 +18,9 @@ def uni_bleu(references, sentences):
             counts.append(ref_sentence.count(unique_candidate[i]))
         maximums.append(max(counts))
 
-    return (sum(maximums) / num_candidate) * np.exp(1 - min(ref_lengths) / num_candidate)
+    bleu = (sum(maximums) / num_candidate)
+
+    if num_candidate <= min(ref_lengths):
+        bleu *= np.exp(1 - min(ref_lengths) / num_candidate)
+
+    return bleu
