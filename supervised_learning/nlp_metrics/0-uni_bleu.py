@@ -21,7 +21,7 @@ def uni_bleu(references, sentences):
         counts = []
         for ref_sentence in references:
 
-            # get lengths of all reference sentences to see if
+            # get lengths of all reference sentences to see  if
             # brevity penalty needs to be applied
             if i == len(unique_candidate) - 1:
                 ref_lengths.append(len(ref_sentence))
