@@ -1,5 +1,38 @@
 #!/usr/bin/env python3
-from transformers import tform
+"""
+This script implements a simple question-answering system using pre-trained
+models for semantic search and question answering. The system allows users
+to input queries, searches for the most relevant document in a given corpus,
+and returns an answer to the user's question based on that document.
+
+Dependencies:
+    - transformers: Provides pre-trained BERT models and tokenizers.
+    - tensorflow: Provides TensorFlow operations and the BERT model framework.
+    - tensorflow_hub: Provides access to pre-trained models, including the
+      Universal Sentence Encoder.
+    - numpy: Used for numerical operations, particularly in similarity scoring.
+    - os: Used for file and directory management.
+
+Modules:
+    - question_answer(corpus_path): Manages the user interaction loop,
+      handling queries and providing answers.
+    - semantic_search(sentence, references, sentence_encoder): Identifies the
+      most relevant document from the corpus by computing similarity scores
+      between the query and the documents.
+    - get_answer(question, reference, bert_qa, tokenizer): Extracts an answer
+      from the most relevant document using a BERT-based question-answering
+      model.
+
+Usage:
+    1. Prepare a directory containing text files (the corpus) that the system
+       will use as reference documents.
+    2. Run the script and provide the path to the corpus directory.
+    3. The system will prompt you to input a question.
+    4. The system will retrieve and display an answer based on the most
+       relevant document.
+    5. Type 'exit', 'quit', 'goodbye', or 'bye' to end the program.
+"""
+import transformers as tform
 import tensorflow as tf
 import tensorflow_hub as th
 import numpy as np
