@@ -85,7 +85,7 @@ def get_answer(question, reference, bert_qa, tokenizer):
 
     # if all logits are less than 0, there is no clear answer
     if np.max(start_logits) < 0 and np.max(end_logits) < 0:
-        return None
+        return 'Sorry, I do not understand your question.'
     
     # find the index of highest logit for both the start and end token
     start = tf.argmax(start_logits) + 1
