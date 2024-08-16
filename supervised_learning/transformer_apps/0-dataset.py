@@ -15,8 +15,10 @@
             Portuguese to English translation using the TED Talks dataset.
 
     Usage:
-        1. Instantiate the `Dataset` class to load the data and perform tokenization.
-        2. Access the training and validation datasets via `data_train` and `data_valid`.
+        1. Instantiate the `Dataset` class to load the data and perform
+           tokenization.
+        2. Access the training and validation datasets via `data_train` and
+           `data_valid`.
         3. Access the tokenizers via `tokenizer_en` and `tokenizer_pt`.
 """
 import tensorflow_datasets as tfds
@@ -39,6 +41,7 @@ class Dataset():
                 to convert Portuguese sentences into sequences of subword
                 tokens.
     """
+
     def __init__(self):
         """ initializes the Dataset class by loading the dataset and creating
             tokenizers for both Portuguese and English languages. """
@@ -50,28 +53,34 @@ class Dataset():
         self.tokenizer_pt = tokenizer_pt
 
     def load_dataset(self):
-      """ loads the Portuguese to English translation dataset.
+        """ loads the Portuguese to English translation dataset.
 
-          Returns:
-              tuple: A tuple containing the training and validation datasets.
-                Each dataset is a TensorFlow dataset of (Portuguese, English)
-                sentence pairs.
-          """
-      pt2en_train = tfds.load('ted_hrlr_translate/pt_to_en', split='train', as_supervised=True)
-      pt2en_val = tfds.load('ted_hrlr_translate/pt_to_en', split='validation', as_supervised=True)
-      return pt2en_train, pt2en_val
+            Returns:
+                tuple: A tuple containing the training and validation datasets.
+                  Each dataset is a TensorFlow dataset of (Portuguese, English)
+                  sentence pairs.
+            """
+        pt2en_train = tfds.load(
+            'ted_hrlr_translate/pt_to_en',
+            split='train',
+            as_supervised=True)
+        pt2en_val = tfds.load(
+            'ted_hrlr_translate/pt_to_en',
+            split='validation',
+            as_supervised=True)
+        return pt2en_train, pt2en_val
 
     def tokenize_dataset(self):
-      """ creates subword tokenizers for both the Portuguese and English
-          languages using the training dataset.
+        """ creates subword tokenizers for both the Portuguese and English
+            languages using the training dataset.
 
-          Returns:
-              tuple: A tuple containing the English and Portuguese
-                tokenizers. These tokenizers are capable of converting text
-                into subword tokens and back.
-      """
-      tokenize_en = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-          (en.numpy() for _, en in self.data_train), target_vocab_size=2**15)
-      tokenize_pt = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-          (pt.numpy() for pt, _ in self.data_train), target_vocab_size=2**15)
-      return tokenize_en, tokenize_pt
+            Returns:
+                tuple: A tuple containing the English and Portuguese
+                  tokenizers. These tokenizers are capable of converting text
+                  into subword tokens and back.
+        """
+        token_en = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
+            (en.numpy() for _, en in self.data_train), target_vocab_size=2**15)
+        token_pt = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
+            (pt.numpy() for pt, _ in self.data_train), target_vocab_size=2**15)
+        return token_en, token_pt
