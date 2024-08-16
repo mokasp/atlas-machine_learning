@@ -89,9 +89,9 @@ def get_answer(question, reference, bert_qa, tokenizer):
     
     # find the index of highest logit for both the start and end token
     start = tf.argmax(start_logits) + 1
-    end = tf.argmax(end_logits) + 1
+    end = tf.argmax(end_logits) + 2
 
     # use the indicies to get the answer from the original input tokens and combine them
-    answer = ' '.join(input_tokens[start:end + 1])
+    answer = ' '.join(input_tokens[start:end])
 
     return answer
