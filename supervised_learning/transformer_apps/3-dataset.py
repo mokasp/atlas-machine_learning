@@ -1,4 +1,26 @@
 #!/usr/bin/env python3
+""" this script defines a `Dataset` class that represents a loaded and
+    preprocessed dataset to be used for machine translation tasks. The
+    class handles the loading of training and validation datasets, as well
+    as tokenization of the input text in both the source and target languages.
+
+    Dependencies:
+        - tensorflow_datasets: A collection of ready-to-use datasets with
+            TensorFlow for machine learning and artificial intelligence
+            applications.
+
+    Class:
+        - Dataset: A class that encapsulates the process of loading and
+            preparing a dataset for machine translation, specifically
+            Portuguese to English translation using the TED Talks dataset.
+
+    Usage:
+        1. Instantiate the `Dataset` class to load the data and perform
+           tokenization.
+        2. Access the training and validation datasets via `data_train` and
+           `data_valid`.
+        3. Access the tokenizers via `tokenizer_en` and `tokenizer_pt`.
+"""
 import tensorflow as tf
 import tensorflow_datasets as tfds
 
