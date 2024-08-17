@@ -1,4 +1,47 @@
 #!/usr/bin/env python3
+""" this script defines a `question_answer` function that utilizes a
+    pre-trained BERT model for answering questions based on a reference
+    document. The function takes a question and a reference document as input
+    and returns the most likely answer from the document.
+
+    Dependencies:
+        - tensorflow: A library for numerical computation using data flow
+            graphs.
+        - tensorflow_hub: A library for reusable machine learning modules.
+        - transformers: A library for state-of-the-art Natural Language
+            Processing (NLP) models.
+        - numpy: A library for numerical operations in Python.
+
+    Function:
+        - question_answer(question, reference):
+            Takes a question and a reference document, processes them using
+            BERT for question answering, and returns the extracted answer.
+
+        Arguments:
+            - question (str): The question to be answered.
+            - reference (str): The document containing the information needed
+                to answer the question.
+
+        Returns:
+            - str: The extracted answer from the reference document. If no
+                clear answer is found, it returns a default message indicating
+                that the question is not understood.
+
+        Steps:
+            1. Load the BERT model and tokenizer from TF Hub and Hugging Face.
+            2. Tokenize the input question and reference document.
+            3. Create segment embeddings and attention masks required for BERT.
+            4. Convert tokenized inputs into TensorFlow tensors.
+            5. Run the BERT model to obtain start and end logits.
+            6. Determine start and end indices of the answer from the logits.
+            7. Extract and return the answer from the reference document.
+
+        Example:
+            question = "What is the capital of France?"
+            reference = "The capital of France is Paris."
+            answer = question_answer(question, reference)
+            print(answer)  # Output: "Paris"
+"""
 import tensorflow as tf
 import tensorflow_hub as th
 import transformers as tform
@@ -6,6 +49,24 @@ import numpy as np
 
 
 def question_answer(question, reference):
+    """ uses a pre-trained BERT model to answer a question based on a
+        reference document.
+
+        This function loads the BERT model and tokenizer, tokenizes the input
+        question and reference document, and processes them to extract the
+        most likely answer from the document. The answer is determined based
+        on the start and end logits output by BERT.
+
+        Args:
+            question (str): The question to be answered.
+            reference (str): The document containing the information needed to
+                answer the question.
+
+        Returns:
+            str: The extracted answer from the reference document. If no clear
+                answer is found, it returns a default message indicating that
+                the question is not understood.
+    """
     # load in models
     bert_qa = th.load("https://tfhub.dev/see--/bert-uncased-tf2-qa/1")
     tokenizer = tform.BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
