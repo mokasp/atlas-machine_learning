@@ -8,8 +8,9 @@
         - numpy: A library for numerical operations in Python.
 
     Functions:
-        - epsilon_greedy(Q, state, epsilon): trains a Q-learning agent on a
-            given environment
+        - train(env, Q, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99,
+            epsilon=1, min_epsilon=0.1, epsilon_decay=0.05): trains a
+                Q-learning agent on a given environment.
 """
 import numpy as np
 
@@ -63,27 +64,28 @@ def train(env, Q, episodes=5000, max_steps=100, alpha=0.1,
                 # exploitation: pick the action with highest q-value
                 action = np.argmax(Q[state, :])
 
-        # use selected action and get new reward
-        current_state, reward, end_of_episode, _ = env.step(action)
-        # if the agent fell in a hole, subtract from the total reqard
-        if end_of_episode and reward == 0:
-            reward = -1
+            # use selected action and get new reward
+            current_state, reward, end_of_episode, _ = env.step(action)
+            # if the agent fell in a hole, subtract from the total reqard
+            if end_of_episode and reward == 0:
+                reward = -1
 
-        # calculate the temporal difference error using the immediate reward
-        # and the discounted estimate of the future rewards
-        td_error = (reward +
-                    gamma *
-                    np.max(Q[current_state, :]) -
-                    Q[state, action])
+            # calculate the temporal difference error using the immediate
+            # reward and the discounted estimate of the future rewards
+            td_error = (reward +
+                        gamma *
+                        np.max(Q[current_state, :]) -
+                        Q[state, action])
 
-        # update the Q value, set new state, and add new reward to the total
-        Q[state, action] = Q[state, action] + alpha * td_error
-        state = current_state
-        rewards += reward
+            # update the Q value, set new state, and add new reward to the
+            # total
+            Q[state, action] = Q[state, action] + alpha * td_error
+            state = current_state
+            rewards += reward
 
-        # check if the episode is complete
-        if end_of_episode:
-            break
+            # check if the episode is complete
+            if end_of_episode:
+                break
 
         # epsilon decay - as the agent explores throughout training, we can
         # reduce the epsilon to encourage exploitation
