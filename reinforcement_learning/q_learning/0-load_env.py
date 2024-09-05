@@ -22,8 +22,12 @@ def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
                 load for the environment, or None
             map_name (optional, string): premade map to load, or None
             is_slippery (optional, bool): determines if the ice is slippery,
-                default is Fault
+                default is False
+
+        Returns:
+            The FrozenLake environment
     """
+    # use gym to initialize the frozenlake environ
     return gym.make('FrozenLake-v0',
                     desc=desc,
                     map_name=map_name,
