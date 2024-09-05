@@ -11,14 +11,13 @@ Adam._name = 'adam'
 from rl.agents.dqn import DQNAgent
 from rl.policy import EpsGreedyQPolicy
 from rl.memory import SequentialMemory
-import numpy as np
 
 env = gym.make('BreakoutDeterministic-v4')
 
 memory = SequentialMemory(limit=1000000, window_length=4)
 
 policy = EpsGreedyQPolicy()
-preprocessed = FrameStack(GrayScaleObservation(ResizeObservation(env, shape=(84, 84))), 4)
+env = FrameStack(GrayScaleObservation(ResizeObservation(env, shape=(84, 84))), 4)
 actions = env.action_space.n
 model = Sequential([
           Input(shape=(84,84,4,)),
