@@ -17,11 +17,12 @@ def q_init(env):
     """ function that initializes a Q-table with a FrozenLake environment
 
         Args:
-            reference (str): The reference text used to answer questions.
+            env (gym environment): FrozenLake instance
 
         Returns:
             (numpy.ndarray): Empty ndarray of zeros representing the Q-table
     """
+    # use the size of the action and space state to  create the empty q-table
     action_space = env.action_space
     state_space = env.observation_space
     return np.zeros((state_space.n, action_space.n))
