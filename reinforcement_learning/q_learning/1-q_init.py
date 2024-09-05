@@ -9,7 +9,7 @@
 
     Functions:
         - q_init(env): initializes a Q-table with a FrozenLake environment
-    """
+"""
 import numpy as np
 
 
