@@ -21,15 +21,15 @@
             support for large, multi-dimensional arrays and matrices, along
             with mathematical functions to operate on these arrays.
 """
-from rl.memory import SequentialMemory
-from rl.policy import EpsGreedyQPolicy
-from rl.agents.dqn import DQNAgent
 import tensorflow.keras as K
 from keras import __version__
 K.__version__ = __version__
 from K.optimizers import Adam
 from K.layers import Dense, Input, Flatten, Conv2D
 from K.models import Sequential
+from rl.memory import SequentialMemory
+from rl.policy import EpsGreedyQPolicy
+from rl.agents.dqn import DQNAgent
 import gym
 from gym.wrappers import GrayScaleObservation, FrameStack, ResizeObservation
 Adam._name = 'adam'
