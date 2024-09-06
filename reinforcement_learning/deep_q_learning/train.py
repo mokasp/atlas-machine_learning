@@ -24,10 +24,10 @@
 from rl.memory import SequentialMemory
 from rl.policy import EpsGreedyQPolicy
 from rl.agents.dqn import DQNAgent
-from K.optimizers import Adam
 import tensorflow.keras as K
 from keras import __version__
 K.__version__ = __version__
+from K.optimizers import Adam
 from K.layers import Dense, Input, Flatten, Conv2D
 from K.models import Sequential
 import gym
