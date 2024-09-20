@@ -21,6 +21,7 @@ def td_lambtha(env, V, policy, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         Args:
             env (gym.Env): gym environment instance.
             V (numpy.ndarray): value estimate
+            policy (function): takes in a state and returns the next action to take
             lambtha (float):  eligibility trace factor
             episodes (int): total number of episodes to train over,
                 default is 5000.
