@@ -1,9 +1,39 @@
 #!/usr/bin/env python3
+""" this script contains a function that performs TD(λ) with a gym
+    environment
+
+    Dependencies:
+        - gym: standard API for reinforcement learning with a diverse
+            collection of reference environments
+        - numpy: A library for numerical operations in Python.
+
+    Functions:
+        - td_lambtha(env, V, policy, lambtha, episodes=5000, max_steps=100,
+        alpha=0.1, gamma=0.99): performs TD(λ) on a given environment.
+"""
 import gym
 import numpy as np
 
 
 def td_lambtha(env, V, policy, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99):
+    """ function that performs the TD(λ) algorithm
+
+        Args:
+            env (gym.Env): gym environment instance.
+            V (numpy.ndarray): value estimate
+            lambtha (float):  eligibility trace factor
+            episodes (int): total number of episodes to train over,
+                default is 5000.
+            max_steps (int): maximum number of steps per episode,
+                default is 100.
+            alpha (float): learning rate for Q-learning, default is 0.1.
+            gamma (float): discount rate for future rewards, default is 0.99.
+
+
+        Returns:
+            np.ndarray: V
+                - V (numpy.ndarray): updated value estimate
+    """
 
     for episode in range(episodes):
         # reset the environment and EoE flag
