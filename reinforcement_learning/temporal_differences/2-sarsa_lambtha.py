@@ -32,15 +32,17 @@ def ep_greedy_policy(Q, state, epsilon):
     choice = np.random.random()
     # decide to explore or exploit based on the epsilon
     if choice < epsilon:
-      # exploration: pick a random action
-      action = np.random.randint(len(Q[state]))
+        # exploration: pick a random action
+        action = np.random.randint(len(Q[state]))
     else:
-      # exploitation: pick the action with highest q-value
-      action = np.argmax(Q[state, :])
+        # exploitation: pick the action with highest q-value
+        action = np.argmax(Q[state, :])
 
     return action
 
-def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
+
+def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
+                  gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
     """ function that that performs SARSA(λ)
 
         Args:
@@ -82,13 +84,15 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamm
 
             # calculate the temporal difference error using the immediate
             # reward and the discounted estimate of the future rewards
-            td_error = reward + (gamma * Q[current_state, next_action]) - Q[state, action]
+            td_error = reward + \
+                (gamma * Q[current_state, next_action]) - Q[state, action]
 
             # add one each time a certain state is visited
             eligibility_trace[state, action] += 1
 
             # update the Q value using the eligibility trace
-            Q[state, action] = Q[state, action] + alpha * td_error * eligibility_trace[state, action]
+            Q[state, action] = Q[state, action] + alpha * \
+                td_error * eligibility_trace[state, action]
 
             # decay the eligibility trace
             eligibility_trace *= gamma * lambtha
@@ -105,6 +109,5 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamm
         # reduce the epsilon to encourage exploitation
         epsilon = min_epsilon + (epsilon - min_epsilon) * \
             np.exp(-epsilon_decay * episode)
-
 
     return Q
