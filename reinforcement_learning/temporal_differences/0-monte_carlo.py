@@ -16,18 +16,21 @@ import gym
 import numpy as np
 
 
-def monte_carlo(env, V, policy, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99):
+def monte_carlo(env, V, policy, episodes=5000,
+                max_steps=100, alpha=0.1, gamma=0.99):
     """ function that performs the monte carlo algorithm
 
         Args:
             env (gym.Env): gym environment instance.
             V (numpy.ndarray): value estimate
-            policy (function): takes in a state and returns the next action to take
+            policy (function): takes in a state and returns the next action
+                to take
             episodes (int): total number of episodes to train over,
                 default is 5000.
             max_steps (int): maximum number of steps per episode,
                 default is 100.
-            alpha (float): learning rate for value estimate update, default is 0.1.
+            alpha (float): learning rate for value estimate update,
+                default is 0.1.
             gamma (float): discount rate for future rewards, default is 0.99.
 
 
@@ -35,7 +38,6 @@ def monte_carlo(env, V, policy, episodes=5000, max_steps=100, alpha=0.1, gamma=0
             np.ndarray: V
                 - V (numpy.ndarray): updated value estimate
     """
-
 
     for i in range(episodes):
         # reset environment
@@ -62,9 +64,9 @@ def monte_carlo(env, V, policy, episodes=5000, max_steps=100, alpha=0.1, gamma=0
             if done:
                 break
 
-        # keep track of the accumulated reward 
+        # keep track of the accumulated reward
         returns = 0
-        for step in range(len(states)-1, -1, -1):
+        for step in range(len(states) - 1, -1, -1):
 
             # get the state and reward from this timestep for this episode
             state = states[step]
@@ -75,7 +77,7 @@ def monte_carlo(env, V, policy, episodes=5000, max_steps=100, alpha=0.1, gamma=0
 
             # if the state hasnt been visited yet in this episode
             if state not in states[:i]:
-              
-              # update the value estimate
-              V[state] += alpha * (returns - V[state])
+
+                # update the value estimate
+                V[state] += alpha * (returns - V[state])
     return V
