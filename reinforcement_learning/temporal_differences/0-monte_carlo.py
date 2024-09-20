@@ -46,3 +46,4 @@ def monte_carlo(env, V, policy, episodes=5000, max_steps=100, alpha=0.1, gamma=0
               
               # update the value estimate
               V[state] += alpha * (returns - V[state])
+    return V
