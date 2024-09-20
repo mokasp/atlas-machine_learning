@@ -1,9 +1,32 @@
 #!/usr/bin/env python3
+""" this script contains a function that performs SARSA(λ) with a gym
+    environment
+
+    Dependencies:
+        - gym: standard API for reinforcement learning with a diverse
+            collection of reference environments
+        - numpy: A library for numerical operations in Python.
+
+    Functions:
+        - sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100,
+            alpha=0.1, gamma=0.99, epsilon=1, min_epsilon=0.1,
+            epsilon_decay=0.05): performs SARSA(λ) on a given environment.
+        - ep_greedy_policy(Q, state, epsilon): performs epsilon greedy policy
+"""
 import gym
 import numpy as np
 
 
 def ep_greedy_policy(Q, state, epsilon):
+    """ function that performs the epsilon greedy policy
+
+        Args:
+            Q (numpy.ndarray): Q-table where rows represent states and columns
+                represent actions.
+            state (int): the current state of the agent
+            epsilon (float): initial exploration rate for the epsilon-greedy
+                policy, default is 1.
+    """
     # use epsilon-greedy to decide the next move
     # choose a random value between 0 and 1
     choice = np.random.random()
@@ -18,7 +41,30 @@ def ep_greedy_policy(Q, state, epsilon):
     return action
 
 def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
+    """ function that that performs SARSA(λ)
 
+        Args:
+            env (gym.Env): gym environment instance.
+            Q (numpy.ndarray): Q-table where rows represent states and columns
+                represent actions.
+            lambtha (float):  eligibility trace factor
+            episodes (int): total number of episodes to train over,
+                default is 5000.
+            max_steps (int): maximum number of steps per episode,
+                default is 100.
+            alpha (float): learning rate for Q-learning, default is 0.1.
+            gamma (float): discount rate for future rewards, default is 0.99.
+            epsilon (float): initial exploration rate for the epsilon-greedy
+                policy, default is 1.
+            min_epsilon (float): minimum value that epsilon should decay to,
+                default is 0.1.
+            epsilon_decay (float): rate at which epsilon decays after each
+                episode, default is 0.05.
+
+        Returns:
+            np.ndarray: Q
+                - Q (numpy.ndarray): updated Q-table after sarsa lambda.
+    """
     for episode in range(episodes):
         # reset the environment and EoE flag
         state = env.reset()
