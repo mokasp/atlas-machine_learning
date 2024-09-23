@@ -3,8 +3,8 @@ monte carlo policy gradients are a class of reinforcement learning algorithms th
 
 ## How to Run
 make sure to downgrade pyglet to version ```1.5.27``` before running mainfiles
-<br/><br/>```pip install pyglet==1.5.27```<br/><br/><br/>to run a mainfile, run
-<br/>```./main-files/0-main.py```
+<br/><br/>```pip install pyglet==1.5.27```<br/><br/><br/>to run a mainfile, drag the main file out of the ```main-files``` folder into the ```policy_gradient``` folder along with ```train.py``` and ```policy_gradient.py```, and run
+<br/>```./0-main.py```
 ## Dependencies
 * ```gym==0.7```: For creating and interacting with the FrozenLake environment.
 * ```numpy```: For numerical operations and managing the Q-table.
