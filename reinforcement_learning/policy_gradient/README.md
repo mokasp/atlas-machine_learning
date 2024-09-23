@@ -1,4 +1,5 @@
 # Policy Gradients
+monte carlo policy gradients are a class of reinforcement learning algorithms that optimize the policy directly by leveraging complete episodes of experience. instead of relying on value function estimates, these methods use the actual returns obtained from episodes to update the policy. the primary goal is to adjust the policy parameters to increase the probability of actions that lead to higher cumulative rewards.
 
 ## How to Run
 make sure to downgrade pyglet to version ```1.5.27``` before running mainfiles
