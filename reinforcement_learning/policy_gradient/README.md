@@ -18,4 +18,5 @@ make sure to downgrade pyglet to version ```1.5.27``` before running mainfiles
 * ```policy_gradient(state, weight):``` Computes the action and the gradient of the policy for a given state.
 ## Resources
 - https://stackoverflow.com/questions/58585019/understanding-gradient-policy-deriving
-- https://intranet.atlasschool.com/captain_logs/207310/edit
+- https://towardsdatascience.com/policy-gradients-in-a-nutshell-8b72f9743c5d
+- https://www.youtube.com/watch?v=KHZVXao4qXs&t=2900s&ab_channel=GoogleDeepMind
