@@ -5,17 +5,17 @@ import time
 from policy_gradient import *
 
 
-def update_grad(rewards, grads, alpha, gamma, Q):
+def update_grad(rewards, grads, alpha, gamma, policy_weights):
     for i in range(len(grads)):
         discounted_sum = np.sum(rewards[i:] * (gamma ** rewards[i:]))
-        Q += alpha * discounted_sum * grads[i]
-    return Q
+        policy_weights += alpha * discounted_sum * grads[i]
+    return policy_weights
 
 def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
   num_actions = env.action_space.n
   num_states = env.observation_space.shape[0]
 
-  Q = np.random.rand(num_states, num_actions)
+  policy_weights = np.random.rand(num_states, num_actions)
 
   scores = []
 
@@ -30,7 +30,7 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
 
     for _ in range(500):
 
-      action, grad = policy_gradient(state, Q)
+      action, grad = policy_gradient(state, policy_weights)
 
       new_state, reward, done, _ = env.step(action)
 
@@ -51,6 +51,6 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
       time.sleep(.5)
 
     scores.append(score)
-    Q = update_grad(np.array(rewards), grads, alpha, gamma, Q)
+    policy_weights = update_grad(np.array(rewards), grads, alpha, gamma, policy_weights)
   
   return scores
