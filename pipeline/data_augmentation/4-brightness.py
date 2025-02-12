@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-    Randomly adjusts the brightness of an image.
+""" Randomly adjusts the brightness of an image.
 
     This function uses TensorFlow's `random_brightness` method to randomly
     adjust the brightness of the input image by a value within the range
