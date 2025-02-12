@@ -4,7 +4,8 @@
 
     Args:
         image (Tensor): A 3D tensor representing the image
-        (height, width, channels) with pixel values in the range [0, 1].
+        (height, width, channels) with pixel values in the range
+        [0, 1].
 
     Returns:
         Tensor: The image rotated by 90 degrees counterclockwise.
