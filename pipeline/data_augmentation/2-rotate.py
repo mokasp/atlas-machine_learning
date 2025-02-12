@@ -12,8 +12,7 @@
         Tensor: The image rotated by 90 degrees counterclockwise.
 
     Example:
-        ```python
-        import tensorflow as tf
+        ```
         image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
         rotated_image = rotate_image(image)
         ```

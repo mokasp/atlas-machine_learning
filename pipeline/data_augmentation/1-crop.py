@@ -13,8 +13,7 @@
         Tensor: The image cropped to the specified size.
 
     Example:
-        ```python
-        import tensorflow as tf
+        ```
         image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
         cropped_image = crop_image(image, [128, 128, 3])
         ```

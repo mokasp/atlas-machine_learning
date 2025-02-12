@@ -16,8 +16,7 @@
         Tensor: The image with the randomly adjusted contrast.
 
     Example:
-        ```python
-        import tensorflow as tf
+        ```
         image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
         adjusted_image = change_contrast(image, 0.5, 1.5)
         ```

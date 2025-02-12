@@ -15,8 +15,7 @@
         Tensor: The image with the adjusted hue.
 
     Example:
-        ```python
-        import tensorflow as tf
+        ```
         image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
         adjusted_image = change_hue(image, 0.2)
         ```

@@ -12,8 +12,7 @@
         Tensor: The image flipped horizontally.
 
     Example:
-        ```python
-        import tensorflow as tf
+        ```
         image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
         flipped_image = flip_image(image)
         ```
