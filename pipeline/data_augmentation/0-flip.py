@@ -3,14 +3,16 @@
     Flips an image horizontally (left to right).
 
     Args:
-        image (Tensor): A 3D tensor representing the image (height, width, channels) with pixel values in the range [0, 1].
+        image (Tensor): A 3D tensor representing the image
+        (height, width, channels) with pixel values in the range [0, 1].
 
     Returns:
         Tensor: The image flipped horizontally.
 
     Example:
         ```
-        image = tf.random.uniform(shape=[256, 256, 3], minval=0, maxval=1, dtype=tf.float32)
+        image = tf.random.uniform(shape=[256, 256, 3], minval=0,
+        maxval=1, dtype=tf.float32)
         flipped_image = flip_image(image)
         ```
 """
