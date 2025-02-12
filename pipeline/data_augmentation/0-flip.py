@@ -2,9 +2,6 @@
 """
     Flips an image horizontally (left to right).
 
-    This function uses TensorFlow's `flip_left_right` method to flip the input image along the vertical axis, 
-    creating a mirror image of the original.
-
     Args:
         image (Tensor): A 3D tensor representing the image (height, width, channels) with pixel values in the range [0, 1].
 
@@ -21,4 +18,7 @@ import tensorflow as tf
 
 
 def flip_image(image):
+    """ This function uses TensorFlow's `flip_left_right` method to flip the
+    input image along the vertical axis, creating a mirror image of
+    the original."""
     return tf.image.flip_left_right(image)
