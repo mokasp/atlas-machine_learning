@@ -2,9 +2,6 @@
 """
     Randomly crops an image to a specified size.
 
-    This function uses TensorFlow's `random_crop` method to randomly crop the input image to the given size. 
-    The size should be specified as a list or tuple of the form [height, width, channels].
-
     Args:
         image (Tensor): A 3D tensor representing the image (height, width, channels) with pixel values in the range [0, 1].
         size (list or tuple): A list or tuple specifying the target size of the cropped image, in the format [height, width, channels].
@@ -22,4 +19,6 @@ import tensorflow as tf
 
 
 def crop_image(image, size):
+    """ This function uses TensorFlow's `random_crop` method to randomly crop the input image to the given size. 
+    The size should be specified as a list or tuple of the form [height, width, channels]. """
     return tf.image.random_crop(image, size)

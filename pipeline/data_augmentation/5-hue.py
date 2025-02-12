@@ -2,10 +2,6 @@
 """
     Adjusts the hue of an image.
 
-    This function uses TensorFlow's `adjust_hue` method to apply a hue
-    adjustment to the input image. The `delta` value controls the amount
-    of adjustment.
-
     Args:
         image (Tensor): A 3D tensor representing the image (height, width,
         channels) with pixel values in the range [0, 1].
@@ -28,4 +24,7 @@ import tensorflow as tf
 
 
 def change_hue(image, delta):
+    """ This function uses TensorFlow's `adjust_hue` method to apply a hue
+    adjustment to the input image. The `delta` value controls the amount
+    of adjustment."""
     return tf.image.adjust_hue(image, delta)
