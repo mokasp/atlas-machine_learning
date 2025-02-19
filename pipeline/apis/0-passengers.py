@@ -8,9 +8,9 @@ def availableShips(passengerCount):
     next_page = True
     page = 1
     filtered_ships = []
-    swapi =  requests.get('https://swapi-api.hbtn.io/api/starships/')
+    swapi = requests.get('https://swapi-api.hbtn.io/api/starships/')
     while next_page:
-        if swapi.json()['next'] == None:
+        if swapi.json()['next'] is None:
             next_page = False
         else:
             ship_subset = swapi.json()['results']
@@ -27,4 +27,3 @@ def availableShips(passengerCount):
             url = 'https://swapi-api.hbtn.io/api/starships/?page=' + str(page)
             swapi = requests.get(url)
     return filtered_ships
-
