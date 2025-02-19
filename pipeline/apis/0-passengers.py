@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+""" to be documented, temporary text to check function logic """
 import requests
 
 
 def availableShips(passengerCount):
+    """ to be documented, temporary text to check function logic """
     next_page = True
     page = 1
     filtered_ships = []
