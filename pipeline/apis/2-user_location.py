@@ -4,6 +4,7 @@ import requests
 import sys
 import datetime
 
+
 def main():
     """ to be documented, temporary text to check function logic """
     github = sys.argv[1]
