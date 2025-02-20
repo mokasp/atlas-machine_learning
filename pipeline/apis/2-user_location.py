@@ -17,7 +17,7 @@ def main():
         minutes = round((time - cur_time).total_seconds() / 60.0)
         print('Reset in ' + str(minutes) + ' min')
     else:
-        print(user_json['location'])
+        print(user_json.json()['location'])
 
 
 if __name__ == '__main__':
