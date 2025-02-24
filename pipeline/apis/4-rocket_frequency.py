@@ -16,11 +16,14 @@ def main():
         rocket_id = launch['rocket']
         rocket = rocket_ids[rocket_id]
         launches_per_rocket[rocket] += 1
-    num_launches = dict(sorted(launches_per_rocket.items(), key=lambda item: item[1], reverse=True))
+    num_launches = dict(
+        sorted(
+            launches_per_rocket.items(),
+            key=lambda item: item[1],
+            reverse=True))
     for ship in num_launches:
         if num_launches[ship] > 0:
             print(ship + ': ' + str(num_launches[ship]))
-
 
 
 if __name__ == '__main__':
