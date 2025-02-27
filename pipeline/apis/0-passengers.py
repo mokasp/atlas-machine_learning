@@ -1,10 +1,30 @@
 #!/usr/bin/env python3
-""" to be documented, temporary text to check function logic """
+""" module containing function that returns a list of ships that can hold a
+    given number of passengers by querying the Swapi API. """
 import requests
 
 
 def availableShips(passengerCount):
-    """ to be documented, temporary text to check function logic """
+    """
+        function that returns a list of ships that can hold a given number
+        of passengers by querying the Swapi API.
+
+        Parameters:
+        -----------
+        passengerCount : int
+            The minimum number of passengers that the ship should be able to
+            hold. Ships with a higher or equal capacity will be included in
+            the returned list.
+
+        Returns:
+        --------
+        list
+            A list of dictionaries, where each dictionary contains the 'name'
+            and 'model' of a ship that can hold at least the specified
+            number of passengers. If no ships meet the criteria, an empty list
+            is returned.
+
+    """
     next_page = True
     page = 1
     filtered_ships = []

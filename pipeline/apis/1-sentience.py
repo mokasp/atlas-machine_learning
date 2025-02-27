@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
-""" to be documented, temporary text to check function logic """
+""" module containing function that returns a list of names of the home
+    planets of all sentient species by querying the Swapi API. """
 import requests
 
 
 def sentientPlanets():
-    """ to be documented, temporary text to check function logic """
+    """
+        function that returns a list of names of the home planets of all
+        sentient species by querying the Swapi API.
+
+        Returns:
+        --------
+        list
+            A list of strings containing the names of the home planets of all
+            sentient species. If no sentient species are found, returns an
+            empty list.
+
+    """
     next_page = True
     page = 1
     sentient_worlds = []

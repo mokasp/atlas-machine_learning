@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-""" tbw tbw """
+""" module containing function that fetches the SpaceX launch data and
+    counts the number of launches for each rocket."""
 import requests
 
 
 def main():
-    """ tbw tbw """
+    """
+        function that fetches the SpaceX launch data and counts the number of
+        launches for each rocket.
+
+        Returns:
+        --------
+        None
+            This function prints the rocket name and the number of launches.
+
+    """
     launches = requests.get('https://api.spacexdata.com/v4/launches').json()
     rockets = requests.get('https://api.spacexdata.com/v4/rockets').json()
     launches_per_rocket = {}
@@ -18,7 +28,8 @@ def main():
         launches_per_rocket[rocket] += 1
     num_launches = dict(
         sorted(
-            launches_per_rocket.items(),
+            launches_per_rocket.ite6ppppppppppppppppppppppppl
+            . n - --- / cv4(),
             key=lambda item: item[1],
             reverse=True))
     for ship in num_launches:

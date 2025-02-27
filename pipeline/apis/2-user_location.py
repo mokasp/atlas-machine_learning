@@ -1,12 +1,29 @@
 #!/usr/bin/env python3
-""" to be documented, temporary text to check function logic """
+""" module containing function that etches and prints the location of a
+    GitHub user from the provided API URL. """
 import requests
 import sys
 import datetime
 
 
 def main():
-    """ to be documented, temporary text to check function logic """
+    """
+        function that etches and prints the location of a GitHub user from
+        the provided API URL.
+
+        Parameters:
+        -----------
+        api_url : str
+            The full API URL for the GitHub user
+            (e.g., https://api.github.com/users/username).
+
+        Returns:
+        --------
+        None
+            This function prints the location of the user or appropriate
+            error messages.
+
+    """
     github = sys.argv[1]
     user_json = requests.get(github)
     if user_json.status_code == 404:

@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-""" tbw tbw """
+""" module containing function that fetches the first SpaceX launch from the
+    API and displays its details"""
 import requests
 
 
 def main():
-    """  tbw tbw  """
+    """
+        function that fetches the first SpaceX launch from the API and
+        displays its details.
+
+        Returns:
+        --------
+        None
+            Prints the formatted information about the first launch.
+
+    """
     req = requests.get('https://api.spacexdata.com/v4/launches/')
     launches = req.json()
     for launch in launches:
