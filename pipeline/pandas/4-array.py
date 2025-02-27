@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-""" a module containing a function that selects the last 10 rows of the 'High' and
-    'Close' columns from the DataFrame, and converts these selected values into a
-    NumPy ndarrayst"""
+""" a module containing a function that selects the last 10 rows of the 'High'
+    and 'Close' columns from the DataFrame, and converts these selected values
+    into a NumPy ndarrayst"""
 
 
 def array(df):
