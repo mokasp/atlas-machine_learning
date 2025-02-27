@@ -28,8 +28,7 @@ def main():
         launches_per_rocket[rocket] += 1
     num_launches = dict(
         sorted(
-            launches_per_rocket.ite6ppppppppppppppppppppppppl
-            . n - --- / cv4(),
+            launches_per_rocket.items(),
             key=lambda item: item[1],
             reverse=True))
     for ship in num_launches:
