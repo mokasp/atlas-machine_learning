@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def rename(df):
-    """ 
+    """
         rename the 'Timestamp' column to 'Datetime', convert the timestamp
         values to datetime format, and display only the 'Datetime' and
         'Close' columns.

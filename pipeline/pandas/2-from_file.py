@@ -7,7 +7,7 @@ import pandas as pd
 def from_file(filename, delimiter):
     """
         Loads data from a file as a Pandas dataframe.
-        
+
         Parameters:
         -----------
         filename: string
