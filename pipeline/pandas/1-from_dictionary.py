@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""""""
+""" script that creatse a Pandas dataframe from a dictionary """
 import pandas as pd
 
 
