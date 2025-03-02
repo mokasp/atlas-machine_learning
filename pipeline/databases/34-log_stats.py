@@ -16,15 +16,15 @@ def log_info(collection):
         if request in tracking.keys():
             tracking[request] += 1
 
-    if logs > 0:
-        print(str(logs) + ' logs')
-        print('Methods:')
-        print('        method GET: ' + str(tracking['GET']))
-        print('        method POST: ' + str(tracking['POST']))
-        print('        method PUT: ' + str(tracking['PUT']))
-        print('        method PATCH: ' + str(tracking['PATCH']))
-        print('        method DELETE: ' + str(tracking['DELETE']))
-        print(str(status) + ' status check')
+
+    print(str(logs) + ' logs')
+    print('Methods:')
+    print('        method GET: ' + str(tracking['GET']))
+    print('        method POST: ' + str(tracking['POST']))
+    print('        method PUT: ' + str(tracking['PUT']))
+    print('        method PATCH: ' + str(tracking['PATCH']))
+    print('        method DELETE: ' + str(tracking['DELETE']))
+    print(str(status) + ' status check')
 
 
 if __name__ == "__main__":
