@@ -18,12 +18,12 @@ def log_info(collection):
 
 
     print(str(logs) + ' logs')
-    print('Methods:')
-    print(' method GET: ' + str(tracking['GET']))
-    print(' method POST: ' + str(tracking['POST']))
-    print(' method PUT: ' + str(tracking['PUT']))
-    print(' method PATCH: ' + str(tracking['PATCH']))
-    print(' method DELETE: ' + str(tracking['DELETE']))
+    print('Methods:\n\tmethod GET: ' + str(tracking['GET']) +
+          '\n\tmethod POST: ' + str(tracking['POST']) +
+          '\n\tmethod PUT: ' + str(tracking['PUT']) +
+          '\n\tmethod PATCH: ' + str(tracking['PATCH']) +
+          '\n\tmethod PATCH: ' + str(tracking['PATCH']) +
+          '\n\tmethod DELETE: ' + str(tracking['DELETE']))
     print(str(status) + ' status check')
 
 
