@@ -22,7 +22,6 @@ def log_info(collection):
           '\n\tmethod POST: ' + str(tracking['POST']) +
           '\n\tmethod PUT: ' + str(tracking['PUT']) +
           '\n\tmethod PATCH: ' + str(tracking['PATCH']) +
-          '\n\tmethod PATCH: ' + str(tracking['PATCH']) +
           '\n\tmethod DELETE: ' + str(tracking['DELETE']))
     print(str(status) + ' status check')
 
